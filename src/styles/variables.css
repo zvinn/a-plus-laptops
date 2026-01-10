@@ -1,0 +1,287 @@
+:root {
+  /* ========================================
+     🔵 A PLUS+ - Professional Blue Theme
+     Blue + White + Gray (Light Mode Default)
+     ======================================== */
+
+  /* Primary Colors - Blue */
+  --primary: #2563eb;
+  /* Blue 600 - Main brand color */
+  --primary-light: #3b82f6;
+  /* Blue 500 - Hover states */
+  --primary-dark: #1d4ed8;
+  /* Blue 700 - Active states */
+  --primary-glow: rgba(37, 99, 235, 0.35);
+
+  /* Accent Colors - Lighter Blue */
+  --accent: #0ea5e9;
+  /* Sky 500 - Secondary highlights */
+  --accent-light: #38bdf8;
+  /* Sky 400 */
+  --accent-dark: #0284c7;
+  /* Sky 600 */
+  --accent-glow: rgba(14, 165, 233, 0.35);
+
+  /* Neutral Colors - Gray */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --gray-950: #030712;
+
+  /* Semantic Colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+
+  /* WhatsApp Brand Colors */
+  --whatsapp: #25d366;
+  --whatsapp-dark: #128c7e;
+  --whatsapp-glow: rgba(37, 211, 102, 0.4);
+
+  /* Teal Opacity Variations (Legacy Support) */
+  --teal: rgb(13, 148, 136);
+  --teal-5: rgba(13, 148, 136, 0.05);
+  --teal-10: rgba(13, 148, 136, 0.1);
+  --teal-15: rgba(13, 148, 136, 0.15);
+  --teal-20: rgba(13, 148, 136, 0.2);
+  --teal-30: rgba(13, 148, 136, 0.3);
+
+  /* Error Color Variations */
+  --error-10: rgba(239, 68, 68, 0.1);
+  --error-20: rgba(239, 68, 68, 0.2);
+  --error-40: rgba(239, 68, 68, 0.4);
+
+  /* Success Color Variations */
+  --success-10: rgba(16, 185, 129, 0.1);
+  --success-20: rgba(16, 185, 129, 0.2);
+  --success-40: rgba(16, 185, 129, 0.4);
+
+  /* ========================================
+     LIGHT MODE (Default)
+     ======================================== */
+  /* Background Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: var(--gray-50);
+  --bg-surface: var(--gray-100);
+  --bg-glass: rgba(255, 255, 255, 0.8);
+  --bg-card: #ffffff;
+
+  /* Text Colors */
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-600);
+  --text-muted: var(--gray-500);
+
+  /* Border Colors */
+  --border-primary: var(--gray-200);
+  --border-light: var(--gray-200);
+  --border-accent: rgba(37, 99, 235, 0.3);
+
+  /* Gradients */
+  --gradient-hero: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  --gradient-card: linear-gradient(145deg, #ffffff 0%, var(--gray-50) 100%);
+  --gradient-accent: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  --gradient-glow: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 20px var(--primary-glow);
+  --shadow-accent-glow: 0 0 15px var(--accent-glow);
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Animation */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Outfit', 'Inter', sans-serif;
+
+  /* Spacing Scale */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  /* Orange/Warning Color Variations */
+  --orange: #f97316;
+  --orange-dark: #ea580c;
+  --orange-10: rgba(249, 115, 22, 0.1);
+  --orange-20: rgba(249, 115, 22, 0.2);
+  --orange-30: rgba(249, 115, 22, 0.3);
+}
+
+/* ========================================
+   🌙 DARK MODE
+   ======================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Background Colors */
+    --bg-primary: var(--gray-950);
+    --bg-secondary: var(--gray-900);
+    --bg-surface: var(--gray-800);
+    --bg-glass: rgba(17, 24, 39, 0.8);
+    --bg-card: var(--gray-800);
+
+    /* Text Colors */
+    --text-primary: var(--gray-50);
+    --text-secondary: var(--gray-400);
+    --text-muted: var(--gray-500);
+
+    /* Border Colors */
+    --border-primary: rgba(156, 163, 175, 0.2);
+    --border-light: rgba(255, 255, 255, 0.1);
+    --border-accent: rgba(37, 99, 235, 0.4);
+
+    /* Gradients */
+    --gradient-card: linear-gradient(145deg, var(--gray-800) 0%, var(--gray-900) 100%);
+
+    /* Shadows (stronger for dark mode) */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Manual Dark Mode Class */
+.dark-mode {
+  /* Background Colors */
+  --bg-primary: var(--gray-950);
+  --bg-secondary: var(--gray-900);
+  --bg-surface: var(--gray-800);
+  --bg-glass: rgba(17, 24, 39, 0.8);
+  --bg-card: var(--gray-800);
+
+  /* Text Colors */
+  --text-primary: var(--gray-50);
+  --text-secondary: var(--gray-400);
+  --text-muted: var(--gray-500);
+
+  /* Border Colors */
+  --border-primary: rgba(156, 163, 175, 0.2);
+  --border-light: rgba(255, 255, 255, 0.1);
+  --border-accent: rgba(37, 99, 235, 0.4);
+
+  /* Gradients */
+  --gradient-card: linear-gradient(145deg, var(--gray-800) 0%, var(--gray-900) 100%);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* ========================================
+   GLOBAL BODY STYLES
+   ======================================== */
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  transition: background-color 0.3s var(--ease-smooth), color 0.3s var(--ease-smooth);
+}
+
+/* Optional: Subtle gradient overlay for dark mode */
+.dark-mode body {
+  background-image:
+    radial-gradient(circle at 10% 20%, var(--primary-glow) 0%, transparent 50%),
+    radial-gradient(circle at 90% 80%, var(--accent-glow) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-image:
+      radial-gradient(circle at 10% 20%, var(--primary-glow) 0%, transparent 50%),
+      radial-gradient(circle at 90% 80%, var(--accent-glow) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+}
+
+/* ========================================
+   SCROLLBAR STYLES
+   ======================================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-400);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-500);
+}
+
+.dark-mode ::-webkit-scrollbar-thumb {
+  background: var(--gray-600);
+}
+
+.dark-mode ::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-500);
+}
+
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar-thumb {
+    background: var(--gray-600);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-500);
+  }
+}
+
+/* ========================================
+   LEGACY VARIABLE ALIASES (Backward Compat)
+   ======================================== */
+:root {
+  --primary-color: var(--primary);
+  --secondary-color: var(--gray-700);
+  --bg-light: var(--bg-secondary);
+  --border-color: var(--border-light);
+  --text-dark: var(--text-primary);
+  --text-light: var(--text-secondary);
+
+  /* Slate aliases (for components still using slate) */
+  --slate-50: var(--gray-50);
+  --slate-100: var(--gray-100);
+  --slate-200: var(--gray-200);
+  --slate-300: var(--gray-300);
+  --slate-400: var(--gray-400);
+  --slate-500: var(--gray-500);
+  --slate-600: var(--gray-600);
+  --slate-700: var(--gray-700);
+  --slate-800: var(--gray-800);
+  --slate-900: var(--gray-900);
+  --slate-950: var(--gray-950);
+}

@@ -1,0 +1,190 @@
+/* Error Boundary Fallback UI Styles */
+
+.error-boundary-fallback {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    padding: 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(239, 68, 68, 0.02) 100%);
+    border-radius: 16px;
+    margin: 1rem;
+}
+
+.error-boundary-fallback.fullscreen {
+    min-height: 60vh;
+    margin: 2rem auto;
+    max-width: 600px;
+}
+
+.error-boundary-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    animation: shake 0.5s ease-in-out;
+}
+
+.error-boundary-icon.retry-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20%,
+    60% {
+        transform: translateX(-5px);
+    }
+
+    40%,
+    80% {
+        transform: translateX(5px);
+    }
+}
+
+.error-boundary-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--error-color, #ef4444);
+    margin-bottom: 0.75rem;
+}
+
+.error-boundary-message {
+    font-size: 1rem;
+    color: var(--text-secondary, #6b7280);
+    margin-bottom: 1.5rem;
+    max-width: 400px;
+    line-height: 1.6;
+}
+
+.error-boundary-retry-info {
+    font-size: 0.85rem;
+    color: var(--text-muted, #9ca3af);
+    margin-bottom: 1.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+}
+
+.error-boundary-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.error-boundary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    text-decoration: none;
+}
+
+.error-boundary-btn-primary {
+    background: linear-gradient(135deg, var(--primary-color, #3b82f6) 0%, #2563eb 100%);
+    color: white;
+    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+}
+
+.error-boundary-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+.error-boundary-btn-secondary {
+    background: var(--bg-secondary, #f3f4f6);
+    color: var(--text-primary, #1f2937);
+    border: 1px solid var(--border-color, #e5e7eb);
+}
+
+.error-boundary-btn-secondary:hover {
+    background: var(--bg-hover, #e5e7eb);
+    transform: translateY(-2px);
+}
+
+.error-boundary-btn-report {
+    background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+    color: white;
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+}
+
+.error-boundary-btn-report:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+/* Dark mode support */
+[data-theme="dark"] .error-boundary-fallback {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.03) 100%);
+}
+
+[data-theme="dark"] .error-boundary-retry-info {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .error-boundary-btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #f9fafb;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .error-boundary-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* RTL support */
+[dir="rtl"] .error-boundary-fallback {
+    direction: rtl;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .error-boundary-fallback {
+        padding: 1.5rem;
+    }
+
+    .error-boundary-icon {
+        font-size: 3rem;
+    }
+
+    .error-boundary-title {
+        font-size: 1.5rem;
+    }
+
+    .error-boundary-btn {
+        font-size: 0.85rem;
+        padding: 0.65rem 1rem;
+    }
+
+    .error-boundary-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .error-boundary-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

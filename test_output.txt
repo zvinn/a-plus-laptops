@@ -1,0 +1,257 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.16 [39m[90mC:/Users/A PLUS/Desktop/A Plus+[39m
+
+ReferenceError: React is not defined
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:80:5)
+    at renderWithHooks (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:20103:13)
+    at beginWork (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+    at innerInvokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+    at invokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+    at HTMLUnknownElementImpl._dispatch (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:243:9)
+    at HTMLUnknownElementImpl.dispatchEvent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:114:17)
+ReferenceError: React is not defined
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:80:5)
+    at renderWithHooks (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:20103:13)
+    at beginWork (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+    at innerInvokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+    at invokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+    at HTMLUnknownElementImpl._dispatch (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:243:9)
+    at HTMLUnknownElementImpl.dispatchEvent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:114:17)
+[90mstderr[2m | src/context/CartContext.test.jsx[2m > [22m[2mCartContext[2m > [22m[2mshould start with an empty cart
+[22m[39mThe above error occurred in the <CartProvider> component:
+
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:9:25)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+ReferenceError: React is not defined
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:80:5)
+    at renderWithHooks (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:20103:13)
+    at beginWork (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+    at innerInvokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+    at invokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+    at HTMLUnknownElementImpl._dispatch (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:243:9)
+    at HTMLUnknownElementImpl.dispatchEvent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:114:17)
+ReferenceError: React is not defined
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:80:5)
+    at renderWithHooks (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:20103:13)
+    at beginWork (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+    at innerInvokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+    at invokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+    at HTMLUnknownElementImpl._dispatch (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:243:9)
+    at HTMLUnknownElementImpl.dispatchEvent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:114:17)
+[90mstderr[2m | src/context/CartContext.test.jsx[2m > [22m[2mCartContext[2m > [22m[2mshould add a product to the cart
+[22m[39mThe above error occurred in the <CartProvider> component:
+
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:9:25)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+ReferenceError: React is not defined
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:80:5)
+    at renderWithHooks (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:20103:13)
+    at beginWork (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+    at innerInvokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+    at invokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+    at HTMLUnknownElementImpl._dispatch (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:243:9)
+    at HTMLUnknownElementImpl.dispatchEvent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:114:17)
+ReferenceError: React is not defined
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:80:5)
+    at renderWithHooks (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:20103:13)
+    at beginWork (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+    at innerInvokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+    at invokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+    at HTMLUnknownElementImpl._dispatch (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:243:9)
+    at HTMLUnknownElementImpl.dispatchEvent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:114:17)
+[90mstderr[2m | src/context/CartContext.test.jsx[2m > [22m[2mCartContext[2m > [22m[2mshould increase quantity if product already exists
+[22m[39mThe above error occurred in the <CartProvider> component:
+
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:9:25)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+ReferenceError: React is not defined
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:80:5)
+    at renderWithHooks (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:20103:13)
+    at beginWork (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+    at innerInvokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+    at invokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+    at HTMLUnknownElementImpl._dispatch (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:243:9)
+    at HTMLUnknownElementImpl.dispatchEvent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:114:17)
+ReferenceError: React is not defined
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:80:5)
+    at renderWithHooks (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:20103:13)
+    at beginWork (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+    at innerInvokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+    at invokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+    at HTMLUnknownElementImpl._dispatch (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:243:9)
+    at HTMLUnknownElementImpl.dispatchEvent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:114:17)
+[90mstderr[2m | src/context/CartContext.test.jsx[2m > [22m[2mCartContext[2m > [22m[2mshould remove a product from the cart
+[22m[39mThe above error occurred in the <CartProvider> component:
+
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:9:25)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+ReferenceError: React is not defined
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:80:5)
+    at renderWithHooks (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:20103:13)
+    at beginWork (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+    at innerInvokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+    at invokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+    at HTMLUnknownElementImpl._dispatch (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:243:9)
+    at HTMLUnknownElementImpl.dispatchEvent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:114:17)
+ReferenceError: React is not defined
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:80:5)
+    at renderWithHooks (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:20103:13)
+    at beginWork (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+    at innerInvokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+    at invokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+    at HTMLUnknownElementImpl._dispatch (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:243:9)
+    at HTMLUnknownElementImpl.dispatchEvent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:114:17)
+[90mstderr[2m | src/context/CartContext.test.jsx[2m > [22m[2mCartContext[2m > [22m[2mshould update quantity manually
+[22m[39mThe above error occurred in the <CartProvider> component:
+
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:9:25)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+ReferenceError: React is not defined
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:80:5)
+    at renderWithHooks (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:20103:13)
+    at beginWork (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+    at innerInvokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+    at invokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+    at HTMLUnknownElementImpl._dispatch (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:243:9)
+    at HTMLUnknownElementImpl.dispatchEvent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:114:17)
+ReferenceError: React is not defined
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:80:5)
+    at renderWithHooks (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:20103:13)
+    at beginWork (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+    at innerInvokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+    at invokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+    at HTMLUnknownElementImpl._dispatch (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:243:9)
+    at HTMLUnknownElementImpl.dispatchEvent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:114:17)
+[90mstderr[2m | src/context/CartContext.test.jsx[2m > [22m[2mCartContext[2m > [22m[2mshould calculate subtotal correctly
+[22m[39mThe above error occurred in the <CartProvider> component:
+
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:9:25)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+ReferenceError: React is not defined
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:80:5)
+    at renderWithHooks (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:20103:13)
+    at beginWork (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+    at innerInvokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+    at invokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+    at HTMLUnknownElementImpl._dispatch (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:243:9)
+    at HTMLUnknownElementImpl.dispatchEvent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:114:17)
+ReferenceError: React is not defined
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:80:5)
+    at renderWithHooks (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:20103:13)
+    at beginWork (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (C:\Users\A PLUS\Desktop\A Plus+\node_modules\react-dom\cjs\react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\generated\EventListener.js:26:30)
+    at innerInvokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+    at invokeEventListeners (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+    at HTMLUnknownElementImpl._dispatch (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:243:9)
+    at HTMLUnknownElementImpl.dispatchEvent (C:\Users\A PLUS\Desktop\A Plus+\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:114:17)
+[90mstderr[2m | src/context/CartContext.test.jsx[2m > [22m[2mCartContext[2m > [22m[2mshould persist to localStorage
+[22m[39mThe above error occurred in the <CartProvider> component:
+
+    at CartProvider (C:/Users/A PLUS/Desktop/A Plus+/src/context/CartContext.jsx:9:25)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+ [31m❯[39m src/context/CartContext.test.jsx [2m([22m[2m7 tests[22m[2m | [22m[31m7 failed[39m[2m)[22m[32m 113[2mms[22m[39m
+[31m     [31m×[31m should start with an empty cart[39m[32m 49[2mms[22m[39m
+[31m     [31m×[31m should add a product to the cart[39m[32m 8[2mms[22m[39m
+[31m     [31m×[31m should increase quantity if product already exists[39m[32m 9[2mms[22m[39m
+[31m     [31m×[31m should remove a product from the cart[39m[32m 12[2mms[22m[39m
+[31m     [31m×[31m should update quantity manually[39m[32m 11[2mms[22m[39m
+[31m     [31m×[31m should calculate subtotal correctly[39m[32m 11[2mms[22m[39m
+[31m     [31m×[31m should persist to localStorage[39m[32m 7[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 7 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/context/CartContext.test.jsx[2m > [22mCartContext[2m > [22mshould start with an empty cart
+[41m[1m FAIL [22m[49m src/context/CartContext.test.jsx[2m > [22mCartContext[2m > [22mshould add a product to the cart
+[41m[1m FAIL [22m[49m src/context/CartContext.test.jsx[2m > [22mCartContext[2m > [22mshould increase quantity if product already exists
+[41m[1m FAIL [22m[49m src/context/CartContext.test.jsx[2m > [22mCartContext[2m > [22mshould remove a product from the cart
+[41m[1m FAIL [22m[49m src/context/CartContext.test.jsx[2m > [22mCartContext[2m > [22mshould update quantity manually
+[41m[1m FAIL [22m[49m src/context/CartContext.test.jsx[2m > [22mCartContext[2m > [22mshould calculate subtotal correctly
+[41m[1m FAIL [22m[49m src/context/CartContext.test.jsx[2m > [22mCartContext[2m > [22mshould persist to localStorage
+[31m[1mReferenceError[22m: React is not defined[39m
+[36m [2m❯[22m CartProvider src/context/CartContext.jsx:[2m80:5[22m[39m
+    [90m 78| [39m    }[33m;[39m
+    [90m 79| [39m
+    [90m 80| [39m    [35mreturn[39m (
+    [90m   | [39m    [31m^[39m
+    [90m 81| [39m        [33m<[39m[33mCartContext[39m[33m.[39m[33mProvider[39m [33mvalue[39m[33m=[39m[33m{[39mvalue[33m}[39m[33m>[39m
+    [90m 82| [39m            [33m{[39mchildren[33m}[39m
+[90m [2m❯[22m renderWithHooks node_modules/react-dom/cjs/react-dom.development.js:[2m15486:18[22m[39m
+[90m [2m❯[22m mountIndeterminateComponent node_modules/react-dom/cjs/react-dom.development.js:[2m20103:13[22m[39m
+[90m [2m❯[22m beginWork node_modules/react-dom/cjs/react-dom.development.js:[2m21626:16[22m[39m
+[90m [2m❯[22m beginWork$1 node_modules/react-dom/cjs/react-dom.development.js:[2m27465:14[22m[39m
+[90m [2m❯[22m performUnitOfWork node_modules/react-dom/cjs/react-dom.development.js:[2m26599:12[22m[39m
+[90m [2m❯[22m workLoopSync node_modules/react-dom/cjs/react-dom.development.js:[2m26505:5[22m[39m
+[90m [2m❯[22m renderRootSync node_modules/react-dom/cjs/react-dom.development.js:[2m26473:7[22m[39m
+[90m [2m❯[22m recoverFromConcurrentError node_modules/react-dom/cjs/react-dom.development.js:[2m25889:20[22m[39m
+[90m [2m❯[22m performConcurrentWorkOnRoot node_modules/react-dom/cjs/react-dom.development.js:[2m25789:22[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m7 failed[39m[22m[90m (7)[39m
+[2m   Start at [22m 21:02:15
+[2m   Duration [22m 5.11s[2m (transform 136ms, setup 445ms, import 479ms, tests 113ms, environment 3.64s)[22m
+

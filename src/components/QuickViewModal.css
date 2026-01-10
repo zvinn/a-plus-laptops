@@ -1,0 +1,351 @@
+/* ========================================
+   QUICK VIEW MODAL - Premium Design
+   ======================================== */
+
+/* Backdrop */
+.quickview-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Modal Container */
+.quickview-modal {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    max-height: 90vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    background: var(--gradient-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Close Button */
+.quickview-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all 0.3s var(--ease-elastic);
+}
+
+.quickview-close:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: var(--error);
+    transform: scale(1.1);
+}
+
+.quickview-close svg {
+    width: 20px;
+    height: 20px;
+    color: var(--text-secondary);
+}
+
+.quickview-close:hover svg {
+    color: var(--error);
+}
+
+/* Product Image Section */
+.quickview-image {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: radial-gradient(circle at center, var(--primary-glow) 0%, transparent 70%);
+}
+
+.quickview-image img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4));
+}
+
+.quickview-discount {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    padding: 6px 12px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+/* Product Details Section */
+.quickview-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem 2rem 2rem 0;
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
+.quickview-brand {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    width: fit-content;
+}
+
+.quickview-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.3;
+}
+
+/* Price */
+.quickview-price-wrapper {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.quickview-old-price {
+    font-size: 1rem;
+    color: var(--error);
+    text-decoration: line-through;
+    font-weight: 500;
+}
+
+.quickview-price {
+    font-size: 2rem;
+    font-weight: 800;
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.quickview-price small {
+    font-size: 0.5em;
+    font-weight: 500;
+    -webkit-text-fill-color: var(--text-secondary);
+}
+
+/* Specs Section */
+.quickview-specs {
+    margin-top: 0.5rem;
+}
+
+.quickview-specs h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.quickview-specs-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.quickview-spec-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    transition: all 0.3s var(--ease-smooth);
+}
+
+.quickview-spec-item:hover {
+    background: var(--teal-15);
+    border-color: var(--border-accent);
+}
+
+.spec-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.spec-value {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    text-align: right;
+}
+
+/* Actions */
+.quickview-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 1rem;
+}
+
+.quickview-add-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    box-shadow: 0 4px 20px var(--primary-glow);
+    transition: all 0.3s var(--ease-elastic);
+}
+
+.quickview-add-cart:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px var(--primary-glow);
+}
+
+.quickview-add-cart svg {
+    width: 20px;
+    height: 20px;
+}
+
+.quickview-view-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s var(--ease-smooth);
+}
+
+.quickview-view-details:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--border-accent);
+    color: var(--text-primary);
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+    .quickview-modal {
+        grid-template-columns: 1fr;
+        max-height: 95vh;
+        overflow-y: auto;
+    }
+
+    .quickview-image {
+        padding: 1.5rem;
+        padding-top: 3.5rem;
+    }
+
+    .quickview-image img {
+        max-height: 250px;
+    }
+
+    .quickview-details {
+        padding: 0 1.5rem 1.5rem 1.5rem;
+        max-height: none;
+        overflow: visible;
+    }
+
+    .quickview-title {
+        font-size: 1.25rem;
+    }
+
+    .quickview-price {
+        font-size: 1.5rem;
+    }
+
+    .quickview-close {
+        top: 0.75rem;
+        right: 0.75rem;
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* ========================================
+   QUICK VIEW BUTTON (ProductCard)
+   ======================================== */
+.quickview-btn {
+    position: absolute;
+    top: 100px;
+    right: 12px;
+    z-index: 10;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all 0.3s var(--ease-elastic);
+    opacity: 0;
+    transform: translateX(10px);
+}
+
+.product-card:hover .quickview-btn {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.quickview-btn:hover {
+    transform: scale(1.1);
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.quickview-btn svg {
+    width: 16px;
+    height: 16px;
+    color: var(--slate-400);
+    transition: all 0.3s var(--ease-smooth);
+}
+
+.quickview-btn:hover svg {
+    color: white;
+}

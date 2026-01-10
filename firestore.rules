@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is the specific admin
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email == 'mhamed.saad.ibrahim@gmail.com';
+    }
+
+    // Default: Deny everything to prevent data leaks
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    
+    // Laptops Collection: Public Read, Admin Write
+    match /laptops/{laptop} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    // User Profiles: Users can read/write their own data
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Orders: Guest Checkout enabled (create if true)
+    // Admins read all, Users read their own
+    // Orders: Guest Checkout enabled but with VALIDATION
+    // Admins read all, Users read their own
+    match /orders/{orderId} {
+      allow create: if 
+        request.resource.data.totalAmount is number &&
+        request.resource.data.totalAmount > 0 &&
+        request.resource.data.customerName is string &&
+        request.resource.data.customerName.size() > 2 &&
+        request.resource.data.status == 'pending_whatsapp';
+        
+      allow read: if request.auth != null && (resource.data.userId == request.auth.uid || isAdmin());
+    }
+
+    // Notifications: 
+    // - Users can read/write their own
+    match /notifications/{notificationId} {
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if request.auth != null && resource.data.userId == request.auth.uid;
+    }
+  }
+}

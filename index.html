@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d9488" />
+
+  <!-- Primary Meta Tags -->
+  <meta name="description"
+    content="A Plus+ | High-Performance Gaming Laptops & Accessories. Official Dealer for Asus, Lenovo, MSI, and Apple in Egypt." />
+  <meta name="keywords"
+    content="gaming laptops, A Plus, laptop store Egypt, ASUS ROG, Lenovo Legion, MSI, HP Victus, Cairo" />
+  <meta name="author" content="A Plus+ Laptops" />
+  <title>A Plus+ | Gaming Laptops Store</title>
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://a-plus-laptops.vercel.app/" />
+  <meta property="og:title" content="A Plus+ | Gaming Laptops Store" />
+  <meta property="og:description"
+    content="High-Performance Gaming Laptops & Accessories. Official Dealer for Asus, Lenovo, MSI, and Apple in Egypt." />
+  <meta property="og:image" content="https://i.ibb.co/0jZ1Z1Q/a-plus-logo.png" />
+  <meta property="og:site_name" content="A Plus+" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://a-plus-laptops.vercel.app/" />
+  <meta name="twitter:title" content="A Plus+ | Gaming Laptops Store" />
+  <meta name="twitter:description" content="High-Performance Gaming Laptops & Accessories in Egypt." />
+  <meta name="twitter:image" content="https://i.ibb.co/0jZ1Z1Q/a-plus-logo.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Performance: Preconnect to Firebase & CDNs -->
+  <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://firebase.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://www.googleapis.com" crossorigin>
+  <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com">
+  <link rel="dns-prefetch" href="https://i.ibb.co">
+</head>
+
+<body>
+  <div id="root">
+    <!-- Fallback loading indicator - will be replaced by React -->
+    <div id="initial-loader"
+      style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#0f172a,#1e293b);color:white;font-family:sans-serif;">
+      <div style="font-size:48px;margin-bottom:20px;">💻</div>
+      <div style="font-size:18px;font-weight:bold;">A Plus+</div>
+      <div style="font-size:14px;color:#94a3b8;margin-top:8px;">Loading...</div>
+      <div id="error-display"
+        style="margin-top:20px;padding:15px;background:#7f1d1d;border-radius:8px;max-width:90%;display:none;font-size:12px;">
+      </div>
+    </div>
+  </div>
+  <script>
+    // Diagnostic: catch any errors before React loads
+    window.onerror = function(msg, url, line, col, error) {
+      var el = document.getElementById('error-display');
+      if (el) {
+        el.style.display = 'block';
+        el.innerHTML = '<strong>Error:</strong> ' + msg + '<br><small>' + url + ':' + line + '</small>';
+      }
+      return false;
+    };
+  </script>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>

@@ -1,0 +1,453 @@
+/* ========================================
+   PRODUCT DETAILS PAGE - Modern Tech Design
+   ======================================== */
+.product-details-page {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: color 0.3s var(--ease-smooth);
+}
+
+.back-link:hover {
+    color: var(--primary-light);
+}
+
+/* ========================================
+   PRODUCT LAYOUT
+   ======================================== */
+.product-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    align-items: start;
+}
+
+/* ========================================
+   GALLERY
+   ======================================== */
+.product-gallery {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+    z-index: 10;
+}
+
+.main-image {
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-light);
+    position: relative;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+.main-image img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.5s var(--ease-smooth);
+}
+
+.main-image:hover img {
+    transform: scale(1.02);
+}
+
+.condition-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--gradient-accent);
+    color: white;
+    padding: 8px 14px;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 700;
+    box-shadow: var(--shadow-sm);
+}
+
+/* ========================================
+   INFO PANEL
+   ======================================== */
+.brand-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.brand-name {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stock-status {
+    background: var(--success-10);
+    color: var(--success);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 700;
+    border: 1px solid var(--success-20);
+}
+
+.stock-status.low {
+    background: var(--error-10);
+    color: var(--error);
+    border-color: var(--error-20);
+}
+
+.product-info-panel h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+}
+
+.price-box {
+    font-size: 2rem;
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+}
+
+/* ========================================
+   CONFIGURATOR
+   ======================================== */
+.configurator-box {
+    background: var(--bg-surface) !important;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light) !important;
+    margin-bottom: 1.5rem;
+}
+
+.configurator-box h3 {
+    color: var(--text-primary) !important;
+    margin-bottom: 1rem;
+}
+
+.config-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-light);
+    cursor: pointer;
+    transition: all 0.3s var(--ease-smooth);
+}
+
+.config-option:hover {
+    border-color: var(--primary);
+    background: var(--teal-5);
+}
+
+.config-option input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary);
+}
+
+.config-option span:last-child {
+    color: var(--primary-light) !important;
+}
+
+/* ========================================
+   BUNDLES
+   ======================================== */
+.bundles-box {
+    background: var(--orange-10) !important;
+    border: 1px solid var(--orange-30) !important;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 1.5rem;
+}
+
+.bundles-box h3 {
+    color: var(--accent) !important;
+}
+
+.bundles-box .bundle-items div {
+    background: var(--bg-surface) !important;
+    border-color: var(--border-light) !important;
+}
+
+.bundles-box .bundle-price span:first-child {
+    color: var(--text-muted) !important;
+}
+
+.bundles-box .bundle-price span:last-child {
+    color: var(--accent) !important;
+}
+
+.bundles-box .btn-outline {
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
+    background: transparent;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-smooth);
+}
+
+.bundles-box .btn-outline:hover {
+    background: var(--accent);
+    color: white !important;
+}
+
+/* ========================================
+   SPECS GRID
+   ======================================== */
+.specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.spec-card {
+    background: var(--bg-surface);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.spec-icon {
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+}
+
+.spec-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.spec-value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* ========================================
+   ACTION BUTTONS
+   ======================================== */
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.btn-lg {
+    padding: 1rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-whatsapp {
+    background: linear-gradient(135deg, var(--whatsapp) 0%, var(--whatsapp-dark) 100%);
+    color: white;
+    border: none;
+}
+
+.btn-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--whatsapp-glow);
+}
+
+/* ========================================
+   FEATURE HIGHLIGHTS
+   ======================================== */
+.feature-highlights {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    margin: 1rem 0 1.5rem;
+}
+
+.feature-highlights>div {
+    text-align: center;
+    padding: 0.75rem;
+    background: var(--bg-surface) !important;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+}
+
+.feature-highlights p {
+    color: var(--text-secondary) !important;
+    font-size: 0.7rem !important;
+}
+
+/* ========================================
+   POLICY SECTION
+   ======================================== */
+.policy-section-details {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.25rem;
+    background: var(--teal-10);
+    border: 1px solid var(--teal-20);
+    border-radius: var(--radius-lg);
+}
+
+.policy-item {
+    font-weight: 600;
+    color: var(--primary-light);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* ========================================
+   STICKY ACTION BAR (Mobile)
+   ======================================== */
+.sticky-action-bar {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-light);
+    padding: 1rem 1.5rem;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.sticky-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ========================================
+   SIMILAR PRODUCTS
+   ======================================== */
+.similar-products-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-light) !important;
+}
+
+.similar-products-section h3 {
+    color: var(--text-primary) !important;
+}
+
+/* ========================================
+   RESPONSIVE - TABLET
+   ======================================== */
+@media (max-width: 768px) {
+    .product-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .product-gallery {
+        position: static;
+    }
+
+    .action-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-highlights {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sticky-action-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .product-details-page {
+        padding-bottom: 100px;
+    }
+}
+
+/* ========================================
+   RESPONSIVE - MOBILE
+   ======================================== */
+@media (max-width: 480px) {
+    .product-details-page {
+        padding: 0 1rem 120px;
+    }
+
+    .product-info-panel h1 {
+        font-size: 1.5rem;
+    }
+
+    .price-box {
+        font-size: 1.5rem;
+    }
+
+    .main-image {
+        padding: 1rem;
+    }
+
+    .specs-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+
+    .spec-card {
+        padding: 0.75rem 0.5rem;
+    }
+
+    .policy-section-details {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .sticky-action-bar {
+        padding: 1rem;
+    }
+
+    .sticky-action-bar .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .configurator-box,
+    .bundles-box {
+        padding: 1rem;
+    }
+}
