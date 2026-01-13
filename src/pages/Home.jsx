@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { collection, getDocs, limit, query, doc, getDoc } from 'firebase/firestore/lite';
+import { collection, getDocs, limit, query, doc, getDoc, orderBy } from 'firebase/firestore/lite';
 import { db } from '../firebase';
 import ProductCard from '../components/ProductCard';
 import LaptopComparison from '../components/LaptopComparison';
@@ -23,6 +23,8 @@ const Home = () => {
     useScrollReveal();
 
     const [featuredLaptops, setFeaturedLaptops] = useState([]);
+    const [allLaptops, setAllLaptops] = useState([]);
+    const [orders, setOrders] = useState([]);
     const [recentlyViewed, setRecentlyViewed] = useState([]);
     const [selectedPolicy, setSelectedPolicy] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -56,6 +58,32 @@ const Home = () => {
             }
         };
         fetchFeatured();
+
+        // Fetch all laptops for best sellers calculation
+        const fetchAllLaptops = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, "laptops"));
+                const items = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                setAllLaptops(items);
+            } catch (error) {
+                console.error("Error fetching all laptops:", error);
+            }
+        };
+
+        // Fetch orders to calculate best sellers
+        const fetchOrders = async () => {
+            try {
+                const ordersQuery = query(collection(db, 'orders'));
+                const ordersSnapshot = await getDocs(ordersQuery);
+                const ordersData = ordersSnapshot.docs.map(doc => doc.data());
+                setOrders(ordersData);
+            } catch (error) {
+                console.error("Error fetching orders:", error);
+            }
+        };
+
+        fetchAllLaptops();
+        fetchOrders();
     }, []);
 
     // Fetch recently viewed products
@@ -88,6 +116,36 @@ const Home = () => {
 
         fetchRecentlyViewed();
     }, []);
+
+    // Calculate best sellers based on order frequency
+    const bestSellers = useMemo(() => {
+        if (orders.length === 0 || allLaptops.length === 0) {
+            // Fallback to showing products sorted by some criteria if no orders yet
+            return allLaptops.slice(0, 4);
+        }
+
+        // Count how many times each product has been ordered
+        const productSales = {};
+        orders.forEach(order => {
+            if (order.items && Array.isArray(order.items)) {
+                order.items.forEach(item => {
+                    const productName = item.name?.toLowerCase();
+                    if (productName) {
+                        productSales[productName] = (productSales[productName] || 0) + (item.quantity || 1);
+                    }
+                });
+            }
+        });
+
+        // Sort laptops by sales count
+        const sortedBySales = [...allLaptops].sort((a, b) => {
+            const aSales = productSales[a.name?.toLowerCase()] || 0;
+            const bSales = productSales[b.name?.toLowerCase()] || 0;
+            return bSales - aSales;
+        });
+
+        return sortedBySales.slice(0, 4);
+    }, [orders, allLaptops]);
 
     const features = [
         {
@@ -227,6 +285,28 @@ const Home = () => {
                         }}>
                             {recentlyViewed.map(laptop => (
                                 <div key={laptop.id} style={{ flex: '0 0 280px', scrollSnapAlign: 'start' }}>
+                                    <ProductCard product={laptop} />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* BEST SELLERS SECTION */}
+            {bestSellers.length > 0 && (
+                <section className="best-sellers-section section-padding animate-on-scroll">
+                    <div className="container">
+                        <div className="section-header">
+                            <h2>🔥 الأكثر مبيعاً</h2>
+                            <p>المنتجات الأكثر طلباً من عملائنا</p>
+                        </div>
+                        <div className="best-sellers-grid">
+                            {bestSellers.map((laptop, index) => (
+                                <div key={laptop.id} className="best-seller-item">
+                                    <div className="best-seller-rank">
+                                        <span>#{index + 1}</span>
+                                    </div>
                                     <ProductCard product={laptop} />
                                 </div>
                             ))}

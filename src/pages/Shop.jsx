@@ -19,10 +19,13 @@ const Shop = () => {
     const [selectedBrand, setSelectedBrand] = useState('All');
     const [selectedCpu, setSelectedCpu] = useState('All');
     const [selectedRam, setSelectedRam] = useState('All');
+    const [selectedGpu, setSelectedGpu] = useState('All');
+    const [selectedStorage, setSelectedStorage] = useState('All');
     const [selectedUse, setSelectedUse] = useState('All');
     const [priceRange, setPriceRange] = useState(100000);
 
     const [showFilters, setShowFilters] = useState(false);
+    const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
     const debounceRef = useRef(null);
 
     const [sortBy, setSortBy] = useState(() => {
@@ -76,9 +79,36 @@ const Shop = () => {
     const brands = useMemo(() => ['All', ...new Set(laptops.map(l => l.brand))], [laptops]);
     const cpus = useMemo(() => ['All', ...new Set(laptops.map(l => l.specs?.cpu).filter(Boolean))], [laptops]);
     const rams = useMemo(() => ['All', ...new Set(laptops.map(l => l.specs?.ram).filter(Boolean))], [laptops]);
+    const gpus = useMemo(() => ['All', ...new Set(laptops.map(l => l.specs?.gpu).filter(Boolean))], [laptops]);
+    const storages = useMemo(() => ['All', ...new Set(laptops.map(l => l.specs?.storage).filter(Boolean))], [laptops]);
 
     // Derived Suitability Options
     const uses = useMemo(() => ['All', ...new Set(laptops.flatMap(l => l.suitability || []))], [laptops]);
+
+    // Active filters count
+    const activeFiltersCount = useMemo(() => {
+        let count = 0;
+        if (selectedBrand !== 'All') count++;
+        if (selectedCpu !== 'All') count++;
+        if (selectedRam !== 'All') count++;
+        if (selectedGpu !== 'All') count++;
+        if (selectedStorage !== 'All') count++;
+        if (selectedUse !== 'All') count++;
+        if (priceRange < 100000) count++;
+        return count;
+    }, [selectedBrand, selectedCpu, selectedRam, selectedGpu, selectedStorage, selectedUse, priceRange]);
+
+    // Clear all filters
+    const clearAllFilters = () => {
+        setSelectedBrand('All');
+        setSelectedCpu('All');
+        setSelectedRam('All');
+        setSelectedGpu('All');
+        setSelectedStorage('All');
+        setSelectedUse('All');
+        setPriceRange(100000);
+        setSearchQuery('');
+    };
 
     const filteredLaptops = useMemo(() => {
         let result = laptops.filter(laptop => {
@@ -91,12 +121,14 @@ const Shop = () => {
             // Loose matching for specs to handle variations like "Core i7" vs "i7"
             const matchCpu = selectedCpu === 'All' || (laptop.specs?.cpu && laptop.specs.cpu.includes(selectedCpu));
             const matchRam = selectedRam === 'All' || (laptop.specs?.ram && laptop.specs.ram.includes(selectedRam));
+            const matchGpu = selectedGpu === 'All' || (laptop.specs?.gpu && laptop.specs.gpu.toLowerCase().includes(selectedGpu.toLowerCase()));
+            const matchStorage = selectedStorage === 'All' || (laptop.specs?.storage && laptop.specs.storage.includes(selectedStorage));
             const matchPrice = laptop.price <= priceRange;
 
             // Suitability Match
             const matchUse = selectedUse === 'All' || (laptop.suitability && laptop.suitability.includes(selectedUse));
 
-            return matchBrand && matchSearch && matchCpu && matchRam && matchPrice && matchUse;
+            return matchBrand && matchSearch && matchCpu && matchRam && matchGpu && matchStorage && matchPrice && matchUse;
         });
 
         // Apply Sorting
@@ -109,7 +141,7 @@ const Shop = () => {
             // Or if we want to be strict and the original array is chronological, we return 0.
             return 0;
         });
-    }, [laptops, selectedBrand, selectedCpu, selectedRam, priceRange, selectedUse, debouncedSearch, sortBy]);
+    }, [laptops, selectedBrand, selectedCpu, selectedRam, selectedGpu, selectedStorage, priceRange, selectedUse, debouncedSearch, sortBy]);
 
     if (loading) {
         return (
@@ -194,29 +226,75 @@ const Shop = () => {
 
             {/* Mobile Filter Toggle & Sort Header */}
             <div className="shop-controls">
-                <button
-                    className="mobile-filter-toggle"
-                    onClick={() => setShowFilters(!showFilters)}
-                    aria-expanded={showFilters}
-                    aria-controls="shop-filters"
-                    aria-label={showFilters ? 'Hide filters' : 'Show filters'}
-                >
-                    {showFilters ? t('shop.filters.hide') : t('shop.filters.show')}
-                </button>
-
-                <div className="sort-dropdown-container">
-                    <label htmlFor="sort-select" className="sort-label">{t('shop.sortBy', 'Sort by:')}</label>
-                    <select
-                        id="sort-select"
-                        value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value)}
-                        className="sort-select"
+                <div className="shop-controls-left">
+                    <button
+                        className="mobile-filter-toggle"
+                        onClick={() => setShowFilters(!showFilters)}
+                        aria-expanded={showFilters}
+                        aria-controls="shop-filters"
+                        aria-label={showFilters ? 'Hide filters' : 'Show filters'}
                     >
-                        <option value="newest">{t('shop.sort.newest', 'Newest')}</option>
-                        <option value="price-low">{t('shop.sort.priceLow', 'Price: Low to High')}</option>
-                        <option value="price-high">{t('shop.sort.priceHigh', 'Price: High to Low')}</option>
-                        <option value="az">{t('shop.sort.az', 'Name: A-Z')}</option>
-                    </select>
+                        {showFilters ? t('shop.filters.hide') : t('shop.filters.show')}
+                        {activeFiltersCount > 0 && (
+                            <span className="filter-badge">{activeFiltersCount}</span>
+                        )}
+                    </button>
+                    {activeFiltersCount > 0 && (
+                        <button className="clear-filters-btn" onClick={clearAllFilters}>
+                            ✕ Clear All
+                        </button>
+                    )}
+                </div>
+
+                <div className="shop-controls-right">
+                    {/* View Mode Toggle */}
+                    <div className="view-toggle">
+                        <button
+                            className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
+                            onClick={() => setViewMode('grid')}
+                            aria-label="Grid view"
+                            title="Grid View"
+                        >
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="3" y="3" width="7" height="7" rx="1" />
+                                <rect x="14" y="3" width="7" height="7" rx="1" />
+                                <rect x="3" y="14" width="7" height="7" rx="1" />
+                                <rect x="14" y="14" width="7" height="7" rx="1" />
+                            </svg>
+                        </button>
+                        <button
+                            className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
+                            onClick={() => setViewMode('list')}
+                            aria-label="List view"
+                            title="List View"
+                        >
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="3" y="4" width="18" height="4" rx="1" />
+                                <rect x="3" y="10" width="18" height="4" rx="1" />
+                                <rect x="3" y="16" width="18" height="4" rx="1" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div className="sort-dropdown-container">
+                        <label htmlFor="sort-select" className="sort-label">{t('shop.sortBy', 'Sort by:')}</label>
+                        <select
+                            id="sort-select"
+                            value={sortBy}
+                            onChange={(e) => setSortBy(e.target.value)}
+                            className="sort-select"
+                        >
+                            <option value="newest">{t('shop.sort.newest', 'Newest')}</option>
+                            <option value="price-low">{t('shop.sort.priceLow', 'Price: Low to High')}</option>
+                            <option value="price-high">{t('shop.sort.priceHigh', 'Price: High to Low')}</option>
+                            <option value="az">{t('shop.sort.az', 'Name: A-Z')}</option>
+                        </select>
+                    </div>
+                </div>
+
+                {/* Results Count */}
+                <div className="results-count">
+                    {filteredLaptops.length} {filteredLaptops.length === 1 ? 'laptop' : 'laptops'} found
                 </div>
             </div>
 
@@ -287,12 +365,32 @@ const Shop = () => {
                         />
                     </div>
 
+                    {/* GPU Filter */}
+                    <div className="filter-group">
+                        <h3>🎮 GPU</h3>
+                        <select value={selectedGpu} onChange={(e) => setSelectedGpu(e.target.value)} className="filter-select">
+                            {gpus.map(gpu => (
+                                <option key={gpu} value={gpu}>{gpu}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* Storage Filter */}
+                    <div className="filter-group">
+                        <h3>💾 Storage</h3>
+                        <select value={selectedStorage} onChange={(e) => setSelectedStorage(e.target.value)} className="filter-select">
+                            {storages.map(storage => (
+                                <option key={storage} value={storage}>{storage}</option>
+                            ))}
+                        </select>
+                    </div>
+
                     {/* Mobile Close Button */}
                     <button className="mobile-filter-close" onClick={() => setShowFilters(false)}>{t('shop.filters.done')}</button>
                 </aside>
 
                 {/* Product Grid */}
-                <main className="shop-grid">
+                <main className={`shop-grid ${viewMode === 'list' ? 'list-view' : ''}`}>
                     {filteredLaptops.length > 0 ? (
                         filteredLaptops.map(laptop => (
                             <ProductCard key={laptop.id} product={laptop} />
