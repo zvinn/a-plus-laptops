@@ -151,7 +151,7 @@ const Navbar = () => {
 
                     {currentUser ? (
                         <>
-                            {currentUser.email === 'admin3@test.com' && (
+                            {(currentUser.email === 'mhamed.saad.ibrahim@gmail.com') && (
                                 <li>
                                     <Link to="/admin" onClick={closeMenu} className="nav-link">
                                         <ComputerDesktopIcon className="icon-sm" />

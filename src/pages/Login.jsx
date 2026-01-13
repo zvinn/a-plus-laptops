@@ -180,7 +180,7 @@ const Login = () => {
                 await login(email, password);
                 setShowSuccess(true);
                 setTimeout(() => {
-                    if (email === 'admin3@test.com') {
+                    if (email === 'mhamed.saad.ibrahim@gmail.com') {
                         navigate('/admin');
                         success("Welcome back, Admin!");
                     } else {
@@ -206,11 +206,17 @@ const Login = () => {
 
     const handleGoogleSignIn = async () => {
         try {
-            await googleSignIn();
+            const result = await googleSignIn();
+            const userEmail = result?.user?.email?.toLowerCase();
             setShowSuccess(true);
             setTimeout(() => {
-                navigate('/');
-                success("Successfully logged in with Google!");
+                if (userEmail === 'mhamed.saad.ibrahim@gmail.com') {
+                    navigate('/admin');
+                    success("Welcome back, Admin!");
+                } else {
+                    navigate('/');
+                    success("Successfully logged in with Google!");
+                }
             }, 800);
         } catch (err) {
             console.error("Google Sign In Error:", err);
