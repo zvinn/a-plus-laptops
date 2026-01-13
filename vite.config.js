@@ -106,12 +106,36 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore'],
-          ui: ['framer-motion', '@heroicons/react', 'lucide-react'],
-          charts: ['recharts'],
-          tracking: ['react-ga4', 'react-gtm-module']
+          // Core React - rarely changes
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-router': ['react-router-dom'],
+
+          // Firebase - split into smaller chunks
+          'firebase-core': ['firebase/app'],
+          'firebase-auth': ['firebase/auth'],
+          'firebase-db': ['firebase/firestore/lite'],
+
+          // UI Components - split by usage frequency
+          'ui-motion': ['framer-motion'],
+          'ui-icons': ['@heroicons/react', 'lucide-react', 'react-icons'],
+
+          // Heavy libraries - loaded on demand
+          'charts': ['recharts'],
+          'tracking': ['react-ga4', 'react-gtm-module'],
+
+          // Utilities
+          'utils': ['date-fns']
         }
+      }
+    },
+    // Optimize chunk size
+    chunkSizeWarningLimit: 500,
+    // Better minification
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
       }
     }
   }

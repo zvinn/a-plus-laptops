@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { laptops as localLaptops } from '../data/laptops';
 import { useNavigate } from 'react-router-dom';
 import { trackSearch } from '../utils/analytics';
+import OptimizedImage from './OptimizedImage';
 import './HeroSearch.css';
 
 const HeroSearch = ({ onSelectLaptop }) => {
@@ -141,7 +142,11 @@ const HeroSearch = ({ onSelectLaptop }) => {
                             role="option"
                             aria-selected={index === activeIndex}
                         >
-                            <img src={laptop.image} alt={`${laptop.brand} ${laptop.name}`} />
+                            <OptimizedImage
+                                src={laptop.image}
+                                alt={`${laptop.brand} ${laptop.name}`}
+                                skeletonHeight="50px"
+                            />
                             <div className="suggestion-info">
                                 <span className="suggestion-name">
                                     {laptop.brand} {laptop.name}

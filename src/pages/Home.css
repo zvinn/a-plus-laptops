@@ -1,9 +1,5 @@
 /* ========================================
-   HOME PAGE - Modern Tech Design
-   ======================================== */
-
-/* ========================================
-   HERO SECTION
+   HERO SECTION - Minimal & Clean
    ======================================== */
 .hero {
     position: relative;
@@ -12,60 +8,16 @@
     align-items: center;
     overflow: hidden;
     padding-top: 80px;
+    background: var(--bg-primary);
 }
 
-.hero-bg-effects {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-}
-
-.orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.4;
-}
-
-.orb-1 {
-    top: -10%;
-    right: -5%;
-    width: 600px;
-    height: 600px;
-    background: var(--primary-glow);
-    animation: float 10s ease-in-out infinite;
-}
-
-.orb-2 {
-    bottom: -10%;
-    left: -5%;
-    width: 500px;
-    height: 500px;
-    background: var(--accent-glow);
-    animation: float 15s ease-in-out infinite reverse;
-}
-
+/* No background effects for minimal design */
+.hero-bg-effects,
+.orb,
+.orb-1,
+.orb-2,
 .grid-pattern {
-    position: absolute;
-    inset: 0;
-    background-image:
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-    background-size: 50px 50px;
-    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
-}
-
-@keyframes float {
-
-    0%,
-    100% {
-        transform: translate(0, 0);
-    }
-
-    50% {
-        transform: translate(30px, -30px);
-    }
+    display: none;
 }
 
 .hero-content {
@@ -80,43 +32,48 @@
 /* Hero Text Column */
 .hero-text-column {
     text-align: left;
+    animation: fadeInUp 0.6s ease-out;
 }
 
 .hero-logo-wrapper {
     margin-bottom: 1.5rem;
-    animation: float 6s ease-in-out infinite;
 }
 
 .hero-logo {
-    width: 140px;
+    width: 160px;
     height: auto;
-    filter: drop-shadow(0 10px 30px var(--primary-glow));
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease;
 }
 
 .hero-logo:hover {
-    transform: scale(1.05) rotate(2deg);
+    transform: scale(1.05);
 }
 
 .hero-title {
     font-size: 3.5rem;
-    font-weight: 800;
+    font-weight: 700;
     line-height: 1.1;
     margin-bottom: 1.5rem;
     letter-spacing: -1px;
     color: var(--text-primary);
 }
 
+.text-gradient {
+    color: var(--primary);
+    display: inline-block;
+}
+
 .hero-slogan {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     color: var(--text-secondary);
     margin-bottom: 2rem;
     max-width: 500px;
     line-height: 1.7;
+    font-weight: 400;
 }
 
 .hero-search-wrapper {
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
 }
 
 .hero-actions {
@@ -132,13 +89,12 @@
 }
 
 /* ========================================
-   TRUST STRIP
+   TRUST STRIP - Minimal
    ======================================== */
 .trust-strip {
     background: var(--bg-surface);
-    backdrop-filter: blur(16px);
-    border-top: 1px solid var(--border-light);
-    border-bottom: 1px solid var(--border-light);
+    border-top: 1px solid var(--border-primary);
+    border-bottom: 1px solid var(--border-primary);
     padding: 1.5rem 0;
     position: relative;
     z-index: 20;
@@ -158,7 +114,7 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     padding-right: 2rem;
-    border-right: 1px solid var(--border-light);
+    border-right: 1px solid var(--border-primary);
 }
 
 .trust-logos {
@@ -171,28 +127,25 @@
 
 .trust-logo {
     font-size: 1rem;
-    font-weight: 800;
+    font-weight: 600;
     color: var(--text-muted);
-    opacity: 0.5;
-    transition: all 0.3s ease;
+    opacity: 0.6;
+    transition: all 0.2s ease;
     cursor: default;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
 .trust-logo:hover {
-    color: var(--primary-light);
+    color: var(--primary);
     opacity: 1;
-    transform: scale(1.1);
 }
 
 /* ========================================
-   FEATURES SECTION
+   FEATURES SECTION - Minimal Cards
    ======================================== */
 .features-section {
     padding: 5rem 0;
-    margin-top: -3rem;
     position: relative;
-    z-index: 15;
 }
 
 .features-grid {
@@ -202,49 +155,56 @@
 }
 
 .feature-card {
-    background: var(--gradient-card);
-    backdrop-filter: blur(16px);
+    background: var(--bg-card);
     padding: 2.5rem;
-    border-radius: var(--radius-xl);
-    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-primary);
     text-align: center;
     cursor: pointer;
-    transition: all 0.4s var(--ease-smooth);
+    transition: all 0.2s ease;
+}
+
+.feature-card::before {
+    display: none;
 }
 
 .feature-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-xl);
-    border-color: var(--feature-color, var(--primary));
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary);
 }
 
 .feature-icon-wrapper {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 70px;
-    height: 70px;
-    background: var(--teal-10);
-    border-radius: var(--radius-lg);
+    width: 80px;
+    height: 80px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-md);
     margin-bottom: 1.5rem;
-    transition: all 0.3s var(--ease-smooth);
+    transition: all 0.2s ease;
 }
 
 .feature-card:hover .feature-icon-wrapper {
-    background: var(--teal-20);
-    transform: scale(1.1);
+    background: var(--primary);
 }
 
 .feature-icon {
-    width: 36px;
-    height: 36px;
-    color: var(--feature-color, var(--primary));
+    width: 40px;
+    height: 40px;
+    color: var(--primary);
+    transition: all 0.2s ease;
+}
+
+.feature-card:hover .feature-icon {
+    color: white;
 }
 
 .feature-card h3 {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     margin-bottom: 0.75rem;
     color: var(--text-primary);
+    font-weight: 600;
 }
 
 .feature-card p {
@@ -254,7 +214,7 @@
 }
 
 /* ========================================
-   FEATURED PRODUCTS
+   FEATURED PRODUCTS - Minimal
    ======================================== */
 .featured-products {
     background: transparent;
@@ -267,9 +227,9 @@
 }
 
 .product-card-skeleton {
-    background: var(--gradient-card);
-    border-radius: var(--radius-xl);
-    border: 1px solid var(--border-light);
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-primary);
     overflow: hidden;
 }
 
@@ -360,7 +320,6 @@
     }
 
     .features-section {
-        margin-top: 0;
         padding: 3rem 0;
     }
 

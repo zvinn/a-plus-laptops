@@ -1,72 +1,73 @@
 /* ========================================
-   FOOTER - Modern Tech Design
+   FOOTER - Minimal & Clean Design
    ======================================== */
 .footer {
     position: relative;
     background: var(--bg-secondary);
-    border-top: 1px solid var(--border-light);
-    padding-top: 4rem;
+    border-top: 1px solid var(--border-primary);
+    padding-top: 5rem;
     overflow: hidden;
 }
 
+/* Removed glow effects */
+.footer::before,
 .footer-glow {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 300px;
-    background: radial-gradient(ellipse at center, var(--primary-glow) 0%, transparent 70%);
-    opacity: 0.3;
-    pointer-events: none;
+    display: none;
 }
 
 .footer-content {
     display: grid;
     grid-template-columns: 1.5fr 1fr 1.5fr;
     gap: 4rem;
-    padding-bottom: 3rem;
+    padding-bottom: 3.5rem;
+    position: relative;
 }
 
 /* ========================================
-   BRAND SECTION
+   BRAND SECTION - Minimal
    ======================================== */
 .brand-section {
-    max-width: 350px;
+    max-width: 380px;
 }
 
 .footer-logo {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
 }
 
 .footer-logo .logo-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: var(--gradient-accent);
+    width: 48px;
+    height: 48px;
+    background: var(--primary);
     border-radius: var(--radius-md);
     color: white;
-    font-weight: 900;
-    font-size: 1rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+}
+
+.footer-logo .logo-icon:hover {
+    transform: scale(1.05);
 }
 
 .footer-logo .logo-text {
-    font-size: 1.3rem;
-    font-weight: 800;
+    font-size: 1.4rem;
+    font-weight: 700;
     color: var(--text-primary);
     font-family: var(--font-heading);
 }
 
 .footer-tagline {
     color: var(--text-secondary);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1.75rem;
+    font-weight: 400;
 }
 
 .policy-badges {
@@ -79,30 +80,50 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 8px 12px;
-    background: var(--teal-10);
-    border: 1px solid var(--border-accent);
+    padding: 10px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
     border-radius: var(--radius-md);
-    color: var(--primary-light);
-    font-size: 0.75rem;
+    color: var(--primary);
+    font-size: 0.8rem;
     font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.policy-badge:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
 }
 
 .badge-icon {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
 }
 
 /* ========================================
-   LINKS SECTION
+   LINKS SECTION - Minimal
    ======================================== */
 .footer-section h4 {
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 1.05rem;
+    font-weight: 600;
     color: var(--text-primary);
     margin-bottom: 1.5rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+    position: relative;
+    padding-bottom: 0.75rem;
+}
+
+.footer-section h4::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: var(--primary);
+    border-radius: var(--radius-full);
 }
 
 .footer-links {
@@ -112,33 +133,42 @@
 }
 
 .footer-links li {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.85rem;
 }
 
 .footer-links a {
     color: var(--text-secondary);
     font-size: 0.95rem;
-    transition: all 0.3s var(--ease-smooth);
+    font-weight: 400;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Removed arrow effect */
+.footer-links a::before {
+    display: none;
 }
 
 .footer-links a:hover {
-    color: var(--primary-light);
-    padding-left: 8px;
+    color: var(--primary);
 }
 
 /* ========================================
-   NEWSLETTER SECTION
+   NEWSLETTER SECTION - Minimal Form
    ======================================== */
 .newsletter-desc {
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
 }
 
 .newsletter-form {
     display: flex;
     gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .input-wrapper {
@@ -148,28 +178,35 @@
 
 .input-icon {
     position: absolute;
-    left: 12px;
+    left: 14px;
     top: 50%;
     transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     color: var(--text-muted);
+    transition: color 0.2s ease;
 }
 
 .newsletter-form input {
     width: 100%;
-    padding: 0.75rem 0.75rem 0.75rem 40px;
-    background: var(--bg-surface);
-    border: 1px solid var(--border-light);
+    padding: 0.875rem 1rem 0.875rem 44px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
     border-radius: var(--radius-md);
     color: var(--text-primary);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 400;
+    transition: all 0.2s ease;
 }
 
 .newsletter-form input:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px var(--primary-glow);
+    box-shadow: 0 0 0 3px rgba(0, 201, 167, 0.1);
+}
+
+.newsletter-form input:focus+.input-icon {
+    color: var(--primary);
 }
 
 .newsletter-form input::placeholder {
@@ -179,29 +216,40 @@
 .contact-info {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1rem;
 }
 
 .contact-info p {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 400;
+    transition: color 0.2s ease;
 }
 
-.contact-icon {
-    width: 18px;
-    height: 18px;
+.contact-info p:hover {
     color: var(--primary);
 }
 
+.contact-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--primary);
+}
+
+.contact-info p:hover .contact-icon {
+    transform: none;
+}
+
 /* ========================================
-   FOOTER BOTTOM
+   FOOTER BOTTOM - Minimal
    ======================================== */
 .footer-bottom {
-    border-top: 1px solid var(--border-light);
-    padding: 1.5rem 0;
+    border-top: 1px solid var(--border-primary);
+    padding: 2rem 0;
+    background: var(--bg-surface);
 }
 
 .footer-bottom-content {
@@ -212,7 +260,8 @@
 
 .footer-bottom p {
     color: var(--text-muted);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    font-weight: 400;
 }
 
 .social-links {
@@ -224,47 +273,52 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-light);
+    width: 42px;
+    height: 42px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
     border-radius: var(--radius-full);
     color: var(--text-secondary);
-    font-size: 0.75rem;
-    font-weight: 700;
-    transition: all 0.3s var(--ease-smooth);
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+/* Removed gradient effect */
+.social-link::before {
+    display: none;
 }
 
 .social-link:hover {
-    background: var(--primary);
     border-color: var(--primary);
+    background: var(--primary);
     color: white;
-    transform: translateY(-3px);
 }
 
 /* ========================================
-   WHATSAPP FLOAT
+   WHATSAPP FLOAT - Simplified
    ======================================== */
 .whatsapp-float {
     position: fixed;
-    bottom: 24px;
-    right: 24px;
+    bottom: 28px;
+    right: 28px;
     z-index: 999;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 56px;
-    height: 56px;
-    background: linear-gradient(135deg, var(--whatsapp) 0%, var(--whatsapp-dark) 100%);
+    width: 60px;
+    height: 60px;
+    background: var(--whatsapp);
     border-radius: var(--radius-full);
     color: white;
-    box-shadow: 0 4px 20px var(--whatsapp-glow);
-    transition: all 0.3s var(--ease-elastic);
+    box-shadow: var(--shadow-md);
+    transition: all 0.2s ease;
 }
 
+/* Removed bounce animation */
 .whatsapp-float:hover {
-    transform: scale(1.1) translateY(-3px);
-    box-shadow: 0 8px 30px var(--whatsapp-glow);
+    transform: scale(1.1);
+    box-shadow: var(--shadow-lg);
 }
 
 /* ========================================

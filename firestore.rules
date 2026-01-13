@@ -45,5 +45,53 @@ service cloud.firestore {
       allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
       allow update, delete: if request.auth != null && resource.data.userId == request.auth.uid;
     }
+
+    // Admins Collection: Super Admin only
+    match /admins/{email} {
+      allow read: if isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // ====== NEW ADMIN SYSTEM COLLECTIONS ======
+
+    // Expenses (Accounting System): Admin only
+    match /expenses/{expenseId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Inventory Movements: Admin only
+    match /inventory_movements/{movementId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Suppliers: Admin only
+    match /suppliers/{supplierId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Purchase Orders: Admin only
+    match /purchase_orders/{orderId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Customers (CRM): Admin only
+    match /customers/{customerId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Customer Interactions: Admin only
+    match /customer_interactions/{interactionId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Follow-ups: Admin only
+    match /follow_ups/{followUpId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Invoices: Admin only
+    match /invoices/{invoiceId} {
+      allow read, write: if isAdmin();
+    }
   }
 }

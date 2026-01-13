@@ -1,0 +1,493 @@
+/* =====================================================
+   Inventory Manager Styles
+   إدارة المخزون المتقدمة - A Plus+
+   ===================================================== */
+
+.inventory-page {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header */
+.inventory-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.inventory-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Tabs */
+.inventory-tabs {
+    display: flex;
+    gap: 0.5rem;
+    background: var(--bg-card);
+    padding: 0.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 0.75rem 1.25rem;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tab-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.tab-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
+/* Stats Grid */
+.inventory-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.inv-stat-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 1.25rem;
+    border: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.inv-stat-card .icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.inv-stat-card.total .icon {
+    background: rgba(59, 130, 246, 0.15);
+}
+
+.inv-stat-card.low .icon {
+    background: rgba(245, 158, 11, 0.15);
+}
+
+.inv-stat-card.out .icon {
+    background: rgba(239, 68, 68, 0.15);
+}
+
+.inv-stat-card.in .icon {
+    background: rgba(34, 197, 94, 0.15);
+}
+
+.inv-stat-card .info h4 {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.inv-stat-card .info p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Stock Table */
+.stock-table-container {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-light);
+    overflow-x: auto;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.table-header h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.search-input {
+    padding: 0.75rem 1rem;
+    padding-left: 2.5rem;
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    min-width: 250px;
+}
+
+.stock-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.stock-table th,
+.stock-table td {
+    padding: 1rem;
+    text-align: right;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.stock-table th {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stock-table tbody tr:hover {
+    background: var(--bg-hover);
+}
+
+.product-cell {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.product-cell img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.product-cell .info h4 {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.product-cell .info span {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* Stock Badge */
+.stock-badge {
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.stock-badge.healthy {
+    background: rgba(34, 197, 94, 0.15);
+    color: #16a34a;
+}
+
+.stock-badge.low {
+    background: rgba(245, 158, 11, 0.15);
+    color: #d97706;
+}
+
+.stock-badge.out {
+    background: rgba(239, 68, 68, 0.15);
+    color: #dc2626;
+}
+
+/* Action Buttons */
+.action-btns {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background: var(--bg-hover);
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.action-btn.add:hover {
+    color: #22c55e;
+    border-color: #22c55e;
+}
+
+.action-btn.remove:hover {
+    color: #ef4444;
+    border-color: #ef4444;
+}
+
+/* Movements Section */
+.movements-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+    .movements-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+.movements-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-light);
+}
+
+.movements-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.movement-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem;
+    border-radius: 10px;
+    background: var(--bg-surface);
+    margin-bottom: 0.5rem;
+}
+
+.movement-item .info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.movement-item .icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.movement-item .icon.in {
+    background: rgba(34, 197, 94, 0.15);
+}
+
+.movement-item .icon.out {
+    background: rgba(239, 68, 68, 0.15);
+}
+
+.movement-item .details h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.movement-item .details span {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.movement-item .quantity {
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.movement-item .quantity.in {
+    color: #22c55e;
+}
+
+.movement-item .quantity.out {
+    color: #ef4444;
+}
+
+/* Suppliers Section */
+.suppliers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.supplier-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-light);
+    transition: all 0.2s ease;
+}
+
+.supplier-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.supplier-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.supplier-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.supplier-info h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.supplier-info span {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.supplier-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.supplier-details .detail {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.supplier-details .detail span {
+    color: var(--text-primary);
+}
+
+/* Modal Styles */
+.movement-modal .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 500px) {
+    .movement-modal .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Quick Stats */
+.quick-stats {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.quick-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.quick-stat .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.quick-stat .dot.green {
+    background: #22c55e;
+}
+
+.quick-stat .dot.yellow {
+    background: #f59e0b;
+}
+
+.quick-stat .dot.red {
+    background: #ef4444;
+}
+
+.quick-stat span {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .inventory-page {
+        padding: 1rem;
+    }
+
+    .inventory-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .inventory-tabs {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .stock-table th,
+    .stock-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.85rem;
+    }
+}

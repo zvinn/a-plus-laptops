@@ -1,4 +1,9 @@
+/* Import Premium Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
 @import './styles/variables.css';
+@import './styles/animations.css';
+@import './styles/utils.css';
 
 /* ========================================
    GLOBAL RESET & BASE STYLES
@@ -98,21 +103,18 @@ a:hover {
 }
 
 /* ========================================
-   CARD BASE
+   CARD BASE (SIMPLIFIED)
    ======================================== */
 .card {
-  background: var(--gradient-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: var(--bg-card);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--border-primary);
   overflow: hidden;
-  transition: all 0.4s var(--ease-smooth);
+  transition: all 0.2s ease;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
   border-color: var(--border-accent);
 }
 
@@ -177,6 +179,133 @@ button:active:not(:disabled),
 }
 
 /* ========================================
+   PREMIUM BUTTON SYSTEM (SIMPLIFIED)
+   ======================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  text-decoration: none;
+}
+
+/* Removed ripple effect for minimal design */
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+}
+
+.btn-secondary:hover {
+  border-color: var(--primary);
+  background: var(--bg-card);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.btn-outline:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* Glass Button - Minimal Version */
+.btn-glass {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-primary);
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Gradient Button - Simplified */
+.btn-gradient {
+  background: var(--gradient-minimal);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-gradient:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Removed Glow Button for minimal design */
+.btn-glow {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-glow:hover {
+  background: var(--primary-dark);
+}
+
+/* Size Variants */
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.btn-lg {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+}
+
+.btn-xl {
+  padding: 1.25rem 2.5rem;
+  font-size: 1.25rem;
+}
+
+/* Icon Button */
+.btn-icon {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: var(--radius-full);
+}
+
+.btn-icon-lg {
+  width: 56px;
+  height: 56px;
+}
+
+/* Disabled State */
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn:disabled:hover {
+  box-shadow: none !important;
+}
+
+/* ========================================
    ACCESSIBILITY UTILITIES
    ======================================== */
 .visually-hidden {
@@ -223,12 +352,12 @@ textarea:focus-visible {
 }
 
 /* ========================================
-   ANIMATIONS
+   ANIMATIONS (MINIMAL)
    ======================================== */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
 
   to {
@@ -237,51 +366,13 @@ textarea:focus-visible {
   }
 }
 
-@keyframes pulse {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.7;
-  }
-}
-
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-
-  100% {
-    background-position: 200% 0;
-  }
-}
+/* Removed pulse and float animations for minimal design */
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.6s var(--ease-smooth) forwards;
+  animation: fadeInUp 0.4s ease forwards;
 }
 
-.animate-pulse {
-  animation: pulse 2s var(--ease-smooth) infinite;
-}
-
-.animate-float {
-  animation: float 4s var(--ease-smooth) infinite;
-}
+/* Removed pulse and float classes */
 
 /* ========================================
    REDUCED MOTION (Accessibility)

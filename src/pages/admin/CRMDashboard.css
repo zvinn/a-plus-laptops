@@ -1,0 +1,506 @@
+/* =====================================================
+   CRM Dashboard Styles
+   إدارة علاقات العملاء - A Plus+
+   ===================================================== */
+
+.crm-page {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header */
+.crm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.crm-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Stats */
+.crm-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.crm-stat-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 1.25rem;
+    border: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.2s ease;
+}
+
+.crm-stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.crm-stat-card .icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.crm-stat-card.total .icon {
+    background: rgba(59, 130, 246, 0.15);
+}
+
+.crm-stat-card.vip .icon {
+    background: rgba(245, 158, 11, 0.15);
+}
+
+.crm-stat-card.new .icon {
+    background: rgba(34, 197, 94, 0.15);
+}
+
+.crm-stat-card.followup .icon {
+    background: rgba(239, 68, 68, 0.15);
+}
+
+.crm-stat-card .info h4 {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.crm-stat-card .info p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Tabs */
+.crm-tabs {
+    display: flex;
+    gap: 0.5rem;
+    background: var(--bg-card);
+    padding: 0.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.crm-tab {
+    padding: 0.75rem 1.25rem;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.crm-tab:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.crm-tab.active {
+    background: var(--primary);
+    color: white;
+}
+
+/* Customer Cards */
+.customers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.customer-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-light);
+    transition: all 0.2s ease;
+}
+
+.customer-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.customer-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.customer-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.customer-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: white;
+    font-weight: 700;
+}
+
+.customer-details h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.customer-details span {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Segment Badge */
+.segment-badge {
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.segment-badge.vip {
+    background: rgba(245, 158, 11, 0.15);
+    color: #d97706;
+}
+
+.segment-badge.regular {
+    background: rgba(59, 130, 246, 0.15);
+    color: #2563eb;
+}
+
+.segment-badge.new {
+    background: rgba(34, 197, 94, 0.15);
+    color: #16a34a;
+}
+
+/* Customer Stats */
+.customer-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: var(--bg-surface);
+    border-radius: 12px;
+}
+
+.customer-stat {
+    text-align: center;
+}
+
+.customer-stat .value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.customer-stat .label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* Customer Actions */
+.customer-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.customer-action-btn {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid var(--border-light);
+    background: var(--bg-surface);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.customer-action-btn:hover {
+    background: var(--bg-hover);
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* Follow-ups Section */
+.followups-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+    .followups-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+.followup-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-light);
+}
+
+.followup-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.followup-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: var(--bg-surface);
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
+    border-left: 3px solid var(--primary);
+}
+
+.followup-item.overdue {
+    border-left-color: #ef4444;
+    background: rgba(239, 68, 68, 0.05);
+}
+
+.followup-item.today {
+    border-left-color: #f59e0b;
+    background: rgba(245, 158, 11, 0.05);
+}
+
+.followup-info h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.followup-info span {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.followup-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.followup-actions button {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    background: var(--bg-card);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.followup-actions button:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* Interactions Log */
+.interactions-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.interaction-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.interaction-item:last-child {
+    border-bottom: none;
+}
+
+.interaction-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(59, 130, 246, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.interaction-content h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.interaction-content p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.interaction-content .time {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* Search and Filter */
+.search-filter-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    flex: 1;
+    min-width: 250px;
+    position: relative;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    padding-right: 2.5rem;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+}
+
+.filter-dropdown {
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    min-width: 150px;
+}
+
+/* Modal Form Styles */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 500px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Quick Actions */
+.quick-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.quick-action-btn {
+    padding: 0.75rem 1.25rem;
+    border: 1px solid var(--border-light);
+    background: var(--bg-card);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.quick-action-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.quick-action-btn.primary {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.quick-action-btn.primary:hover {
+    background: var(--primary-hover);
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .crm-page {
+        padding: 1rem;
+    }
+
+    .crm-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .customers-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .customer-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

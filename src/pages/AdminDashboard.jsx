@@ -6,6 +6,7 @@ import { collection, getDocs, addDoc, deleteDoc, doc, orderBy, query, updateDoc,
 import { useToast } from '../context/ToastContext';
 import { useNotifications } from '../context/NotificationContext';
 import Skeleton from '../components/Skeleton';
+import OptimizedImage from '../components/OptimizedImage';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import './AdminDashboard.css';
 
@@ -374,6 +375,20 @@ const AdminDashboard = () => {
                         <button className={`tab-btn ${activeTab === 'admins' ? 'active' : ''}`} onClick={() => setActiveTab('admins')}>👥 Manage Admins</button>
                     )}
                 </div>
+                <div className="admin-systems-nav" style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem', flexWrap: 'wrap' }}>
+                    <button className="system-btn" onClick={() => navigate('/admin/accounting')} style={{ padding: '0.5rem 1rem', background: 'linear-gradient(135deg, #22c55e, #16a34a)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '0.9rem', fontWeight: '600' }}>
+                        💰 المحاسبة
+                    </button>
+                    <button className="system-btn" onClick={() => navigate('/admin/inventory')} style={{ padding: '0.5rem 1rem', background: 'linear-gradient(135deg, #3b82f6, #2563eb)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '0.9rem', fontWeight: '600' }}>
+                        📦 المخزون
+                    </button>
+                    <button className="system-btn" onClick={() => navigate('/admin/crm')} style={{ padding: '0.5rem 1rem', background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '0.9rem', fontWeight: '600' }}>
+                        👥 العملاء
+                    </button>
+                    <button className="system-btn" onClick={() => navigate('/admin/invoices')} style={{ padding: '0.5rem 1rem', background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '0.9rem', fontWeight: '600' }}>
+                        🧾 الفواتير
+                    </button>
+                </div>
             </div>
 
             <div className="admin-content">
@@ -597,7 +612,14 @@ const AdminDashboard = () => {
                                 <tbody>
                                     {products.map(product => (
                                         <tr key={product.id}>
-                                            <td><img src={product.image} alt="" className="table-img" /></td>
+                                            <td>
+                                                <OptimizedImage
+                                                    src={product.image}
+                                                    alt=""
+                                                    className="table-img"
+                                                    skeletonHeight="50px"
+                                                />
+                                            </td>
                                             <td>{product.name}</td>
                                             <td>{product.brand}</td>
                                             <td>{product.price?.toLocaleString()}</td>

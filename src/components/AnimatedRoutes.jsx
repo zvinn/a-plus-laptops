@@ -25,6 +25,12 @@ const Wishlist = lazy(() => import('../pages/Wishlist'));
 const ComparisonBattle = lazy(() => import('../components/LaptopComparison'));
 const NotFound = lazy(() => import('../pages/NotFound'));
 
+// Admin System Pages
+const Accounting = lazy(() => import('../pages/admin/Accounting'));
+const InventoryManager = lazy(() => import('../pages/admin/InventoryManager'));
+const CRMDashboard = lazy(() => import('../pages/admin/CRMDashboard'));
+const InvoiceManager = lazy(() => import('../pages/admin/InvoiceManager'));
+
 import { seedLaptops } from '../utils/seedData';
 import PageTransition from './PageTransition';
 import { PageErrorBoundary } from './ErrorBoundary';
@@ -112,6 +118,26 @@ const AnimatedRoutes = () => {
                     <Route path="/admin" element={
                         <PageErrorBoundary pageName="AdminDashboard">
                             <PageTransition><AdminDashboard /></PageTransition>
+                        </PageErrorBoundary>
+                    } />
+                    <Route path="/admin/accounting" element={
+                        <PageErrorBoundary pageName="Accounting">
+                            <PageTransition><Accounting /></PageTransition>
+                        </PageErrorBoundary>
+                    } />
+                    <Route path="/admin/inventory" element={
+                        <PageErrorBoundary pageName="InventoryManager">
+                            <PageTransition><InventoryManager /></PageTransition>
+                        </PageErrorBoundary>
+                    } />
+                    <Route path="/admin/crm" element={
+                        <PageErrorBoundary pageName="CRMDashboard">
+                            <PageTransition><CRMDashboard /></PageTransition>
+                        </PageErrorBoundary>
+                    } />
+                    <Route path="/admin/invoices" element={
+                        <PageErrorBoundary pageName="InvoiceManager">
+                            <PageTransition><InvoiceManager /></PageTransition>
                         </PageErrorBoundary>
                     } />
                     <Route path="/wishlist" element={

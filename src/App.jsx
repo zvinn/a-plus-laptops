@@ -1,20 +1,20 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AnimatedRoutes from './components/AnimatedRoutes';
 import ContextProviders from './components/ContextProviders';
-// Lazy load Chatbot to save initial bundle size
-import { lazy, Suspense } from 'react';
-const Chatbot = lazy(() => import('./components/Chatbot'));
 import ScrollToTop from './components/ScrollToTop';
-import LiveActivityToast from './components/LiveActivityToast';
 import ErrorBoundary from './components/ErrorBoundary';
-import PWAInstallPrompt from './components/PWAInstallPrompt';
-import CookieConsent from './components/CookieConsent';
-import BottomNav from './components/BottomNav';
-import BackToTop from './components/BackToTop';
 import { initGA } from './utils/analytics';
+
+// Lazy load non-critical components to reduce initial bundle size
+const Chatbot = lazy(() => import('./components/Chatbot'));
+const LiveActivityToast = lazy(() => import('./components/LiveActivityToast'));
+const PWAInstallPrompt = lazy(() => import('./components/PWAInstallPrompt'));
+const CookieConsent = lazy(() => import('./components/CookieConsent'));
+const BottomNav = lazy(() => import('./components/BottomNav'));
+const BackToTop = lazy(() => import('./components/BackToTop'));
 
 function App() {
   useEffect(() => {
@@ -51,11 +51,13 @@ function App() {
               <Chatbot />
             </Suspense>
           </ErrorBoundary>
-          <LiveActivityToast />
-          <PWAInstallPrompt />
-          <CookieConsent />
-          <BackToTop />
-          <BottomNav />
+          <Suspense fallback={null}>
+            <LiveActivityToast />
+            <PWAInstallPrompt />
+            <CookieConsent />
+            <BackToTop />
+            <BottomNav />
+          </Suspense>
         </div>
       </Router>
     </ContextProviders>

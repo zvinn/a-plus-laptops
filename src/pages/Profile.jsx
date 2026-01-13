@@ -5,6 +5,7 @@ import { collection, query, where, getDocs, orderBy } from 'firebase/firestore/l
 import { useNavigate } from 'react-router-dom';
 import Skeleton from '../components/Skeleton';
 import SEO from '../components/SEO';
+import OptimizedImage from '../components/OptimizedImage';
 import './Profile.css';
 
 const Profile = () => {
@@ -131,7 +132,13 @@ const SavedComparisonsList = () => {
                     </div>
                     <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '1rem' }}>
                         {comp.laptops.slice(0, 3).map(l => (
-                            <img key={l.id} src={l.image} alt="" style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--border-color)' }} />
+                            <OptimizedImage
+                                key={l.id}
+                                src={l.image}
+                                alt=""
+                                style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--border-color)' }}
+                                skeletonHeight="40px"
+                            />
                         ))}
                     </div>
                     <h4 style={{ fontSize: '0.9rem', marginBottom: '1rem', lineHeight: '1.4' }}>

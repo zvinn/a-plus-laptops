@@ -4,6 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { Link } from 'react-router-dom';
 import { ShoppingBagIcon, TrashIcon, PlusIcon, MinusIcon } from '@heroicons/react/24/outline';
 import SEO from '../components/SEO';
+import OptimizedImage from '../components/OptimizedImage';
 import './Cart.css';
 
 const Cart = () => {
@@ -52,7 +53,12 @@ const Cart = () => {
                 <div className="cart-items">
                     {cart.map(item => (
                         <div key={item.id} className="cart-item">
-                            <img src={item.image} alt={item.name} className="cart-item-img" />
+                            <OptimizedImage
+                                src={item.image}
+                                alt={item.name}
+                                className="cart-item-img"
+                                skeletonHeight="80px"
+                            />
                             <div className="cart-item-info">
                                 <h3>{item.name}</h3>
                                 <div className="cart-item-price">{item.price.toLocaleString()} {t('common.currency')}</div>

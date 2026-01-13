@@ -5,6 +5,7 @@ import { collection, getDocs } from 'firebase/firestore/lite';
 import Skeleton from '../components/Skeleton';
 import { useLanguage } from '../context/LanguageContext';
 import SEO from '../components/SEO';
+import OptimizedImage from '../components/OptimizedImage';
 import './Shop.css';
 
 const Shop = () => {
@@ -169,7 +170,12 @@ const Shop = () => {
                                     className="search-result-item"
                                     onClick={() => setSearchQuery(laptop.name)}
                                 >
-                                    <img src={laptop.image} alt={laptop.name} className="search-result-img" loading="lazy" />
+                                    <OptimizedImage
+                                        src={laptop.image}
+                                        alt={laptop.name}
+                                        className="search-result-img"
+                                        skeletonHeight="60px"
+                                    />
                                     <div className="search-result-info">
                                         <div className="search-result-name">{laptop.name}</div>
                                         <div className="search-result-price">{laptop.price.toLocaleString()} {t('common.currency')}</div>

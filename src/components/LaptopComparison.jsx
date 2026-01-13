@@ -16,6 +16,7 @@ import {
 import { TrophyIcon as TrophySolid } from '@heroicons/react/24/solid';
 import HeroSearch from './HeroSearch';
 import ComparisonBattle from './ComparisonBattle';
+import OptimizedImage from './OptimizedImage';
 import './LaptopComparison.css';
 
 // Context for comparison
@@ -196,7 +197,11 @@ const ComparisonModal = () => {
                                         <XMarkIcon />
                                     </button>
                                     <div className="laptop-image-wrapper">
-                                        <img src={laptop.image} alt={laptop.name} />
+                                        <OptimizedImage
+                                            src={laptop.image}
+                                            alt={laptop.name}
+                                            skeletonHeight="200px"
+                                        />
                                     </div>
                                     <div className="laptop-info">
                                         <span className="laptop-brand">{laptop.brand}</span>
@@ -419,7 +424,11 @@ const LaptopComparison = () => {
                             <XMarkIcon />
                         </button>
                         <div className="laptop-image-wrapper">
-                            <img src={laptop.image} alt={laptop.name} />
+                            <OptimizedImage
+                                src={laptop.image}
+                                alt={laptop.name}
+                                skeletonHeight="200px"
+                            />
                         </div>
                         <div className="laptop-info">
                             <span className="laptop-brand">{laptop.brand}</span>

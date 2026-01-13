@@ -4,6 +4,7 @@ import { MessageCircle, X, Send, RotateCcw, ChevronRight } from 'lucide-react';
 import { SparklesIcon } from '@heroicons/react/24/solid';
 import { laptops } from '../data/laptops';
 import { useNavigate } from 'react-router-dom';
+import OptimizedImage from './OptimizedImage';
 import './Chatbot.css';
 
 const Chatbot = () => {
@@ -147,7 +148,11 @@ const Chatbot = () => {
                                     setIsOpen(false);
                                     navigate(`/${msg.data.id}`); // Assuming route is /:id or /product/:id check routes later
                                 }}>
-                                    <img src={msg.data.image} alt={msg.data.name} loading="lazy" />
+                                    <OptimizedImage
+                                        src={msg.data.image}
+                                        alt={msg.data.name}
+                                        skeletonHeight="60px"
+                                    />
                                     <div className="chat-product-info">
                                         <h4>{msg.data.name}</h4>
                                         <p>{msg.data.price.toLocaleString()} EGP</p>

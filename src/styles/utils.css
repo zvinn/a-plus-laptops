@@ -1,0 +1,506 @@
+/* ========================================
+   🛠️ UTILITY CLASSES
+   Reusable utility classes for quick styling
+   ======================================== */
+
+/* ========================================
+   GLASSMORPHISM
+   ======================================== */
+.glass-light {
+    background: var(--glass-white-light);
+    backdrop-filter: blur(var(--glass-blur-md));
+    -webkit-backdrop-filter: blur(var(--glass-blur-md));
+    border: 1px solid var(--glass-white-medium);
+}
+
+.glass-medium {
+    background: var(--glass-white-medium);
+    backdrop-filter: blur(var(--glass-blur-md));
+    -webkit-backdrop-filter: blur(var(--glass-blur-md));
+    border: 1px solid var(--glass-white-strong);
+}
+
+.glass-strong {
+    background: var(--glass-white-strong);
+    backdrop-filter: blur(var(--glass-blur-lg));
+    -webkit-backdrop-filter: blur(var(--glass-blur-lg));
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-dark-light {
+    background: var(--glass-dark-light);
+    backdrop-filter: blur(var(--glass-blur-md));
+    -webkit-backdrop-filter: blur(var(--glass-blur-md));
+    border: 1px solid var(--glass-dark-medium);
+}
+
+/* ========================================
+   GRADIENT BACKGROUNDS
+   ======================================== */
+.gradient-bg-primary {
+    background: var(--gradient-hero);
+}
+
+.gradient-bg-accent {
+    background: var(--gradient-accent);
+}
+
+.gradient-bg-aurora {
+    background: var(--gradient-aurora);
+}
+
+.gradient-bg-sunset {
+    background: var(--gradient-sunset);
+}
+
+.gradient-bg-ocean {
+    background: var(--gradient-ocean);
+}
+
+.gradient-bg-gaming {
+    background: var(--gradient-gaming);
+}
+
+.gradient-bg-cyber {
+    background: var(--gradient-cyber);
+}
+
+.gradient-bg-premium {
+    background: var(--gradient-premium);
+    background-size: 200% 200%;
+    animation: gradientShift 8s ease infinite;
+}
+
+/* ========================================
+   GRADIENT TEXT
+   ======================================== */
+.gradient-text {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.gradient-text-aurora {
+    background: var(--gradient-aurora);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.gradient-text-gaming {
+    background: var(--gradient-gaming);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.gradient-text-cyber {
+    background: var(--gradient-cyber);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.gradient-text-animated {
+    background: var(--gradient-premium);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 3s ease infinite;
+    display: inline-block;
+}
+
+/* ========================================
+   SHADOWS & GLOWS
+   ======================================== */
+.shadow-glow-primary {
+    box-shadow: var(--shadow-glow-primary);
+}
+
+.shadow-glow-accent {
+    box-shadow: var(--shadow-glow-accent);
+}
+
+.shadow-glow-success {
+    box-shadow: var(--shadow-glow-success);
+}
+
+.shadow-layered {
+    box-shadow: var(--shadow-layered);
+}
+
+.shadow-elevated {
+    box-shadow: var(--shadow-elevated);
+}
+
+.shadow-floating {
+    box-shadow: var(--shadow-floating);
+}
+
+/* ========================================
+   SPACING UTILITIES
+   ======================================== */
+.section-spacing {
+    padding: 5rem 0;
+}
+
+.section-spacing-sm {
+    padding: 3rem 0;
+}
+
+.section-spacing-lg {
+    padding: 7rem 0;
+}
+
+.card-spacing {
+    padding: 2rem;
+}
+
+.card-spacing-sm {
+    padding: 1.5rem;
+}
+
+.card-spacing-lg {
+    padding: 3rem;
+}
+
+/* ========================================
+   GRID UTILITIES
+   ======================================== */
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+.grid-auto-fit {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.grid-auto-fill {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.grid-gap-sm {
+    gap: 1rem;
+}
+
+.grid-gap-lg {
+    gap: 3rem;
+}
+
+/* ========================================
+   FLEX UTILITIES
+   ======================================== */
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-start {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.flex-end {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-column-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.gap-sm {
+    gap: 0.5rem;
+}
+
+.gap-md {
+    gap: 1rem;
+}
+
+.gap-lg {
+    gap: 2rem;
+}
+
+/* ========================================
+   BORDER RADIUS
+   ======================================== */
+.rounded-sm {
+    border-radius: var(--radius-sm);
+}
+
+.rounded-md {
+    border-radius: var(--radius-md);
+}
+
+.rounded-lg {
+    border-radius: var(--radius-lg);
+}
+
+.rounded-xl {
+    border-radius: var(--radius-xl);
+}
+
+.rounded-full {
+    border-radius: var(--radius-full);
+}
+
+/* ========================================
+   PREMIUM CARDS
+   ======================================== */
+.card-premium {
+    background: var(--gradient-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-light);
+    padding: 2rem;
+    transition: all 0.4s var(--ease-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.card-premium::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.1),
+            transparent);
+    transition: left 0.5s ease;
+}
+
+.card-premium:hover::before {
+    left: 100%;
+}
+
+.card-premium:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-elevated);
+    border-color: var(--primary);
+}
+
+.card-glass {
+    background: var(--glass-white-medium);
+    backdrop-filter: blur(var(--glass-blur-md));
+    -webkit-backdrop-filter: blur(var(--glass-blur-md));
+    border: 1px solid var(--glass-white-strong);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+}
+
+.card-gradient {
+    background: var(--gradient-aurora);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    color: white;
+}
+
+/* ========================================
+   PREMIUM BUTTONS
+   ======================================== */
+.btn-premium {
+    position: relative;
+    background: var(--gradient-accent);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s var(--ease-smooth);
+}
+
+.btn-premium::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-premium:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow-primary);
+}
+
+.btn-glow {
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
+    transition: box-shadow 0.3s var(--ease-smooth);
+}
+
+.btn-glow:hover {
+    box-shadow: 0 0 40px rgba(37, 99, 235, 0.8);
+}
+
+/* ========================================
+   BADGES
+   ======================================== */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.badge-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.badge-success {
+    background: var(--success);
+    color: white;
+}
+
+.badge-gradient {
+    background: var(--gradient-gaming);
+    color: white;
+}
+
+.badge-glow {
+    background: var(--primary);
+    color: white;
+    box-shadow: var(--shadow-glow-primary);
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
+/* ========================================
+   OVERLAY EFFECTS
+   ======================================== */
+.overlay-dark {
+    position: relative;
+}
+
+.overlay-dark::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(0, 0, 0, 0.7) 100%);
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.overlay-gradient {
+    position: relative;
+}
+
+.overlay-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-accent);
+    opacity: 0;
+    transition: opacity 0.3s var(--ease-smooth);
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.overlay-gradient:hover::before {
+    opacity: 0.1;
+}
+
+/* ========================================
+   RESPONSIVE UTILITIES
+   ======================================== */
+@media (max-width: 992px) {
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .section-spacing {
+        padding: 3rem 0;
+    }
+
+    .card-spacing {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: 1fr;
+    }
+
+    .section-spacing {
+        padding: 2rem 0;
+    }
+
+    .card-spacing {
+        padding: 1rem;
+    }
+
+    .flex-between {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
