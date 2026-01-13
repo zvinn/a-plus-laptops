@@ -20,7 +20,7 @@
     max-width: 420px;
     box-shadow: var(--shadow-xl);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .login-card::before {
