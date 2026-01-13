@@ -204,7 +204,7 @@
 }
 
 /* ========================================
-   CARD IMAGE - Clean
+   CARD IMAGE - Clean with Dark Background
    ======================================== */
 .card-image {
     position: relative;
@@ -216,10 +216,30 @@
     justify-content: center;
     overflow: hidden;
     text-decoration: none;
-    background: var(--bg-surface);
+    background: linear-gradient(145deg, #1a1f2e 0%, #0f1318 100%);
+    cursor: pointer;
 }
 
-/* Removed glow effect */
+/* Subtle vignette to blend white-background images */
+.card-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(15, 19, 24, 0.4) 100%);
+    pointer-events: none;
+}
+
+/* Hover glow effect */
+.product-card:hover .card-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Hidden glow element (unused now) */
 .image-glow {
     display: none;
 }
@@ -228,11 +248,14 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    transition: transform 0.2s ease;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
 }
 
 .product-card:hover .card-image img {
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
 .brand-tag {

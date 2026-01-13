@@ -65,7 +65,7 @@ const Navbar = () => {
         <nav className={`navbar ${isMenuOpen ? 'menu-open' : ''} ${isScrolled ? 'scrolled' : ''}`} role="navigation" aria-label="Main navigation">
             <div className="container navbar-container">
                 <Link to="/" className="logo" onClick={closeMenu}>
-                    <span className="logo-icon">A+</span>
+                    <span className="logo-icon">A<sup>+</sup></span>
                     <span className="logo-text">Laptops</span>
                 </Link>
 
