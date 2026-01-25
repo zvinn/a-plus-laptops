@@ -4,7 +4,10 @@ service cloud.firestore {
     
     // Helper function to check if user is the specific admin
     function isAdmin() {
-      return request.auth != null && request.auth.token.email == 'mhamed.saad.ibrahim@gmail.com';
+      return request.auth != null && (
+        request.auth.token.email == 'mhamed.saad.ibrahim@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.token.email))
+      );
     }
 
     // Default: Deny everything to prevent data leaks

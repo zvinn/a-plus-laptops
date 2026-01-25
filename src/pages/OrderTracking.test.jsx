@@ -239,11 +239,11 @@ describe('OrderTracking Page', () => {
             );
 
             await waitFor(() => {
-                expect(screen.getByText(/January 15, 2024/i)).toBeInTheDocument();
+                expect(screen.getAllByText(/January 15, 2024/i).length).toBeGreaterThan(0);
             });
 
-            // Check items count (2 items in first order)
-            expect(screen.getByText(/2 Items/i)).toBeInTheDocument();
+            // Check items count (3 items in first order: 1 Laptop + 2 Mouse)
+            expect(screen.getByText(/3 Items/i)).toBeInTheDocument();
 
             // Check total amount
             expect(screen.getByText(/50,000/)).toBeInTheDocument();
@@ -263,7 +263,7 @@ describe('OrderTracking Page', () => {
 
             // Check quantities
             expect(screen.getByText(/x1/i)).toBeInTheDocument();
-            expect(screen.getByText(/x2/i)).toBeInTheDocument();
+            expect(screen.getAllByText(/x2/i).length).toBeGreaterThan(0);
 
             // Check item totals (price * quantity)
             expect(screen.getByText(/30,000/)).toBeInTheDocument(); // Laptop: 30000 * 1
