@@ -126,7 +126,7 @@ const OrderTracking = () => {
                                             <div className="order-meta">
                                                 <span>{format(order.createdAt, 'PPP')}</span>
                                                 <span>•</span>
-                                                <span>{order.items.length} Items</span>
+                                                <span>{order.items.reduce((acc, item) => acc + item.quantity, 0)} Items</span>
                                             </div>
                                         </div>
                                         <div className="order-total-badge">
