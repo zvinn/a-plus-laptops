@@ -34,6 +34,18 @@ export const translations = {
             subtitle: "Our latest imports, ready for work.",
             viewAll: "View All Laptops"
         },
+        categories: {
+            title: "Shop by Category",
+            subtitle: "Find the perfect laptop for your needs",
+            business: "Business",
+            businessDesc: "Professional laptops for work",
+            student: "Student",
+            studentDesc: "Affordable for education",
+            creative: "Creative",
+            creativeDesc: "For designers & creators",
+            budget: "Budget",
+            budgetDesc: "Best value for money"
+        },
         trust: {
             label: "Trusted By:"
         },
@@ -134,7 +146,6 @@ export const translations = {
             details: "Details",
             onlyLeft: "Only 2 Left!",
             rights: "All rights reserved.",
-            rights: "All rights reserved.",
             sold: "sold",
             continueUsingGoogle: "Continue with Google"
         },
@@ -157,7 +168,9 @@ export const translations = {
             continueShopping: "Continue Shopping",
             stepCart: "Cart",
             stepDetails: "Details",
-            stepDone: "Done"
+            stepDone: "Done",
+            addToCart: "Add to Cart",
+            addedToCart: "Added to cart!"
         },
         checkout: {
             title: "Shipping Details",
@@ -275,6 +288,18 @@ export const translations = {
             subtitle: "أحدث الأجهزة اللي وصلت المخزن.",
             viewAll: "عرض كل اللابتوبات"
         },
+        categories: {
+            title: "تصفح حسب الفئة",
+            subtitle: "اختر اللابتوب المناسب لاحتياجاتك",
+            business: "أعمال",
+            businessDesc: "لابتوبات احترافية للعمل",
+            student: "طلاب",
+            studentDesc: "مناسب للدراسة والميزانية",
+            creative: "إبداعي",
+            creativeDesc: "للمصممين والمبدعين",
+            budget: "اقتصادي",
+            budgetDesc: "أفضل قيمة مقابل السعر"
+        },
         trust: {
             label: "شركاء النجاح:"
         },
@@ -375,7 +400,6 @@ export const translations = {
             details: "التفاصيل",
             onlyLeft: "فاضل 2 بس!",
             rights: "جميع الحقوق محفوظة. A Plus",
-            rights: "جميع الحقوق محفوظة. A Plus",
             sold: "مُباع",
             continueUsingGoogle: "المتابعة باستخدام Google"
         },
@@ -398,7 +422,9 @@ export const translations = {
             continueShopping: "متابعة التسوق",
             stepCart: "السلة",
             stepDetails: "البيانات",
-            stepDone: "تم"
+            stepDone: "تم",
+            addToCart: "أضف للسلة",
+            addedToCart: "تمت الإضافة للسلة!"
         },
         checkout: {
             title: "بيانات الشحن",

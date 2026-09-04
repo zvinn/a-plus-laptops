@@ -15,7 +15,7 @@ const SEO = ({
     const defaultImage = 'https://i.ibb.co/0jZ1Z1Q/a-plus-logo.png';
     const baseUrl = 'https://a-plus-laptops.vercel.app';
 
-    const fullTitle = title ? `${title} | ${siteName}` : `${siteName} | Gaming Laptops Store`;
+    const fullTitle = title ? `${title} | ${siteName}` : `${siteName} | Premium Laptops Store`;
     const fullUrl = url ? `${baseUrl}${url}` : baseUrl;
     const ogImage = image || defaultImage;
 

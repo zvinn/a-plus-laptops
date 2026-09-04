@@ -5,7 +5,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { useLanguage } from '../context/LanguageContext';
 
 const Testimonials = () => {
-    const { t } = useLanguage();
+    // const { t } = useLanguage(); // Removing t as it is unused
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
     const timeoutRef = useRef(null);

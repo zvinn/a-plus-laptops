@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect, useCallback, memo } from 'react';
-import { doc, getDoc } from 'firebase/firestore/lite';
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../context/ToastContext';
@@ -12,9 +12,13 @@ import { trackViewItem, trackAddToCart } from '../utils/analytics';
 import { addRecentlyViewed, getRecentlyViewed } from '../utils/recentlyViewed';
 
 // Sub-component for Similar Products
-import ProductCard from '../components/ProductCard';
+import ProductCard from '../components/ProductCardPremium';
 import OptimizedImage from '../components/OptimizedImage';
-import { collection, query, where, limit, getDocs } from 'firebase/firestore/lite';
+import {
+    Cpu, Monitor, HardDrive, Maximize, ShieldCheck, RotateCcw,
+    Zap, Battery, Thermometer, Gamepad2, Wrench, Flame, ShoppingBag, Mouse
+} from 'lucide-react';
+import { collection, query, where, limit, getDocs } from 'firebase/firestore';
 
 const SimilarProducts = memo(({ currentProduct }) => {
     const [similar, setSimilar] = useState([]);
@@ -123,7 +127,7 @@ RecentlyViewedSection.displayName = 'RecentlyViewedSection';
 const ProductDetails = () => {
     const { id } = useParams();
     const { addToCart } = useCart();
-    const { success } = useToast();
+    const { success, error } = useToast();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -240,7 +244,7 @@ const ProductDetails = () => {
         },
         "sku": product.id,
         "mpn": product.id,
-        "category": "Laptops > Gaming Laptops",
+        "category": "Laptops > Business Laptops & Workstations",
         "offers": {
             "@type": "Offer",
             "url": `https://a-plus-laptops.vercel.app/product/${product.id}`,
@@ -278,7 +282,7 @@ const ProductDetails = () => {
                 image={product.image}
                 url={`/product/${product.id}`}
                 type="product"
-                keywords={`${product.brand}, ${product.name}, gaming laptop, buy laptop Egypt`}
+                keywords={`${product.brand}, ${product.name}, workstation laptop, business laptop, buy laptop Egypt`}
                 structuredData={productStructuredData}
                 breadcrumbs={breadcrumbs}
             />
@@ -335,82 +339,94 @@ const ProductDetails = () => {
                         </span>
                     </div>
 
-                    {/* CONFIGURATOR */}
-                    <div className="configurator-box" style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '8px', border: '1px solid #e2e8f0', marginBottom: '2rem' }}>
-                        <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#334155' }}>Customize Your Build 🛠️</h3>
 
-                        <label className="config-option" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.8rem', cursor: 'pointer' }}>
+
+                    // ... (previous code)
+
+                    {/* CONFIGURATOR */}
+                    <div className="configurator-box" style={{ background: 'var(--bg-surface)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--border-light)', marginBottom: '2rem' }}>
+                        <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <Wrench size={20} className="text-primary" /> Customize Your Build
+                        </h3>
+
+                        <label className="config-option" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.8rem', cursor: 'pointer', padding: '0.75rem', borderRadius: '8px', background: 'var(--bg-card)', border: '1px solid var(--border-light)' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                 <input
                                     type="checkbox"
                                     id="upgrade-ram"
                                     checked={upgradeRam}
                                     onChange={() => setUpgradeRam(!upgradeRam)}
-                                    style={{ transform: 'scale(1.2)' }}
+                                    style={{ transform: 'scale(1.2)', accentColor: '#2196F3' }}
                                     aria-describedby="ram-price"
                                 />
                                 <span>Upgrade RAM (+16GB)</span>
                             </div>
-                            <span id="ram-price" style={{ fontWeight: 'bold', color: '#2563eb' }}>+{RAM_UPGRADE_PRICE} EGP</span>
+                            <span id="ram-price" style={{ fontWeight: 'bold', color: '#2196F3' }}>+{RAM_UPGRADE_PRICE} EGP</span>
                         </label>
 
-                        <label className="config-option" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer' }}>
+                        <label className="config-option" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', padding: '0.75rem', borderRadius: '8px', background: 'var(--bg-card)', border: '1px solid var(--border-light)' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                 <input
                                     type="checkbox"
                                     id="upgrade-storage"
                                     checked={upgradeStorage}
                                     onChange={() => setUpgradeStorage(!upgradeStorage)}
-                                    style={{ transform: 'scale(1.2)' }}
+                                    style={{ transform: 'scale(1.2)', accentColor: '#2196F3' }}
                                     aria-describedby="storage-price"
                                 />
                                 <span>Add 1TB SSD Storage</span>
                             </div>
-                            <span id="storage-price" style={{ fontWeight: 'bold', color: '#2563eb' }}>+{STORAGE_UPGRADE_PRICE} EGP</span>
+                            <span id="storage-price" style={{ fontWeight: 'bold', color: '#2196F3' }}>+{STORAGE_UPGRADE_PRICE} EGP</span>
                         </label>
                     </div>
 
                     {/* SMART BUNDLES */}
-                    <div className="bundles-box" style={{ background: '#fffbeb', padding: '1.5rem', borderRadius: '8px', border: '1px solid #fcd34d', marginBottom: '2rem' }}>
-                        <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: '#92400e' }}>🔥 Smart Bundle Deal</h3>
-                        <p style={{ marginBottom: '1rem', fontSize: '0.9rem' }}>Get a <strong>Professional Bag + Wireless Mouse</strong> with this laptop.</p>
+                    <div className="bundles-box" style={{ background: 'rgba(245, 158, 11, 0.05)', padding: '1.5rem', borderRadius: '12px', border: '1px solid rgba(245, 158, 11, 0.2)', marginBottom: '2rem' }}>
+                        <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: '#d97706', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <Flame size={20} /> Smart Bundle Deal
+                        </h3>
+                        <p style={{ marginBottom: '1rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Get a <strong>Professional Bag + Wireless Mouse</strong> with this laptop.</p>
 
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <div className="bundle-items" style={{ display: 'flex', gap: '10px' }}>
-                                <div style={{ background: 'white', padding: '5px', borderRadius: '4px', border: '1px solid #e2e8f0' }}>🎒 Bag</div>
-                                <div style={{ background: 'white', padding: '5px', borderRadius: '4px', border: '1px solid #e2e8f0' }}>🖱️ Mouse</div>
+                                <div style={{ background: 'var(--bg-card)', padding: '8px 12px', borderRadius: '8px', border: '1px solid var(--border-light)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                    <ShoppingBag size={16} /> Bag
+                                </div>
+                                <div style={{ background: 'var(--bg-card)', padding: '8px 12px', borderRadius: '8px', border: '1px solid var(--border-light)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                    <Mouse size={16} /> Mouse
+                                </div>
                             </div>
                             <div className="bundle-price">
-                                <span style={{ textDecoration: 'line-through', color: '#94a3b8', marginRight: '5px' }}>800 EGP</span>
+                                <span style={{ textDecoration: 'line-through', color: 'var(--text-muted)', marginRight: '8px', fontSize: '0.9rem' }}>800 EGP</span>
                                 <span style={{ fontWeight: 'bold', color: '#d97706' }}>Only +300 EGP</span>
                             </div>
                         </div>
-                        <button className="btn btn-sm btn-outline" style={{ marginTop: '10px', width: '100%', borderColor: '#d97706', color: '#d97706' }}>Add Bundle to Offer</button>
+                        <button className="btn btn-sm btn-outline" style={{ marginTop: '15px', width: '100%', borderColor: '#d97706', color: '#d97706' }}>Add Bundle to Offer</button>
                     </div>
 
                     <div className="specs-grid">
                         <div className="spec-card">
-                            <span className="spec-icon">🧠</span>
+                            <span className="spec-icon"><Cpu size={24} /></span>
                             <span className="spec-label">Processor</span>
                             <span className="spec-value">{product.specs.cpu}</span>
                         </div>
                         <div className="spec-card">
-                            <span className="spec-icon">🎮</span>
+                            <span className="spec-icon"><Gamepad2 size={24} /></span>
                             <span className="spec-label">Graphics</span>
                             <span className="spec-value">{product.specs.gpu}</span>
                         </div>
                         <div className="spec-card">
-                            <span className="spec-icon">💾</span>
+                            <span className="spec-icon"><HardDrive size={24} /></span>
                             <span className="spec-label">Memory</span>
                             <span className="spec-value">{product.specs.ram} {upgradeRam && '(+16GB)'}</span>
                         </div>
                         <div className="spec-card">
-                            <span className="spec-icon">💿</span>
+                            <span className="spec-icon"><HardDrive size={24} /></span>
                             <span className="spec-label">Storage</span>
                             <span className="spec-value">{product.specs.storage} {upgradeStorage && '(+1TB)'}</span>
                         </div>
                         <div className="spec-card">
-                            <span className="spec-icon">📺</span>
+                            <span className="spec-icon"><Monitor size={24} /></span>
                             <span className="spec-label">Screen</span>
                             <span className="spec-value">{product.specs.screen}</span>
                         </div>
@@ -422,7 +438,7 @@ const ProductDetails = () => {
                             disabled={(product.stockCount ?? 50) === 0}
                             className="btn btn-primary btn-lg"
                             style={{ opacity: (product.stockCount ?? 50) === 0 ? 0.5 : 1, cursor: (product.stockCount ?? 50) === 0 ? 'not-allowed' : 'pointer' }}
-                            aria-label={`Add ${product.name} to cart for ${currentPrice.toLocaleString()} EGP`}>
+                            aria-label={(product.stockCount ?? 50) === 0 ? 'Out of Stock' : `Add ${product.name} to cart for ${currentPrice.toLocaleString()} EGP`}>
                             {(product.stockCount ?? 50) === 0 ? 'Out of Stock' : 'Add to Cart'}
                         </button>
                         <button
@@ -439,33 +455,33 @@ const ProductDetails = () => {
 
                     {/* FEATURE HIGHLIGHTS (New for High-Fi) */}
                     <div className="feature-highlights" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', marginBottom: '2rem', marginTop: '1rem' }}>
-                        <div style={{ textAlign: 'center', padding: '10px', background: '#f0f9ff', borderRadius: '8px' }}>
-                            <span style={{ fontSize: '1.5rem' }}>🚀</span>
+                        <div style={{ textAlign: 'center', padding: '15px 10px', background: '#f0f9ff', borderRadius: '12px' }}>
+                            <Zap size={28} color="#0369a1" />
                             <p style={{ fontSize: '0.75rem', fontWeight: 'bold', margin: '5px 0 0', color: '#0369a1' }}>Fast CPU</p>
                         </div>
-                        <div style={{ textAlign: 'center', padding: '10px', background: '#fdf4ff', borderRadius: '8px' }}>
-                            <span style={{ fontSize: '1.5rem' }}>🎮</span>
+                        <div style={{ textAlign: 'center', padding: '15px 10px', background: '#fdf4ff', borderRadius: '12px' }}>
+                            <Gamepad2 size={28} color="#a21caf" />
                             <p style={{ fontSize: '0.75rem', fontWeight: 'bold', margin: '5px 0 0', color: '#a21caf' }}>RTX Ready</p>
                         </div>
-                        <div style={{ textAlign: 'center', padding: '10px', background: '#ecfccb', borderRadius: '8px' }}>
-                            <span style={{ fontSize: '1.5rem' }}>🔋</span>
+                        <div style={{ textAlign: 'center', padding: '15px 10px', background: '#ecfccb', borderRadius: '12px' }}>
+                            <Battery size={28} color="#4d7c0f" />
                             <p style={{ fontSize: '0.75rem', fontWeight: 'bold', margin: '5px 0 0', color: '#4d7c0f' }}>Long Life</p>
                         </div>
-                        <div style={{ textAlign: 'center', padding: '10px', background: '#fff7ed', borderRadius: '8px' }}>
-                            <span style={{ fontSize: '1.5rem' }}>❄️</span>
+                        <div style={{ textAlign: 'center', padding: '15px 10px', background: '#fff7ed', borderRadius: '12px' }}>
+                            <Thermometer size={28} color="#c2410c" />
                             <p style={{ fontSize: '0.75rem', fontWeight: 'bold', margin: '5px 0 0', color: '#c2410c' }}>Cooling</p>
                         </div>
                     </div>
 
                     <div className="product-description-section" style={{ marginTop: '0', borderTop: 'none' }}>
                         <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Why this laptop?</h3>
-                        <p style={{ lineHeight: '1.6', color: '#475569', marginBottom: '1.5rem' }}>
-                            {product.description || "Designed for the modern professional and gamer alike, this machine combines raw power with sophisticated design. Whether you are rendering 4K video or dominating the leaderboard, the thermal management system ensures you stay cool under pressure. The vivid display brings every detail to life."}
+                        <p style={{ lineHeight: '1.6', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
+                            {product.description || "Designed for the modern professional, this machine combines raw power with sophisticated design. Whether you are rendering 4K video, compiling code, or managing complex datasets, the thermal management system ensures peak performance. The vivid display brings every detail to life."}
                         </p>
                         <ul className="benefits-list" style={{ listStyle: 'none', padding: 0, display: 'grid', gap: '0.8rem' }}>
-                            {['Top-tier Performance for AAA Games', 'Professional Color Accuracy for Creatives', 'Military-Grade Durability Standards', 'Optimized for Windows 11 Pro'].map((benefit, i) => (
-                                <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.95rem' }}>
-                                    <span style={{ color: '#10b981' }}>✓</span> {benefit}
+                            {['Top-tier Performance for Heavy Workloads', 'Professional Color Accuracy for Creatives', 'Military-Grade Durability Standards', 'Optimized for Windows 11 Pro'].map((benefit, i) => (
+                                <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.95rem', color: 'var(--text-primary)' }}>
+                                    <ShieldCheck size={18} color="#10b981" /> {benefit}
                                 </li>
                             ))}
                         </ul>
@@ -475,8 +491,8 @@ const ProductDetails = () => {
 
             {/* SPECS & DETAILS BELOW */}
             <div className="policy-section-details">
-                <div className="policy-item">🛡️ 6 Months Hardware Warranty</div>
-                <div className="policy-item">↩️ 14 Days Return Policy</div>
+                <div className="policy-item"><ShieldCheck size={20} /> 6 Months Hardware Warranty</div>
+                <div className="policy-item"><RotateCcw size={20} /> 14 Days Return Policy</div>
             </div>
 
             <ReviewList productId={product.id} />

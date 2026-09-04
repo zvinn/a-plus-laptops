@@ -1,4 +1,5 @@
 import SEO from '../components/SEO';
+import { Gem, ShieldCheck, Rocket } from 'lucide-react';
 import './About.css';
 
 const About = () => {
@@ -6,9 +7,9 @@ const About = () => {
         <div className="page-container container">
             <SEO
                 title="About Us"
-                description="A Plus+ Laptops - Your trusted source for premium gaming laptops in Egypt. We bridge the gap between Egyptian professionals and world-class technology."
+                description="A Plus+ Laptops - Your trusted source for premium laptops in Egypt. We bridge the gap between Egyptian professionals and world-class technology."
                 url="/about"
-                keywords="A Plus, gaming laptops Egypt, laptop store Cairo, premium laptops"
+                keywords="A Plus, laptops Egypt, laptop store Cairo, premium laptops, professional workstations"
             />
             {/* Hero Section */}
             <div className="about-hero animate-on-scroll fade-in">
@@ -23,7 +24,7 @@ const About = () => {
             {/* Values Grid */}
             <div className="values-grid">
                 <div className="value-card animate-on-scroll">
-                    <span className="value-icon">💎</span>
+                    <span className="value-icon"><Gem size={40} color="#2196F3" /></span>
                     <h3>Premium Quality</h3>
                     <p>
                         We don't deal in "average". Every device is hand-picked, thoroughly tested,
@@ -31,7 +32,7 @@ const About = () => {
                     </p>
                 </div>
                 <div className="value-card animate-on-scroll">
-                    <span className="value-icon">🛡️</span>
+                    <span className="value-icon"><ShieldCheck size={40} color="#22c55e" /></span>
                     <h3>Real Warranty</h3>
                     <p>
                         Our 6-month hardware warranty is iron-clad. If something goes wrong,
@@ -39,7 +40,7 @@ const About = () => {
                     </p>
                 </div>
                 <div className="value-card animate-on-scroll">
-                    <span className="value-icon">🚀</span>
+                    <span className="value-icon"><Rocket size={40} color="#f59e0b" /></span>
                     <h3>Expert Guidance</h3>
                     <p>
                         Not sure what "RTX 3060 vs 4050" means for your workflow? We do.

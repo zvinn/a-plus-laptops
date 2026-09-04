@@ -1,28 +1,33 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { db } from '../../firebase';
-import {
-    collection, getDocs, addDoc, updateDoc, deleteDoc, doc,
-    query, orderBy, serverTimestamp, Timestamp, increment
-} from 'firebase/firestore/lite';
+// Firebase logic moved to inventoryService.js
 import { useToast } from '../../context/ToastContext';
+import { useConfirm } from '../../context/ConfirmContext';
 import OptimizedImage from '../../components/OptimizedImage';
+import { inventoryService } from '../../api/inventoryService';
+import {
+    Download, Upload, RotateCcw, AlertTriangle, Wrench, Package,
+    Trash2, Plus, Building, User, Mail, Phone, MapPin
+} from 'lucide-react';
+import Skeleton from '../../components/Skeleton';
 import './InventoryManager.css';
 
 // Movement Types
+// Movement Types
 const MOVEMENT_TYPES = [
-    { id: 'purchase', label: 'شراء', icon: '📥', color: '#22c55e' },
-    { id: 'sale', label: 'بيع', icon: '📤', color: '#3b82f6' },
-    { id: 'return', label: 'إرجاع', icon: '↩️', color: '#f59e0b' },
-    { id: 'damage', label: 'تلف', icon: '💔', color: '#ef4444' },
-    { id: 'adjustment', label: 'تعديل', icon: '🔧', color: '#8b5cf6' },
+    { id: 'purchase', label: 'شراء', icon: <Download size={18} />, color: '#22c55e' },
+    { id: 'sale', label: 'بيع', icon: <Upload size={18} />, color: '#3b82f6' },
+    { id: 'return', label: 'إرجاع', icon: <RotateCcw size={18} />, color: '#f59e0b' },
+    { id: 'damage', label: 'تلف', icon: <AlertTriangle size={18} />, color: '#ef4444' },
+    { id: 'adjustment', label: 'تعديل', icon: <Wrench size={18} />, color: '#8b5cf6' },
 ];
 
 const InventoryManager = () => {
     const { currentUser } = useAuth();
     const navigate = useNavigate();
     const { success, error } = useToast();
+    const { confirm } = useConfirm();
 
     // State
     const [products, setProducts] = useState([]);
@@ -32,10 +37,9 @@ const InventoryManager = () => {
     const [activeTab, setActiveTab] = useState('stock');
     const [searchQuery, setSearchQuery] = useState('');
 
-    // Modal States
     const [showMovementModal, setShowMovementModal] = useState(false);
     const [showSupplierModal, setShowSupplierModal] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState(null);
+    // Removed unused selectedProduct state
 
     // Form States
     const [newMovement, setNewMovement] = useState({
@@ -56,41 +60,25 @@ const InventoryManager = () => {
     });
 
     // Fetch Data
-    const fetchData = async () => {
+    // Fetch Data
+    const fetchData = useCallback(async () => {
         setLoading(true);
         try {
-            // Fetch products
-            const productsSnapshot = await getDocs(collection(db, 'laptops'));
-            const productsData = productsSnapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
+            const [productsData, movementsData, suppliersData] = await Promise.all([
+                inventoryService.getProducts(),
+                inventoryService.getMovements(),
+                inventoryService.getSuppliers()
+            ]);
+
             setProducts(productsData);
-
-            // Fetch movements
-            const movementsQuery = query(collection(db, 'inventory_movements'), orderBy('createdAt', 'desc'));
-            const movementsSnapshot = await getDocs(movementsQuery);
-            const movementsData = movementsSnapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data(),
-                createdAt: doc.data().createdAt?.toDate?.() || new Date()
-            }));
             setMovements(movementsData);
-
-            // Fetch suppliers
-            const suppliersSnapshot = await getDocs(collection(db, 'suppliers'));
-            const suppliersData = suppliersSnapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
             setSuppliers(suppliersData);
-
         } catch (err) {
             console.error('Error fetching inventory data:', err);
             error('فشل في تحميل بيانات المخزون');
         }
         setLoading(false);
-    };
+    }, [error]);
 
     useEffect(() => {
         if (!currentUser) {
@@ -98,7 +86,7 @@ const InventoryManager = () => {
             return;
         }
         fetchData();
-    }, [currentUser, navigate]);
+    }, [currentUser, navigate, fetchData]);
 
     // Stats
     const stats = useMemo(() => {
@@ -133,21 +121,11 @@ const InventoryManager = () => {
         const isIncoming = ['purchase', 'return'].includes(newMovement.type);
 
         try {
-            // Add movement record
-            await addDoc(collection(db, 'inventory_movements'), {
+            await inventoryService.addMovement({
                 ...newMovement,
                 quantity,
-                direction: isIncoming ? 'in' : 'out',
-                addedBy: currentUser.email,
-                createdAt: serverTimestamp()
-            });
-
-            // Update product stock
-            const productRef = doc(db, 'laptops', newMovement.productId);
-            const stockChange = isIncoming ? quantity : -quantity;
-            await updateDoc(productRef, {
-                stockCount: increment(stockChange)
-            });
+                isIncoming
+            }, currentUser.email);
 
             success('تم تسجيل حركة المخزون بنجاح');
             setShowMovementModal(false);
@@ -168,27 +146,40 @@ const InventoryManager = () => {
     // Quick Stock Adjustment
     const handleQuickAdjust = async (productId, adjustment) => {
         try {
-            const productRef = doc(db, 'laptops', productId);
-            await updateDoc(productRef, {
-                stockCount: increment(adjustment)
-            });
-
-            // Log movement
-            await addDoc(collection(db, 'inventory_movements'), {
-                productId,
-                type: 'adjustment',
-                quantity: Math.abs(adjustment),
-                direction: adjustment > 0 ? 'in' : 'out',
-                reason: 'تعديل سريع',
-                addedBy: currentUser.email,
-                createdAt: serverTimestamp()
-            });
-
+            await inventoryService.adjustStock(productId, adjustment, currentUser.email);
             success(`تم ${adjustment > 0 ? 'إضافة' : 'خصم'} ${Math.abs(adjustment)} وحدة`);
             fetchData();
         } catch (err) {
             console.error('Error adjusting stock:', err);
             error('فشل في تعديل المخزون');
+        }
+    };
+
+    // Export to CSV
+    const handleExport = () => {
+        try {
+            const headers = ['SKU', 'Brand', 'Name', 'Stock', 'Price', 'Status'];
+            const csvContent = [
+                headers.join(','),
+                ...filteredProducts.map(p => [
+                    p.id,
+                    `"${p.brand}"`,
+                    `"${p.name}"`,
+                    p.stockCount || 0,
+                    p.price || 0,
+                    (p.stockCount || 0) === 0 ? 'Out of Stock' : (p.stockCount || 0) <= (p.lowStockThreshold || 5) ? 'Low Stock' : 'In Stock'
+                ].join(','))
+            ].join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `inventory_export_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+            success('تم تصدير البيانات بنجاح');
+        } catch (err) {
+            console.error('Export error:', err);
+            error('فشل في تصدير البيانات');
         }
     };
 
@@ -202,11 +193,7 @@ const InventoryManager = () => {
         }
 
         try {
-            await addDoc(collection(db, 'suppliers'), {
-                ...newSupplier,
-                addedBy: currentUser.email,
-                createdAt: serverTimestamp()
-            });
+            await inventoryService.addSupplier(newSupplier, currentUser.email);
 
             success('تمت إضافة المورد بنجاح');
             setShowSupplierModal(false);
@@ -227,10 +214,15 @@ const InventoryManager = () => {
 
     // Delete Supplier
     const handleDeleteSupplier = async (supplierId) => {
-        if (!window.confirm('هل أنت متأكد من حذف هذا المورد؟')) return;
+        if (!await confirm({
+            title: 'حذف المورد',
+            message: 'هل أنت متأكد من حذف هذا المورد؟',
+            confirmText: 'حذف',
+            variant: 'danger'
+        })) return;
 
         try {
-            await deleteDoc(doc(db, 'suppliers', supplierId));
+            await inventoryService.deleteSupplier(supplierId);
             success('تم حذف المورد');
             fetchData();
         } catch (err) {
@@ -251,16 +243,15 @@ const InventoryManager = () => {
 
     if (loading) {
         return (
-            <div className="inventory-page">
-                <div className="inventory-header">
-                    <div className="loading-skeleton" style={{ width: '200px', height: '40px' }} />
-                </div>
+            <div className="inventory-page page-container container">
+                <Skeleton type="text" height="40px" width="200px" style={{ marginBottom: '2rem' }} />
                 <div className="inventory-stats">
                     {[1, 2, 3, 4].map(i => (
-                        <div key={i} className="inv-stat-card">
-                            <div className="loading-skeleton" style={{ width: '100%', height: '60px' }} />
-                        </div>
+                        <Skeleton key={i} type="rect" height="100px" style={{ borderRadius: '16px' }} />
                     ))}
+                </div>
+                <div style={{ marginTop: '2rem' }}>
+                    <Skeleton type="rect" height="400px" style={{ borderRadius: '16px' }} />
                 </div>
             </div>
         );
@@ -272,11 +263,14 @@ const InventoryManager = () => {
             <div className="inventory-header">
                 <h1>📦 إدارة المخزون</h1>
                 <div style={{ display: 'flex', gap: '0.75rem' }}>
+                    <button className="add-btn" style={{ background: 'var(--bg-card)', color: 'var(--text-primary)', border: '1px solid var(--border-light)' }} onClick={handleExport}>
+                        <Download size={18} /> تصدير CSV
+                    </button>
                     <button className="add-btn" onClick={() => setShowMovementModal(true)}>
-                        ➕ تسجيل حركة
+                        <Plus size={18} /> تسجيل حركة
                     </button>
                     <button className="add-btn" style={{ background: 'var(--bg-card)', color: 'var(--text-primary)', border: '1px solid var(--border-light)' }} onClick={() => setShowSupplierModal(true)}>
-                        🏭 إضافة مورد
+                        <Building size={18} /> إضافة مورد
                     </button>
                 </div>
             </div>
@@ -284,21 +278,21 @@ const InventoryManager = () => {
             {/* Stats */}
             <div className="inventory-stats">
                 <div className="inv-stat-card total">
-                    <div className="icon">📦</div>
+                    <div className="icon"><Package size={24} /></div>
                     <div className="info">
                         <h4>إجمالي المنتجات</h4>
                         <p>{stats.totalProducts}</p>
                     </div>
                 </div>
                 <div className="inv-stat-card low">
-                    <div className="icon">⚠️</div>
+                    <div className="icon"><AlertTriangle size={24} /></div>
                     <div className="info">
                         <h4>مخزون منخفض</h4>
                         <p>{stats.lowStock}</p>
                     </div>
                 </div>
                 <div className="inv-stat-card out">
-                    <div className="icon">❌</div>
+                    <div className="icon"><AlertTriangle size={24} /></div>
                     <div className="info">
                         <h4>نفذ من المخزون</h4>
                         <p>{stats.outOfStock}</p>
@@ -396,7 +390,7 @@ const InventoryManager = () => {
                                                 <button className="action-btn remove" onClick={() => handleQuickAdjust(product.id, -1)} title="خصم 1" disabled={product.stockCount === 0}>
                                                     -
                                                 </button>
-                                                <button className="action-btn" onClick={() => { setSelectedProduct(product); setNewMovement(prev => ({ ...prev, productId: product.id })); setShowMovementModal(true); }} title="تسجيل حركة">
+                                                <button className="action-btn" onClick={() => { setNewMovement(prev => ({ ...prev, productId: product.id })); setShowMovementModal(true); }} title="تسجيل حركة">
                                                     📝
                                                 </button>
                                             </div>
@@ -489,7 +483,7 @@ const InventoryManager = () => {
                                 )}
                                 {supplier.address && (
                                     <div className="detail">
-                                        📍 <span>{supplier.address}</span>
+                                        <MapPin size={16} /> <span>{supplier.address}</span>
                                     </div>
                                 )}
                             </div>
@@ -498,16 +492,16 @@ const InventoryManager = () => {
                                 style={{ marginTop: '1rem', width: '100%', justifyContent: 'center' }}
                                 onClick={() => handleDeleteSupplier(supplier.id)}
                             >
-                                🗑️ حذف
+                                <Trash2 size={16} /> حذف
                             </button>
                         </div>
                     ))}
                     {suppliers.length === 0 && (
                         <div className="empty-state" style={{ gridColumn: '1 / -1' }}>
-                            <div className="empty-state-icon">🏭</div>
+                            <div className="empty-state-icon"><Building size={48} /></div>
                             <p>لا يوجد موردين مضافين</p>
                             <button className="add-btn" style={{ marginTop: '1rem' }} onClick={() => setShowSupplierModal(true)}>
-                                ➕ إضافة مورد
+                                <Plus size={18} /> إضافة مورد
                             </button>
                         </div>
                     )}

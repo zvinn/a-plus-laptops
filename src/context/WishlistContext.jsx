@@ -3,6 +3,7 @@ import { useToast } from './ToastContext';
 
 const WishlistContext = createContext();
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useWishlist = () => useContext(WishlistContext);
 
 export const WishlistProvider = ({ children }) => {

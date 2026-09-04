@@ -10,12 +10,20 @@ import { ShoppingBagIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import SEO from '../components/SEO';
 import { trackBeginCheckout, trackPurchase } from '../utils/analytics';
 import emailjs from '@emailjs/browser';
+import CouponInput from '../components/CouponInput';
 import './Checkout.css';
 
 const STORAGE_KEY = 'checkout_form_data';
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+const EGYPT_GOVERNORATES = [
+    "Cairo", "Giza", "Alexandria", "Dakahlia", "Red Sea", "Beheira", "Fayoum",
+    "Gharbiya", "Ismailia", "Menofia", "Minya", "Qaliubiya", "New Valley", "Suez",
+    "Aswan", "Assiut", "Beni Suef", "Port Said", "Damietta", "Sharkia", "South Sinai",
+    "Kafr Al Sheikh", "Matrouh", "Luxor", "Qena", "North Sinai", "Sohag"
+].sort();
 
 const Checkout = () => {
     const { cart, getCartTotal, clearCart } = useCart();
@@ -26,6 +34,26 @@ const Checkout = () => {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
     const [showSuccess, setShowSuccess] = useState(false);
+
+    // Coupon State
+    const [appliedCoupon, setAppliedCoupon] = useState(null);
+    const [discount, setDiscount] = useState(0);
+
+    // Calculate final total with discount
+    const getFinalTotal = () => {
+        return Math.max(0, getCartTotal() - discount);
+    };
+
+    // Coupon handlers
+    const handleCouponApply = (discountAmount, couponId, couponCode) => {
+        setDiscount(discountAmount);
+        setAppliedCoupon({ id: couponId, code: couponCode, discount: discountAmount });
+    };
+
+    const handleCouponRemove = () => {
+        setDiscount(0);
+        setAppliedCoupon(null);
+    };
 
     // Initialize form with saved data or defaults
     const getInitialFormData = () => {
@@ -218,7 +246,11 @@ const Checkout = () => {
                     phone: cleanPhone
                 },
                 items: cart,
-                totalAmount: getCartTotal(),
+                subtotal: getCartTotal(),
+                discount: discount,
+                couponId: appliedCoupon?.id || null,
+                couponCode: appliedCoupon?.code || null,
+                totalAmount: getFinalTotal(),
                 status: 'pending_whatsapp',
                 createdAt: serverTimestamp()
             };
@@ -277,10 +309,13 @@ const Checkout = () => {
                 message += `- ${item.name} (x${item.quantity}): ${(item.price * item.quantity).toLocaleString()} EGP\n`;
             });
 
-            message += `\n*Total: ${getCartTotal().toLocaleString()} EGP*`;
+            if (discount > 0) {
+                message += `\n*Discount (${appliedCoupon?.code}): -${discount.toLocaleString()} EGP*`;
+            }
+            message += `\n*Total: ${getFinalTotal().toLocaleString()} EGP*`;
 
             clearCart();
-            trackPurchase(docRef.id, getCartTotal(), cart);
+            trackPurchase(docRef.id, getFinalTotal(), cart);
             setShowSuccess(true);
             success("Order placed successfully!");
 
@@ -392,12 +427,7 @@ const Checkout = () => {
                     </div>
 
                     <div className="checkout-layout">
-                        const EGYPT_GOVERNORATES = [
-                        "Cairo", "Giza", "Alexandria", "Dakahlia", "Red Sea", "Beheira", "Fayoum",
-                        "Gharbiya", "Ismailia", "Menofia", "Minya", "Qaliubiya", "New Valley", "Suez",
-                        "Aswan", "Assiut", "Beni Suef", "Port Said", "Damietta", "Sharkia", "South Sinai",
-                        "Kafr Al Sheikh", "Matrouh", "Luxor", "Qena", "North Sinai", "Sohag"
-                        ].sort();
+
 
                         // ... inside component ...
 
@@ -527,10 +557,41 @@ const Checkout = () => {
                                         </div>
                                     ))}
                                 </div>
+
+                                {/* Coupon Input Section */}
+                                <div className="coupon-section">
+                                    <CouponInput
+                                        orderTotal={getCartTotal()}
+                                        onApply={handleCouponApply}
+                                        onRemove={handleCouponRemove}
+                                        appliedCoupon={appliedCoupon}
+                                    />
+                                </div>
+
                                 <div className="summary-divider"></div>
+
+                                {/* Subtotal */}
+                                <div className="summary-row">
+                                    <span>المجموع الفرعي</span>
+                                    <span>{getCartTotal().toLocaleString()} {t('common.currency')}</span>
+                                </div>
+
+                                {/* Discount Row (if coupon applied) */}
+                                {discount > 0 && (
+                                    <div className="summary-row discount">
+                                        <span>الخصم ({appliedCoupon?.code})</span>
+                                        <span className="discount-amount">-{discount.toLocaleString()} {t('common.currency')}</span>
+                                    </div>
+                                )}
+
+                                <div className="summary-divider"></div>
+
+                                {/* Final Total */}
                                 <div className="summary-total">
                                     <span>{t('cart.total')}</span>
-                                    <span>{getCartTotal().toLocaleString()} {t('common.currency')}</span>
+                                    <span className={discount > 0 ? 'discounted-total' : ''}>
+                                        {getFinalTotal().toLocaleString()} {t('common.currency')}
+                                    </span>
                                 </div>
                                 <button
                                     type="submit"

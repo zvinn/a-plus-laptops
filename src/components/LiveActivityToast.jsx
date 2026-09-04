@@ -6,10 +6,16 @@ const names = ["Ahmed", "Mohamed", "Sara", "Omar", "Khaled", "Youssef", "Nour", 
 const products = ["Asus TUF F15", "Lenovo Legion 5", "MacBook Air M2", "HP Victus", "Dell G15", "MSI Katana"];
 const cities = ["Cairo", "Giza", "Alexandria", "Mansoura", "Tanta"];
 
+// Set to true to re-enable purchase notifications
+const ENABLED = true;
+
 const LiveActivityToast = () => {
     const [notification, setNotification] = useState(null);
 
     useEffect(() => {
+        // Skip if disabled
+        if (!ENABLED) return;
+
         // Show first notification after 5 seconds
         const initialTimer = setTimeout(() => {
             triggerNotification();

@@ -50,3 +50,8 @@ credentials/
 # OS files
 Thumbs.db
 .DS_Store
+
+# Testing and Coverage
+coverage/
+*.txt
+!public/robots.txt

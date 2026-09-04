@@ -4,13 +4,13 @@ import { useLanguage } from '../context/LanguageContext';
 import { useToast } from '../context/ToastContext';
 import { Link } from 'react-router-dom';
 import {
-    ShieldCheckIcon,
-    ChatBubbleLeftRightIcon,
-    TruckIcon,
-    EnvelopeIcon,
-    PhoneIcon,
-    MapPinIcon
-} from '@heroicons/react/24/outline';
+    ShieldCheck,
+    MessageCircle,
+    Truck,
+    Mail,
+    Phone,
+    MapPin
+} from 'lucide-react';
 
 const Footer = () => {
     const { t } = useLanguage();
@@ -79,15 +79,15 @@ const Footer = () => {
 
                     <div className="policy-badges">
                         <span className="policy-badge">
-                            <ShieldCheckIcon className="badge-icon" />
+                            <ShieldCheck size={18} className="badge-icon" />
                             {t('features.warranty')}
                         </span>
                         <span className="policy-badge">
-                            <ChatBubbleLeftRightIcon className="badge-icon" />
+                            <MessageCircle size={18} className="badge-icon" />
                             {t('features.qualityService')}
                         </span>
                         <span className="policy-badge">
-                            <TruckIcon className="badge-icon" />
+                            <Truck size={18} className="badge-icon" />
                             {t('features.shipping')}
                         </span>
                     </div>
@@ -116,7 +116,7 @@ const Footer = () => {
                         noValidate
                     >
                         <div className={`input-wrapper ${emailError ? 'has-error' : ''}`}>
-                            <EnvelopeIcon className="input-icon" aria-hidden="true" />
+                            <Mail size={20} className="input-icon" aria-hidden="true" />
                             <label htmlFor="newsletter-email" className="visually-hidden">Email address</label>
                             <input
                                 id="newsletter-email"
@@ -150,8 +150,8 @@ const Footer = () => {
                     </form>
 
                     <address className="contact-info">
-                        <p><PhoneIcon className="contact-icon" aria-hidden="true" /> <a href="tel:01040663348" aria-label="Call us at 01040663348">01040663348</a></p>
-                        <p><MapPinIcon className="contact-icon" aria-hidden="true" /> {t('footer.contact')}</p>
+                        <p><Phone size={20} className="contact-icon" aria-hidden="true" /> <a href="tel:01040663348" aria-label="Call us at 01040663348">01040663348</a></p>
+                        <p><MapPin size={20} className="contact-icon" aria-hidden="true" /> {t('footer.contact')}</p>
                     </address>
                 </div>
             </div>

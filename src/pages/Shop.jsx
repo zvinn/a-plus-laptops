@@ -1,12 +1,15 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import ProductCard from '../components/ProductCard';
+import ProductCard from '../components/ProductCardPremium';
+import { ProductCardSkeleton } from '../components/Skeleton';
 import { db } from '../firebase';
-import { collection, getDocs } from 'firebase/firestore/lite';
+import { collection, getDocs } from 'firebase/firestore';
 import Skeleton from '../components/Skeleton';
 import { useLanguage } from '../context/LanguageContext';
 import SEO from '../components/SEO';
 import OptimizedImage from '../components/OptimizedImage';
 import './Shop.css';
+
+const ITEMS_PER_PAGE = 12;
 
 const Shop = () => {
     const { t } = useLanguage();
@@ -28,10 +31,15 @@ const Shop = () => {
     const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
     const debounceRef = useRef(null);
 
+    // Pagination / Load More state
+    const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+    const loadMoreRef = useRef(null);
+
     const [sortBy, setSortBy] = useState(() => {
         try {
             return localStorage.getItem('shopSortBy') || 'newest';
-        } catch (e) {
+        } catch {
             return 'newest';
         }
     });
@@ -56,7 +64,7 @@ const Shop = () => {
     useEffect(() => {
         try {
             localStorage.setItem('shopSortBy', sortBy);
-        } catch (e) { }
+        } catch { }
     }, [sortBy]);
 
     useEffect(() => {
@@ -108,8 +116,15 @@ const Shop = () => {
         setSelectedUse('All');
         setPriceRange(100000);
         setSearchQuery('');
+        setVisibleCount(ITEMS_PER_PAGE); // Reset pagination when clearing filters
     };
 
+    // Reset visible count when filters change
+    useEffect(() => {
+        setVisibleCount(ITEMS_PER_PAGE);
+    }, [selectedBrand, selectedCpu, selectedRam, selectedGpu, selectedStorage, selectedUse, priceRange, debouncedSearch, sortBy]);
+
+    // filteredLaptops - MUST be defined before visibleLaptops that depends on it
     const filteredLaptops = useMemo(() => {
         let result = laptops.filter(laptop => {
             const matchBrand = selectedBrand === 'All' || laptop.brand === selectedBrand;
@@ -136,31 +151,60 @@ const Shop = () => {
             if (sortBy === 'price-low') return a.price - b.price;
             if (sortBy === 'price-high') return b.price - a.price;
             if (sortBy === 'az') return a.name.localeCompare(b.name);
-            // Default 'newest' - currently assuming original order is newest or random. 
-            // If we had a date field, we'd use it here. For now, we keep original index implicitly by not sorting? 
-            // Or if we want to be strict and the original array is chronological, we return 0.
             return 0;
         });
     }, [laptops, selectedBrand, selectedCpu, selectedRam, selectedGpu, selectedStorage, priceRange, selectedUse, debouncedSearch, sortBy]);
+
+    // Load more handler
+    const loadMore = useCallback(() => {
+        if (isLoadingMore) return;
+        setIsLoadingMore(true);
+
+        setTimeout(() => {
+            setVisibleCount(prev => prev + ITEMS_PER_PAGE);
+            setIsLoadingMore(false);
+        }, 300);
+    }, [isLoadingMore]);
+
+    // Intersection Observer for automatic loading
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && visibleCount < filteredLaptops.length) {
+                    loadMore();
+                }
+            },
+            { threshold: 0.1, rootMargin: '100px' }
+        );
+
+        if (loadMoreRef.current) {
+            observer.observe(loadMoreRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, [loadMore, visibleCount, filteredLaptops.length]);
+
+    // Calculate visible laptops (NOW AFTER filteredLaptops is defined)
+    const visibleLaptops = useMemo(() => {
+        return filteredLaptops.slice(0, visibleCount);
+    }, [filteredLaptops, visibleCount]);
+
+    const hasMore = visibleCount < filteredLaptops.length;
 
     if (loading) {
         return (
             <div className="shop-page page-container container">
                 <h1 className="shop-title">Our Collection</h1>
                 <div style={{ maxWidth: '600px', margin: '0 auto 3rem' }}>
-                    <Skeleton type="rect" height="50px" style={{ borderRadius: '50px' }} />
+                    <Skeleton type="rect" height="50px" animation="shimmer" style={{ borderRadius: '50px' }} />
                 </div>
                 <div className="shop-layout">
                     <div className="shop-sidebar">
-                        <Skeleton type="rect" height="300px" />
+                        <Skeleton type="rect" height="300px" animation="shimmer" />
                     </div>
                     <div className="shop-grid">
                         {[1, 2, 3, 4, 5, 6].map(i => (
-                            <div key={i} style={{ background: 'white', borderRadius: '16px', padding: '1rem', height: '400px' }}>
-                                <Skeleton type="rect" height="200px" style={{ marginBottom: '1rem' }} />
-                                <Skeleton type="text" width="80%" />
-                                <Skeleton type="text" width="40%" />
-                            </div>
+                            <ProductCardSkeleton key={i} animation="shimmer" />
                         ))}
                     </div>
                 </div>
@@ -171,10 +215,10 @@ const Shop = () => {
     return (
         <div className="shop-page page-container container">
             <SEO
-                title="Shop Gaming Laptops"
-                description="Browse our collection of high-performance gaming laptops from ASUS, Lenovo, MSI, HP, Dell, and Apple. Best prices in Egypt with warranty."
+                title="Shop Laptops"
+                description="Browse our collection of premium laptops from ASUS, Lenovo, MSI, HP, Dell, and Apple. Best prices in Egypt with warranty for professionals and students."
                 url="/shop"
-                keywords="gaming laptops, ASUS ROG, Lenovo Legion, MSI, HP Victus, buy laptop Egypt"
+                keywords="laptops Egypt, business laptops, student laptops, workstation, buy laptop Egypt"
             />
             <h1 className="shop-title">{t('shop.title')}</h1>
 
@@ -391,10 +435,46 @@ const Shop = () => {
 
                 {/* Product Grid */}
                 <main className={`shop-grid ${viewMode === 'list' ? 'list-view' : ''}`}>
-                    {filteredLaptops.length > 0 ? (
-                        filteredLaptops.map(laptop => (
-                            <ProductCard key={laptop.id} product={laptop} />
-                        ))
+                    {visibleLaptops.length > 0 ? (
+                        <>
+                            {visibleLaptops.map(laptop => (
+                                <ProductCard key={laptop.id} product={laptop} />
+                            ))}
+
+                            {/* Load More Section */}
+                            {hasMore && (
+                                <div className="load-more-section" ref={loadMoreRef}>
+                                    <button
+                                        className="btn btn-secondary load-more-btn"
+                                        onClick={loadMore}
+                                        disabled={isLoadingMore}
+                                    >
+                                        {isLoadingMore ? (
+                                            <>
+                                                <span className="loading-spinner"></span>
+                                                {t('common.loading', 'Loading...')}
+                                            </>
+                                        ) : (
+                                            <>
+                                                {t('shop.loadMore', 'Load More')}
+                                                <span className="load-more-count">
+                                                    ({visibleCount} / {filteredLaptops.length})
+                                                </span>
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
+                            )}
+
+                            {/* Loading skeletons when loading more */}
+                            {isLoadingMore && (
+                                <div className="loading-more-grid">
+                                    {[1, 2, 3, 4].map(i => (
+                                        <ProductCardSkeleton key={`loading-${i}`} animation="pulse" />
+                                    ))}
+                                </div>
+                            )}
+                        </>
                     ) : (
                         <div className="no-results">{t('shop.noResults')}</div>
                     )}

@@ -8,7 +8,7 @@ const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "A Plus+ Laptops",
-    "description": "Premium gaming laptops and accessories store in Egypt",
+    "description": "Premium laptops and workstations store in Egypt",
     "url": "https://a-plus-laptops.vercel.app",
     "telephone": "+201040663348",
     "address": {

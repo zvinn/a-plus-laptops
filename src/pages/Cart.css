@@ -1,12 +1,21 @@
 /* ========================================
-   CART PAGE - Modern Tech Design
+   CART PAGE - Premium Dark Theme
    ======================================== */
 .cart-page {
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
     padding-bottom: 100px;
-    /* Space for mobile checkout bar */
+    /* Force dark theme */
+    --bg-page: #0A0A0F;
+    --bg-card: #12131A;
+    --bg-surface: #1A1B26;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --border-color: rgba(255, 255, 255, 0.08);
+
+    background: var(--bg-page);
+    color: var(--text-primary);
 }
 
 /* ========================================

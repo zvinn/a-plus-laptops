@@ -1,16 +1,24 @@
 /* ========================================
-   FOOTER - Minimal & Clean Design
+   FOOTER - Premium Dark Theme
    ======================================== */
 .footer {
     position: relative;
+    /* Force dark theme */
+    --bg-secondary: #0A0A0F;
+    --bg-surface: #12131A;
+    --bg-card: #1A1B26;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --border-primary: rgba(255, 255, 255, 0.08);
+
     background: var(--bg-secondary);
     border-top: 1px solid var(--border-primary);
     padding-top: 5rem;
     overflow: hidden;
 }
 
-/* Removed glow effects */
-.footer::before,
+/* Removed glow for minimal design */
 .footer-glow {
     display: none;
 }

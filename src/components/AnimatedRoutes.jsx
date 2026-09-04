@@ -30,6 +30,7 @@ const Accounting = lazy(() => import('../pages/admin/Accounting'));
 const InventoryManager = lazy(() => import('../pages/admin/InventoryManager'));
 const CRMDashboard = lazy(() => import('../pages/admin/CRMDashboard'));
 const InvoiceManager = lazy(() => import('../pages/admin/InvoiceManager'));
+const CouponManager = lazy(() => import('../pages/admin/CouponManager'));
 
 import { seedLaptops } from '../utils/seedData';
 import PageTransition from './PageTransition';
@@ -38,10 +39,48 @@ import Skeleton from './Skeleton';
 
 // Loading fallback for lazy-loaded pages
 const PageLoader = () => (
-    <div style={{ padding: '4rem 2rem', display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '800px', margin: '0 auto' }}>
-        <Skeleton type="rect" height="200px" style={{ borderRadius: '16px' }} />
-        <Skeleton type="text" width="60%" />
-        <Skeleton type="text" width="80%" />
+    <div className="page-loader" style={{
+        padding: '4rem 2rem',
+        maxWidth: '1200px',
+        margin: '0 auto',
+        minHeight: '60vh',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '2rem'
+    }}>
+        {/* Header Skeleton */}
+        <div style={{ textAlign: 'center' }}>
+            <Skeleton type="text" width="40%" height="2rem" style={{ margin: '0 auto 1rem' }} />
+            <Skeleton type="text" width="60%" height="1rem" style={{ margin: '0 auto' }} />
+        </div>
+
+        {/* Content Skeleton */}
+        <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '1.5rem',
+            marginTop: '2rem'
+        }}>
+            {[1, 2, 3, 4].map(i => (
+                <div
+                    key={i}
+                    style={{
+                        background: 'var(--bg-card)',
+                        borderRadius: '16px',
+                        padding: '0',
+                        overflow: 'hidden',
+                        border: '1px solid var(--border-primary)'
+                    }}
+                >
+                    <Skeleton type="rect" height="180px" style={{ borderRadius: 0 }} />
+                    <div style={{ padding: '1rem' }}>
+                        <Skeleton type="text" width="80%" style={{ marginBottom: '0.5rem' }} />
+                        <Skeleton type="text" width="60%" style={{ marginBottom: '0.75rem' }} />
+                        <Skeleton type="text" width="40%" />
+                    </div>
+                </div>
+            ))}
+        </div>
     </div>
 );
 
@@ -138,6 +177,11 @@ const AnimatedRoutes = () => {
                     <Route path="/admin/invoices" element={
                         <PageErrorBoundary pageName="InvoiceManager">
                             <PageTransition><InvoiceManager /></PageTransition>
+                        </PageErrorBoundary>
+                    } />
+                    <Route path="/admin/coupons" element={
+                        <PageErrorBoundary pageName="CouponManager">
+                            <PageTransition><CouponManager /></PageTransition>
                         </PageErrorBoundary>
                     } />
                     <Route path="/wishlist" element={

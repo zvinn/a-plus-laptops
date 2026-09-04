@@ -1,42 +1,55 @@
 :root {
   /* ========================================
-     🎨 A PLUS+ - Minimal Design System
-     Mint Green + Neutral Grays (Clean & Professional)
+     🎨 A PLUS+ - Professional Design System
+     Sky Blue + Charcoal + White (Based on Logo)
      ======================================== */
 
-  /* Primary Colors - Mint Green Accent */
-  --primary: #00C9A7;
-  /* Mint green - Main accent color */
-  --primary-light: #1DD4B3;
-  /* Lighter mint - Hover states */
-  --primary-dark: #00B396;
-  /* Darker mint - Active states */
-  --primary-glow: rgba(0, 201, 167, 0.15);
+  /* Primary Colors - Sky Blue (from logo) */
+  --primary: #2196F3;
+  --primary-light: #42A5F5;
+  --primary-dark: #1976D2;
+  --primary-glow: rgba(33, 150, 243, 0.15);
 
-  /* Accent Colors (same as primary for minimal design) */
-  --accent: #00C9A7;
-  --accent-light: #1DD4B3;
-  --accent-dark: #00B396;
-  --accent-glow: rgba(0, 201, 167, 0.15);
+  /* Accent Colors */
+  --accent: #2196F3;
+  --accent-light: #64B5F6;
+  --accent-dark: #1565C0;
+  --accent-glow: rgba(33, 150, 243, 0.15);
 
-  /* Neutral Colors - Minimalist Gray Scale */
-  --gray-50: #FAFAFA;
-  --gray-100: #F5F5F7;
-  --gray-200: #E5E5E7;
-  --gray-300: #D1D1D6;
-  --gray-400: #A1A1A6;
-  --gray-500: #6E6E73;
-  --gray-600: #48484A;
-  --gray-700: #3A3A3C;
-  --gray-800: #2C2C2E;
-  --gray-900: #1C1C1E;
-  --gray-950: #0F1419;
+  /* Neutral Colors - Charcoal Scale (from logo) */
+  --gray-50: #F8FAFC;
+  --gray-100: #F1F5F9;
+  --gray-200: #E2E8F0;
+  --gray-300: #CBD5E1;
+  --gray-400: #94A3B8;
+  --gray-500: #64748B;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1E293B;
+  --gray-900: #0F172A;
+  --gray-950: #020617;
 
-  /* Semantic Colors - Minimal */
-  --success: #00C9A7;
-  --warning: #FFB340;
-  --error: #FF3B30;
-  --info: #00C9A7;
+  /* Charcoal (from logo - main dark color) */
+  --charcoal: #2D3436;
+  --charcoal-light: #636E72;
+  --charcoal-dark: #1E2427;
+
+  /* Semantic Colors */
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --info: #2196F3;
+  --orange: #F97316;
+
+  /* Semantic Color Opacity Variants */
+  --success-10: rgba(16, 185, 129, 0.1);
+  --success-20: rgba(16, 185, 129, 0.2);
+  --error-10: rgba(239, 68, 68, 0.1);
+  --error-20: rgba(239, 68, 68, 0.2);
+  --warning-10: rgba(245, 158, 11, 0.1);
+  --warning-20: rgba(245, 158, 11, 0.2);
+  --orange-10: rgba(249, 115, 22, 0.1);
+  --orange-20: rgba(249, 115, 22, 0.2);
 
   /* WhatsApp Brand Colors */
   --whatsapp: #25d366;
@@ -44,15 +57,12 @@
   --whatsapp-glow: rgba(37, 211, 102, 0.15);
 
   /* ========================================
-     🎨 MINIMAL GRADIENTS (Limited Use)
+     🎨 GRADIENTS
      ======================================== */
-  /* Simple subtle gradient for accent elements only */
-  --gradient-minimal: linear-gradient(135deg, #00C9A7 0%, #1DD4B3 100%);
-
-  /* Legacy gradient support (removed fancy gradients) */
+  --gradient-minimal: linear-gradient(135deg, #2196F3 0%, #42A5F5 100%);
   --gradient-aurora: var(--gradient-minimal);
   --gradient-sunset: var(--gradient-minimal);
-  --gradient-ocean: var(--gradient-minimal);
+  --gradient-ocean: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);
   --gradient-gaming: var(--gradient-minimal);
   --gradient-royal: var(--gradient-minimal);
   --gradient-fire: var(--gradient-minimal);
@@ -62,55 +72,60 @@
   --gradient-premium: var(--gradient-minimal);
 
   /* ========================================
-     ✨ MINIMAL GLASS EFFECTS (Removed)
+     ✨ GLASS EFFECTS
      ======================================== */
-  /* Glassmorphism removed for minimal design */
-  --glass-white-light: rgba(255, 255, 255, 0.05);
-  --glass-white-medium: rgba(255, 255, 255, 0.08);
-  --glass-white-strong: rgba(255, 255, 255, 0.12);
-  --glass-dark-light: rgba(0, 0, 0, 0.05);
-  --glass-dark-medium: rgba(0, 0, 0, 0.08);
-  --glass-dark-strong: rgba(0, 0, 0, 0.12);
-  --glass-blur-sm: 0px;
-  --glass-blur-md: 0px;
-  --glass-blur-lg: 0px;
+  --glass-white-light: rgba(255, 255, 255, 0.7);
+  --glass-white-medium: rgba(255, 255, 255, 0.85);
+  --glass-white-strong: rgba(255, 255, 255, 0.95);
+  --glass-dark-light: rgba(0, 0, 0, 0.03);
+  --glass-dark-medium: rgba(0, 0, 0, 0.05);
+  --glass-dark-strong: rgba(0, 0, 0, 0.08);
+  --glass-blur-sm: 8px;
+  --glass-blur-md: 16px;
+  --glass-blur-lg: 24px;
 
   /* ========================================
-     💎 MINIMAL SHADOWS (Subtle Only)
+     💎 SHADOWS
      ======================================== */
-  /* Removed glow effects - using subtle shadows only */
-  --shadow-glow-primary: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-glow-accent: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-glow-success: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-glow-purple: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-layered: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --shadow-floating: 0 8px 16px rgba(0, 0, 0, 0.12);
+  --shadow-glow-primary: 0 4px 14px rgba(33, 150, 243, 0.25);
+  --shadow-glow-accent: 0 4px 14px rgba(33, 150, 243, 0.2);
+  --shadow-glow-success: 0 4px 14px rgba(16, 185, 129, 0.2);
+  --shadow-glow-purple: 0 4px 14px rgba(139, 92, 246, 0.2);
+  --shadow-layered: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-elevated: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --shadow-floating: 0 12px 32px rgba(0, 0, 0, 0.12);
 
-  /* Teal Opacity Variations (Legacy Support) */
-  --teal: #00C9A7;
-  --teal-5: rgba(0, 201, 167, 0.05);
-  --teal-10: rgba(0, 201, 167, 0.1);
-  --teal-15: rgba(0, 201, 167, 0.15);
-  --teal-20: rgba(0, 201, 167, 0.2);
-  --teal-30: rgba(0, 201, 167, 0.3);
+  /* Blue Opacity Variations */
+  --blue-5: rgba(33, 150, 243, 0.05);
+  --blue-10: rgba(33, 150, 243, 0.1);
+  --blue-15: rgba(33, 150, 243, 0.15);
+  --blue-20: rgba(33, 150, 243, 0.2);
+  --blue-30: rgba(33, 150, 243, 0.3);
+
+  /* Legacy teal aliases (for backward compatibility) */
+  --teal: #2196F3;
+  --teal-5: rgba(33, 150, 243, 0.05);
+  --teal-10: rgba(33, 150, 243, 0.1);
+  --teal-15: rgba(33, 150, 243, 0.15);
+  --teal-20: rgba(33, 150, 243, 0.2);
+  --teal-30: rgba(33, 150, 243, 0.3);
 
   /* Error Color Variations */
-  --error-10: rgba(255, 59, 48, 0.1);
-  --error-20: rgba(255, 59, 48, 0.2);
-  --error-40: rgba(255, 59, 48, 0.4);
+  --error-10: rgba(239, 68, 68, 0.1);
+  --error-20: rgba(239, 68, 68, 0.2);
+  --error-40: rgba(239, 68, 68, 0.4);
 
   /* Success Color Variations */
-  --success-10: rgba(0, 201, 167, 0.1);
-  --success-20: rgba(0, 201, 167, 0.2);
-  --success-40: rgba(0, 201, 167, 0.4);
+  --success-10: rgba(16, 185, 129, 0.1);
+  --success-20: rgba(16, 185, 129, 0.2);
+  --success-40: rgba(16, 185, 129, 0.4);
 
   /* Orange/Warning Color Variations */
-  --orange: #FFB340;
-  --orange-dark: #FF9500;
-  --orange-10: rgba(255, 179, 64, 0.1);
-  --orange-20: rgba(255, 179, 64, 0.2);
-  --orange-30: rgba(255, 179, 64, 0.3);
+  --orange: #F59E0B;
+  --orange-dark: #D97706;
+  --orange-10: rgba(245, 158, 11, 0.1);
+  --orange-20: rgba(245, 158, 11, 0.2);
+  --orange-30: rgba(245, 158, 11, 0.3);
 }
 
 /* ========================================
@@ -130,24 +145,24 @@
   --text-muted: #A1A1A6;
 
   /* Border Colors - Subtle */
-  --border-primary: #E5E5E7;
-  --border-light: #F5F5F7;
-  --border-accent: rgba(0, 201, 167, 0.2);
+  --border-primary: #E2E8F0;
+  --border-light: #F1F5F9;
+  --border-accent: rgba(33, 150, 243, 0.2);
 
-  /* Gradients - Minimal */
-  --gradient-hero: linear-gradient(135deg, #00C9A7 0%, #1DD4B3 100%);
-  --gradient-card: linear-gradient(145deg, #FFFFFF 0%, #FAFAFA 100%);
-  --gradient-accent: linear-gradient(135deg, #00C9A7 0%, #1DD4B3 100%);
-  --gradient-primary: linear-gradient(135deg, #00C9A7 0%, #00B396 100%);
-  --gradient-glow: radial-gradient(circle, rgba(0, 201, 167, 0.1) 0%, transparent 70%);
+  /* Gradients - Blue Based */
+  --gradient-hero: linear-gradient(135deg, #2196F3 0%, #42A5F5 100%);
+  --gradient-card: linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%);
+  --gradient-accent: linear-gradient(135deg, #2196F3 0%, #42A5F5 100%);
+  --gradient-primary: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+  --gradient-glow: radial-gradient(circle, rgba(33, 150, 243, 0.1) 0%, transparent 70%);
 
   /* Shadows - Subtle and Soft */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 8px 16px rgba(0, 0, 0, 0.12);
-  --shadow-glow: 0 0 12px rgba(0, 201, 167, 0.2);
-  --shadow-accent-glow: 0 0 12px rgba(0, 201, 167, 0.15);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.12);
+  --shadow-glow: 0 0 20px rgba(33, 150, 243, 0.2);
+  --shadow-accent-glow: 0 4px 16px rgba(33, 150, 243, 0.25);
 
   /* Border Radius */
   --radius-sm: 8px;

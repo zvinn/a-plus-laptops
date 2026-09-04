@@ -1,22 +1,25 @@
 import { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore/lite';
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useLanguage } from '../context/LanguageContext';
 import ProductCard from '../components/ProductCard';
 import { Link } from 'react-router-dom';
 import {
-    SparklesIcon,
-    ArrowLeftIcon,
-    ArrowRightIcon,
-    CheckCircleIcon,
-    ComputerDesktopIcon,
-    BriefcaseIcon,
-    AcademicCapIcon,
-    CurrencyDollarIcon,
-    BoltIcon,
-    StarIcon
-} from '@heroicons/react/24/outline';
-import { StarIcon as StarSolid, CheckCircleIcon as CheckSolid } from '@heroicons/react/24/solid';
+    Sparkles,
+    ArrowLeft,
+    ArrowRight,
+    CheckCircle,
+    Monitor,
+    Briefcase,
+    GraduationCap,
+    DollarSign,
+    Zap,
+    Battery,
+    Star,
+    Gamepad2,
+    Wallet,
+    Gem
+} from 'lucide-react';
 import SEO from '../components/SEO';
 import AIConcierge from '../components/AIConcierge';
 import { searchLaptops } from '../utils/semanticSearch';
@@ -48,21 +51,21 @@ const LaptopFinder = () => {
             options: [
                 {
                     value: 'gaming',
-                    icon: '🎮',
+                    icon: <Gamepad2 size={24} />,
                     title: t('finder.gaming') || 'Gaming & Heavy Design',
                     desc: t('finder.gamingDesc') || 'High FPS, 3D rendering, heavy editing',
                     color: 'purple'
                 },
                 {
                     value: 'work',
-                    icon: '💼',
+                    icon: <Briefcase size={24} />,
                     title: t('finder.work') || 'Professional Work',
                     desc: t('finder.workDesc') || 'Coding, Office, Data analysis',
                     color: 'blue'
                 },
                 {
                     value: 'student',
-                    icon: '🎓',
+                    icon: <GraduationCap size={24} />,
                     title: t('finder.student') || 'Student & Casual',
                     desc: t('finder.studentDesc') || 'Study, browsing, movies',
                     color: 'green'
@@ -76,21 +79,21 @@ const LaptopFinder = () => {
             options: [
                 {
                     value: 'low',
-                    icon: '💵',
+                    icon: <Wallet size={24} />,
                     title: t('finder.budget1') || 'Budget Friendly',
                     desc: t('finder.budget1Desc') || 'Under 15,000 EGP',
                     color: 'teal'
                 },
                 {
                     value: 'medium',
-                    icon: '💰',
+                    icon: <DollarSign size={24} />,
                     title: t('finder.budget2') || 'Mid-Range',
                     desc: t('finder.budget2Desc') || '15,000 - 30,000 EGP',
                     color: 'orange'
                 },
                 {
                     value: 'high',
-                    icon: '💎',
+                    icon: <Gem size={24} />,
                     title: t('finder.budget3') || 'Premium',
                     desc: t('finder.budget3Desc') || 'Above 30,000 EGP',
                     color: 'gold'
@@ -104,21 +107,21 @@ const LaptopFinder = () => {
             options: [
                 {
                     value: 'performance',
-                    icon: '⚡',
+                    icon: <Zap size={24} />,
                     title: t('finder.performance') || 'Raw Performance',
                     desc: t('finder.performanceDesc') || 'Speed and power above all',
                     color: 'red'
                 },
                 {
                     value: 'battery',
-                    icon: '🔋',
+                    icon: <Battery size={24} />,
                     title: t('finder.battery') || 'Battery Life',
                     desc: t('finder.batteryDesc') || 'All-day unplugged usage',
                     color: 'green'
                 },
                 {
                     value: 'value',
-                    icon: '⭐',
+                    icon: <Star size={24} />,
                     title: t('finder.value') || 'Best Value',
                     desc: t('finder.valueDesc') || 'Maximum specs for price',
                     color: 'blue'
@@ -208,16 +211,16 @@ const LaptopFinder = () => {
         <div className="finder-page">
             <SEO
                 title="AI Laptop Finder"
-                description="Find your perfect laptop in 3 simple questions. Our AI-powered quiz recommends the best gaming laptop based on your needs and budget."
+                description="Find your perfect laptop in 3 simple questions. Our AI-powered quiz recommends the best laptop based on your needs, budget, and priorities."
                 url="/laptop-finder"
-                keywords="laptop finder, laptop quiz, best laptop for gaming, laptop recommendation"
+                keywords="laptop finder, laptop quiz, best laptop for work, laptop recommendation, student laptop"
             />
             <div className="finder-container">
                 {/* Welcome Screen */}
                 {step === 0 && (
                     <div className="welcome-screen fade-in">
                         <div className="welcome-icon">
-                            <SparklesIcon />
+                            <Sparkles size={48} />
                         </div>
                         <h1 className="welcome-title">
                             {t('finder.title') || 'AI Laptop Finder'}
@@ -227,15 +230,15 @@ const LaptopFinder = () => {
                         </p>
                         <div className="welcome-features">
                             <div className="feature">
-                                <CheckCircleIcon />
+                                <CheckCircle size={20} />
                                 <span>{t('finder.feature1') || '3 Simple Questions'}</span>
                             </div>
                             <div className="feature">
-                                <CheckCircleIcon />
+                                <CheckCircle size={20} />
                                 <span>{t('finder.feature2') || 'Personalized Results'}</span>
                             </div>
                             <div className="feature">
-                                <CheckCircleIcon />
+                                <CheckCircle size={20} />
                                 <span>{t('finder.feature3') || 'Smart Recommendations'}</span>
                             </div>
                         </div>
@@ -245,7 +248,7 @@ const LaptopFinder = () => {
                             aria-label="Start laptop finder quiz"
                         >
                             <span>{t('finder.start') || "Let's Start"}</span>
-                            <ArrowRightIcon aria-hidden="true" />
+                            <ArrowRight aria-hidden="true" size={20} />
                         </button>
 
                         <div className="ai-toggle-hint" style={{ marginTop: '1.5rem', textAlign: 'center' }}>
@@ -257,7 +260,7 @@ const LaptopFinder = () => {
                                 onClick={() => setUseAI(true)}
                                 style={{ borderColor: 'var(--primary)', color: 'var(--primary)' }}
                             >
-                                <SparklesIcon style={{ width: '18px', marginRight: '8px' }} />
+                                <Sparkles style={{ width: '18px', marginRight: '8px' }} />
                                 Try AI Chat Concierge
                             </button>
                         </div>
@@ -268,7 +271,7 @@ const LaptopFinder = () => {
                 {useAI && (
                     <div className="ai-concierge-view fade-in">
                         <button className="back-btn" onClick={() => setUseAI(false)} style={{ marginBottom: '1rem' }}>
-                            <ArrowLeftIcon /> Back to Quiz
+                            <ArrowLeft size={18} /> Back to Quiz
                         </button>
                         <AIConcierge />
                     </div>
@@ -291,7 +294,7 @@ const LaptopFinder = () => {
                                         key={q.id}
                                         className={`progress-step ${idx + 1 <= step ? 'active' : ''} ${idx + 1 < step ? 'completed' : ''}`}
                                     >
-                                        {idx + 1 < step ? <CheckSolid /> : <span>{idx + 1}</span>}
+                                        {idx + 1 < step ? <CheckCircle size={16} /> : <span>{idx + 1}</span>}
                                     </div>
                                 ))}
                             </div>
@@ -316,7 +319,7 @@ const LaptopFinder = () => {
                                     <h3 className="option-title">{option.title}</h3>
                                     <p className="option-desc">{option.desc}</p>
                                     <div className="option-select" aria-hidden="true">
-                                        <ArrowRightIcon />
+                                        <ArrowRight size={20} />
                                     </div>
                                 </button>
                             ))}
@@ -324,7 +327,7 @@ const LaptopFinder = () => {
 
                         {/* Back Button */}
                         <button className="back-btn" onClick={goBack} aria-label="Go back to previous question">
-                            <ArrowLeftIcon aria-hidden="true" />
+                            <ArrowLeft aria-hidden="true" size={18} />
                             <span>{t('finder.back') || 'Go Back'}</span>
                         </button>
                     </div>
@@ -334,7 +337,7 @@ const LaptopFinder = () => {
                 {isCalculating && (
                     <div className="calculating-screen fade-in" role="alert" aria-live="polite">
                         <div className="calculating-spinner" aria-hidden="true">
-                            <SparklesIcon className="spin" />
+                            <Sparkles className="spin" size={32} />
                         </div>
                         <h2>{t('finder.calculating') || 'Finding your perfect match...'}</h2>
                         <p>{t('finder.analyzing') || 'Analyzing your preferences'}</p>
@@ -346,7 +349,7 @@ const LaptopFinder = () => {
                     <div className="results-screen fade-in">
                         <div className="results-header">
                             <div className="results-icon">
-                                <StarSolid />
+                                <Star size={32} className="text-yellow-400 fill-current" />
                             </div>
                             <h2 className="results-title">
                                 {t('finder.resultsTitle') || 'Your Perfect Matches'}

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { collection, getDocs } from 'firebase/firestore/lite';
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useLanguage } from '../context/LanguageContext';
 import ProductCard from './ProductCard';
@@ -8,7 +8,7 @@ import { searchLaptops } from '../utils/semanticSearch';
 import './AIConcierge.css';
 
 const AIConcierge = () => {
-    const { t, language } = useLanguage();
+    const { language } = useLanguage();
     const [messages, setMessages] = useState([
         {
             id: 1,

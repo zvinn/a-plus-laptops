@@ -1,21 +1,26 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../firebase';
 import {
-    collection, getDocs, addDoc, updateDoc, deleteDoc, doc,
-    query, orderBy, where, serverTimestamp, Timestamp
-} from 'firebase/firestore/lite';
+    collection, getDocs, addDoc, updateDoc, doc,
+    query, orderBy, serverTimestamp, Timestamp
+} from 'firebase/firestore';
 import { useToast } from '../../context/ToastContext';
+import {
+    Phone, Mail, Users, MessageCircle, FileText, Star, Briefcase,
+    ClipboardList, CheckCircle, Clock, UserPlus, Download
+} from 'lucide-react';
+import Skeleton from '../../components/Skeleton';
 import './CRMDashboard.css';
 
 // Interaction Types
 const INTERACTION_TYPES = [
-    { id: 'call', label: 'مكالمة', icon: '📞' },
-    { id: 'email', label: 'بريد إلكتروني', icon: '✉️' },
-    { id: 'meeting', label: 'اجتماع', icon: '🤝' },
-    { id: 'whatsapp', label: 'واتساب', icon: '💬' },
-    { id: 'note', label: 'ملاحظة', icon: '📝' },
+    { id: 'call', label: 'مكالمة', icon: <Phone size={16} /> },
+    { id: 'email', label: 'بريد إلكتروني', icon: <Mail size={16} /> },
+    { id: 'meeting', label: 'اجتماع', icon: <Users size={16} /> },
+    { id: 'whatsapp', label: 'واتساب', icon: <MessageCircle size={16} /> },
+    { id: 'note', label: 'ملاحظة', icon: <FileText size={16} /> },
 ];
 
 const CRMDashboard = () => {
@@ -25,7 +30,7 @@ const CRMDashboard = () => {
 
     // State
     const [customers, setCustomers] = useState([]);
-    const [orders, setOrders] = useState([]);
+    // Removed unused orders state
     const [interactions, setInteractions] = useState([]);
     const [followUps, setFollowUps] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -37,7 +42,7 @@ const CRMDashboard = () => {
     const [showAddCustomer, setShowAddCustomer] = useState(false);
     const [showAddInteraction, setShowAddInteraction] = useState(false);
     const [showAddFollowUp, setShowAddFollowUp] = useState(false);
-    const [selectedCustomer, setSelectedCustomer] = useState(null);
+    // Removed unused selectedCustomer state
 
     // Forms
     const [newCustomer, setNewCustomer] = useState({
@@ -51,7 +56,7 @@ const CRMDashboard = () => {
     });
 
     // Fetch Data
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         setLoading(true);
         try {
             // Fetch orders to extract customers
@@ -62,7 +67,7 @@ const CRMDashboard = () => {
                 ...doc.data(),
                 createdAt: doc.data().createdAt?.toDate?.() || new Date()
             }));
-            setOrders(ordersData);
+            // No need to setOrders as it was unused
 
             // Extract unique customers from orders
             const customersMap = new Map();
@@ -138,7 +143,7 @@ const CRMDashboard = () => {
             error('فشل في تحميل بيانات العملاء');
         }
         setLoading(false);
-    };
+    }, [error]);
 
     useEffect(() => {
         if (!currentUser) {
@@ -146,7 +151,7 @@ const CRMDashboard = () => {
             return;
         }
         fetchData();
-    }, [currentUser, navigate]);
+    }, [currentUser, navigate, fetchData]);
 
     // Stats
     const stats = useMemo(() => {
@@ -201,6 +206,34 @@ const CRMDashboard = () => {
         } catch (err) {
             console.error('Error adding customer:', err);
             error('فشل في إضافة العميل');
+        }
+    };
+
+    // Export Customers
+    const handleExport = () => {
+        try {
+            const headers = ['Name', 'Email', 'Phone', 'Segment', 'Total Spent', 'Orders Count'];
+            const csvContent = [
+                headers.join(','),
+                ...filteredCustomers.map(c => [
+                    `"${c.name}"`,
+                    c.email,
+                    c.phone,
+                    c.segment,
+                    c.totalSpent,
+                    c.orders.length
+                ].join(','))
+            ].join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `customers_vip_export_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+            success('تم تصدير العملاء بنجاح');
+        } catch (err) {
+            console.error('Export error:', err);
+            error('فشل في التصدير');
         }
     };
 
@@ -291,16 +324,15 @@ const CRMDashboard = () => {
 
     if (loading) {
         return (
-            <div className="crm-page">
-                <div className="crm-header">
-                    <div className="loading-skeleton" style={{ width: '200px', height: '40px' }} />
-                </div>
+            <div className="crm-page page-container container">
+                <Skeleton type="text" height="40px" width="200px" style={{ marginBottom: '2rem' }} />
                 <div className="crm-stats">
                     {[1, 2, 3, 4].map(i => (
-                        <div key={i} className="crm-stat-card">
-                            <div className="loading-skeleton" style={{ width: '100%', height: '60px' }} />
-                        </div>
+                        <Skeleton key={i} type="rect" height="100px" style={{ borderRadius: '16px' }} />
                     ))}
+                </div>
+                <div style={{ marginTop: '2rem' }}>
+                    <Skeleton type="rect" height="400px" style={{ borderRadius: '16px' }} />
                 </div>
             </div>
         );
@@ -312,14 +344,17 @@ const CRMDashboard = () => {
             <div className="crm-header">
                 <h1>👥 إدارة العملاء (CRM)</h1>
                 <div className="quick-actions">
+                    <button className="quick-action-btn" onClick={handleExport}>
+                        <Download size={18} /> تصدير CSV
+                    </button>
                     <button className="quick-action-btn" onClick={() => setShowAddInteraction(true)}>
-                        📝 تسجيل تفاعل
+                        <FileText size={18} /> تسجيل تفاعل
                     </button>
                     <button className="quick-action-btn" onClick={() => setShowAddFollowUp(true)}>
-                        📅 إضافة متابعة
+                        <Clock size={18} /> إضافة متابعة
                     </button>
                     <button className="quick-action-btn primary" onClick={() => setShowAddCustomer(true)}>
-                        ➕ إضافة عميل
+                        <UserPlus size={18} /> إضافة عميل
                     </button>
                 </div>
             </div>
@@ -327,28 +362,28 @@ const CRMDashboard = () => {
             {/* Stats */}
             <div className="crm-stats">
                 <div className="crm-stat-card total">
-                    <div className="icon">👥</div>
+                    <div className="icon"><Users size={24} /></div>
                     <div className="info">
                         <h4>إجمالي العملاء</h4>
                         <p>{stats.total}</p>
                     </div>
                 </div>
                 <div className="crm-stat-card vip">
-                    <div className="icon">⭐</div>
+                    <div className="icon"><Star size={24} /></div>
                     <div className="info">
                         <h4>عملاء VIP</h4>
                         <p>{stats.vip}</p>
                     </div>
                 </div>
                 <div className="crm-stat-card new">
-                    <div className="icon">🆕</div>
+                    <div className="icon"><UserPlus size={24} /></div>
                     <div className="info">
                         <h4>عملاء جدد</h4>
                         <p>{stats.newCustomers}</p>
                     </div>
                 </div>
                 <div className="crm-stat-card followup">
-                    <div className="icon">📋</div>
+                    <div className="icon"><ClipboardList size={24} /></div>
                     <div className="info">
                         <h4>متابعات معلقة</h4>
                         <p>{stats.pendingFollowUps}</p>
@@ -359,13 +394,13 @@ const CRMDashboard = () => {
             {/* Tabs */}
             <div className="crm-tabs">
                 <button className={`crm-tab ${activeTab === 'customers' ? 'active' : ''}`} onClick={() => setActiveTab('customers')}>
-                    👥 العملاء
+                    <Users size={18} /> العملاء
                 </button>
                 <button className={`crm-tab ${activeTab === 'followups' ? 'active' : ''}`} onClick={() => setActiveTab('followups')}>
-                    📅 المتابعات
+                    <Clock size={18} /> المتابعات
                 </button>
                 <button className={`crm-tab ${activeTab === 'interactions' ? 'active' : ''}`} onClick={() => setActiveTab('interactions')}>
-                    💬 سجل التفاعلات
+                    <MessageCircle size={18} /> سجل التفاعلات
                 </button>
             </div>
 
@@ -432,13 +467,13 @@ const CRMDashboard = () => {
                                 <div className="customer-actions">
                                     <button
                                         className="customer-action-btn"
-                                        onClick={() => { setSelectedCustomer(customer); setNewInteraction(prev => ({ ...prev, customerId: customer.id })); setShowAddInteraction(true); }}
+                                        onClick={() => { setNewInteraction(prev => ({ ...prev, customerId: customer.id })); setShowAddInteraction(true); }}
                                     >
                                         📝 تفاعل
                                     </button>
                                     <button
                                         className="customer-action-btn"
-                                        onClick={() => { setSelectedCustomer(customer); setNewFollowUp(prev => ({ ...prev, customerId: customer.id })); setShowAddFollowUp(true); }}
+                                        onClick={() => { setNewFollowUp(prev => ({ ...prev, customerId: customer.id })); setShowAddFollowUp(true); }}
                                     >
                                         📅 متابعة
                                     </button>
@@ -557,8 +592,9 @@ const CRMDashboard = () => {
                         </div>
                         <form onSubmit={handleAddCustomer}>
                             <div className="form-group">
-                                <label>الاسم *</label>
+                                <label htmlFor="cust-name">الاسم *</label>
                                 <input
+                                    id="cust-name"
                                     type="text"
                                     value={newCustomer.name}
                                     onChange={e => setNewCustomer(prev => ({ ...prev, name: e.target.value }))}
@@ -567,8 +603,9 @@ const CRMDashboard = () => {
                             </div>
                             <div className="form-row">
                                 <div className="form-group">
-                                    <label>البريد الإلكتروني</label>
+                                    <label htmlFor="cust-email">البريد الإلكتروني</label>
                                     <input
+                                        id="cust-email"
                                         type="email"
                                         value={newCustomer.email}
                                         onChange={e => setNewCustomer(prev => ({ ...prev, email: e.target.value }))}

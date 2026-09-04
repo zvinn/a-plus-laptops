@@ -1,8 +1,19 @@
 /* ========================================
-   ABOUT PAGE - Modern Tech Design
+   ABOUT PAGE - Premium Dark Theme
    ======================================== */
 .about-page {
     padding-bottom: 4rem;
+    /* Force dark theme */
+    --bg-page: #0A0A0F;
+    --bg-card: #12131A;
+    --bg-surface: #1A1B26;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --border-color: rgba(255, 255, 255, 0.08);
+
+    background: var(--bg-page);
+    color: var(--text-primary);
+    min-height: 100vh;
 }
 
 /* ========================================

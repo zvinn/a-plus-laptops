@@ -1,15 +1,35 @@
-/* Skeleton.css */
+/* ========================================
+   SKELETON LOADING SYSTEM - Enhanced
+   ======================================== */
+
+/* Base Skeleton Styles */
 .skeleton {
-    background: rgba(255, 255, 255, 0.05);
-    /* Glass-like placeholder */
+    background: var(--bg-surface);
     border-radius: 8px;
-    /* Softer corners */
     position: relative;
     overflow: hidden;
-    backdrop-filter: blur(4px);
 }
 
-.skeleton::after {
+/* Light Mode */
+[data-theme='light'] .skeleton,
+.light-mode .skeleton {
+    background: linear-gradient(90deg, #f0f0f0 0%, #e0e0e0 50%, #f0f0f0 100%);
+    background-size: 200% 100%;
+}
+
+/* Dark Mode */
+[data-theme='dark'] .skeleton,
+.dark-mode .skeleton {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 100%);
+    background-size: 200% 100%;
+}
+
+/* ========================================
+   ANIMATION TYPES
+   ======================================== */
+
+/* Shimmer Animation (Default) */
+.skeleton-shimmer::after {
     content: "";
     position: absolute;
     top: 0;
@@ -18,9 +38,9 @@
     width: 100%;
     background: linear-gradient(90deg,
             transparent 0%,
-            rgba(255, 255, 255, 0.15) 50%,
+            rgba(255, 255, 255, 0.2) 50%,
             transparent 100%);
-    animation: shimmer 1.8s ease-in-out infinite;
+    animation: shimmer 1.5s ease-in-out infinite;
 }
 
 @keyframes shimmer {
@@ -33,7 +53,55 @@
     }
 }
 
-/* Base Types */
+/* Pulse Animation */
+.skeleton-pulse {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Wave Animation */
+.skeleton-wave::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 50%;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.15) 25%,
+            rgba(255, 255, 255, 0.3) 50%,
+            rgba(255, 255, 255, 0.15) 75%,
+            transparent 100%);
+    animation: wave 2s ease-in-out infinite;
+}
+
+@keyframes wave {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 150%;
+    }
+}
+
+/* ========================================
+   SKELETON TYPES
+   ======================================== */
+
+/* Text Skeleton */
 .skeleton-text {
     height: 1em;
     margin-bottom: 0.5em;
@@ -41,13 +109,113 @@
     border-radius: 4px;
 }
 
+/* Rectangle Skeleton */
 .skeleton-rect {
     width: 100%;
     height: 200px;
 }
 
+/* Circle Skeleton */
 .skeleton-circle {
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Avatar Skeleton */
+.skeleton-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Button Skeleton */
+.skeleton-button {
+    width: 120px;
+    height: 40px;
+    border-radius: 8px;
+}
+
+/* ========================================
+   SKELETON COMPOSITIONS
+   ======================================== */
+
+/* Paragraph Skeleton */
+.skeleton-paragraph {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Card Skeleton */
+.skeleton-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--border-primary);
+}
+
+/* Product Card Skeleton */
+.product-card-skeleton {
+    background: var(--bg-card);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border-primary);
+    transition: all 0.3s ease;
+}
+
+.product-card-skeleton:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.product-card-skeleton-content {
+    padding: 1rem;
+}
+
+/* Stats Grid Skeleton */
+.stats-grid-skeleton {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+/* ========================================
+   RESPONSIVE ADJUSTMENTS
+   ======================================== */
+@media (max-width: 768px) {
+    .product-grid-skeleton {
+        grid-template-columns: 1fr 1fr !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-grid-skeleton {
+        grid-template-columns: 1fr !important;
+    }
+
+    .skeleton-rect {
+        height: 150px;
+    }
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+
+    .skeleton-shimmer::after,
+    .skeleton-wave::after {
+        animation: none;
+    }
+
+    .skeleton-pulse {
+        animation: none;
+    }
+
+    .skeleton::after {
+        display: none;
+    }
 }

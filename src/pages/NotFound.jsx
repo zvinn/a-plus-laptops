@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FiSearch, FiHome, FiShoppingBag, FiArrowLeft } from 'react-icons/fi';
+import { Search, Home, ShoppingBag, ArrowLeft } from 'lucide-react';
 import './NotFound.css';
 
 const NotFound = () => {
@@ -45,7 +45,7 @@ const NotFound = () => {
                     className="search-section"
                 >
                     <form onSubmit={handleSearch} className="not-found-search">
-                        <FiSearch className="search-icon" />
+                        <Search className="search-icon" />
                         <input
                             type="text"
                             placeholder="Search for laptops, accessories..."
@@ -64,13 +64,13 @@ const NotFound = () => {
                     className="action-buttons"
                 >
                     <button onClick={() => navigate(-1)} className="btn-secondary">
-                        <FiArrowLeft /> Go Back
+                        <ArrowLeft size={18} /> Go Back
                     </button>
                     <button onClick={() => navigate('/')} className="btn-primary">
-                        <FiHome /> Home
+                        <Home size={18} /> Home
                     </button>
                     <button onClick={() => navigate('/shop')} className="btn-outline">
-                        <FiShoppingBag /> Shop Now
+                        <ShoppingBag size={18} /> Shop Now
                     </button>
                 </motion.div>
             </div>

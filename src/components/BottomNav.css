@@ -1,5 +1,6 @@
 /* ========================================
    BOTTOM NAVIGATION - Mobile Only
+   Premium Design with Enhanced UX
    ======================================== */
 .bottom-nav {
     display: none;
@@ -8,12 +9,13 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    background: var(--bg-glass);
+    background: rgba(15, 23, 42, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid var(--border-light);
+    border-top: 1px solid rgba(99, 102, 241, 0.2);
     padding: 0.5rem 0;
     padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0));
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Show only on mobile */
@@ -37,26 +39,34 @@
     justify-content: center;
     gap: 4px;
     padding: 8px 16px;
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
-    transition: all 0.2s var(--ease-smooth);
-    border-radius: var(--radius-md);
+    transition: all 0.25s ease;
+    border-radius: 12px;
     min-width: 60px;
+    position: relative;
     -webkit-tap-highlight-color: transparent;
 }
 
 .bottom-nav-item:active {
-    transform: scale(0.95);
+    transform: scale(0.92);
 }
 
+/* Enhanced Active State */
 .bottom-nav-item.active {
-    color: var(--primary);
+    color: #6366f1;
+    background: rgba(99, 102, 241, 0.15);
+}
+
+.bottom-nav-item.active .bottom-nav-icon {
+    transform: translateY(-2px);
 }
 
 .bottom-nav-icon {
     position: relative;
     width: 24px;
     height: 24px;
+    transition: transform 0.2s ease;
 }
 
 .bottom-nav-icon svg {
@@ -69,9 +79,10 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.3px;
+    transition: color 0.2s ease;
 }
 
-/* Cart Badge */
+/* Cart Badge - Enhanced */
 .bottom-nav-badge {
     position: absolute;
     top: -6px;
@@ -82,23 +93,37 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--error);
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
     color: white;
     font-size: 0.65rem;
     font-weight: 700;
-    border-radius: var(--radius-full);
-    box-shadow: 0 2px 6px var(--error-40);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+    animation: badge-pulse 2s ease-in-out infinite;
 }
 
-/* Active Indicator Dot */
+@keyframes badge-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 2px 15px rgba(239, 68, 68, 0.6);
+    }
+}
+
+/* Active Indicator Glow */
 .bottom-nav-item.active::after {
     content: '';
     position: absolute;
-    bottom: 2px;
-    width: 4px;
-    height: 4px;
-    background: var(--primary);
-    border-radius: var(--radius-full);
+    bottom: 4px;
+    width: 6px;
+    height: 6px;
+    background: #6366f1;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #6366f1;
 }
 
 /* Haptic Feedback Simulation (visual) */
@@ -108,7 +133,7 @@
     }
 
     50% {
-        background: var(--primary-glow);
+        background: rgba(99, 102, 241, 0.2);
     }
 
     100% {

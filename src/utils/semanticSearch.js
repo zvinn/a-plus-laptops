@@ -90,7 +90,7 @@ const parseQueryToVector = (query) => {
 /**
  * Calculates similarity score between query vector and laptop vector
  */
-const calculateSimilarity = (queryVec, laptopVec, laptop) => {
+const calculateSimilarity = (queryVec, laptopVec) => {
     let score = 0;
     let maxPossibleScore = 0;
     const reasons = [];

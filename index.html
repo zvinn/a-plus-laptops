@@ -10,18 +10,18 @@
 
   <!-- Primary Meta Tags -->
   <meta name="description"
-    content="A Plus+ | High-Performance Gaming Laptops & Accessories. Official Dealer for Asus, Lenovo, MSI, and Apple in Egypt." />
+    content="A Plus+ | Premium Laptops for Professionals & Students. Official Dealer for Asus, Lenovo, MSI, HP, Dell and Apple in Egypt." />
   <meta name="keywords"
-    content="gaming laptops, A Plus, laptop store Egypt, ASUS ROG, Lenovo Legion, MSI, HP Victus, Cairo" />
+    content="laptops Egypt, A Plus, laptop store Egypt, business laptops, student laptops, workstation, Cairo" />
   <meta name="author" content="A Plus+ Laptops" />
-  <title>A Plus+ | Gaming Laptops Store</title>
+  <title>A Plus+ | Premium Laptops Store</title>
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://a-plus-laptops.vercel.app/" />
-  <meta property="og:title" content="A Plus+ | Gaming Laptops Store" />
+  <meta property="og:title" content="A Plus+ | Premium Laptops Store" />
   <meta property="og:description"
-    content="High-Performance Gaming Laptops & Accessories. Official Dealer for Asus, Lenovo, MSI, and Apple in Egypt." />
+    content="Premium Laptops for Professionals & Students. Official Dealer for Asus, Lenovo, MSI, and Apple in Egypt." />
   <meta property="og:image" content="https://i.ibb.co/0jZ1Z1Q/a-plus-logo.png" />
   <meta property="og:site_name" content="A Plus+" />
   <meta property="og:locale" content="en_US" />
@@ -29,15 +29,15 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://a-plus-laptops.vercel.app/" />
-  <meta name="twitter:title" content="A Plus+ | Gaming Laptops Store" />
-  <meta name="twitter:description" content="High-Performance Gaming Laptops & Accessories in Egypt." />
+  <meta name="twitter:title" content="A Plus+ | Premium Laptops Store" />
+  <meta name="twitter:description" content="Premium Laptops for Professionals & Students in Egypt." />
   <meta name="twitter:image" content="https://i.ibb.co/0jZ1Z1Q/a-plus-logo.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
 
   <!-- Performance: Preconnect to Firebase & CDNs -->
@@ -56,18 +56,53 @@
   <div id="root">
     <!-- Fallback loading indicator - will be replaced by React -->
     <div id="initial-loader"
-      style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#0f172a,#1e293b);color:white;font-family:sans-serif;">
-      <div style="font-size:48px;margin-bottom:20px;">💻</div>
-      <div style="font-size:18px;font-weight:bold;">A Plus+</div>
-      <div style="font-size:14px;color:#94a3b8;margin-top:8px;">Loading...</div>
+      style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#ffffff;color:#1e293b;font-family:'Inter',sans-serif;">
+      <div
+        style="width:60px;height:60px;background:#2196F3;border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:24px;box-shadow:0 10px 25px -5px rgba(33,150,243,0.3);">
+        A+</div>
+      <div style="font-size:18px;font-weight:600;margin-top:20px;letter-spacing:-0.5px;">A Plus Laptops</div>
+      <div style="display:flex;gap:5px;margin-top:15px;">
+        <div
+          style="width:8px;height:8px;background:#2196F3;border-radius:50%;animation:bounce 0.6s infinite alternate;">
+        </div>
+        <div
+          style="width:8px;height:8px;background:#2196F3;border-radius:50%;animation:bounce 0.6s infinite alternate 0.2s;">
+        </div>
+        <div
+          style="width:8px;height:8px;background:#2196F3;border-radius:50%;animation:bounce 0.6s infinite alternate 0.4s;">
+        </div>
+      </div>
+      <style>
+        @keyframes bounce {
+          to {
+            transform: translateY(-8px);
+            opacity: 0.6;
+          }
+        }
+
+        @media (prefers-color-scheme: dark) {
+          #initial-loader {
+            background: #0f172a !important;
+            color: white !important;
+          }
+
+          #initial-loader div[style*="background:#2196F3"] {
+            box-shadow: 0 10px 25px -5px rgba(33, 150, 243, 0.5) !important;
+          }
+
+          #initial-loader>div:nth-child(2) {
+            color: #f1f5f9 !important;
+          }
+        }
+      </style>
       <div id="error-display"
-        style="margin-top:20px;padding:15px;background:#7f1d1d;border-radius:8px;max-width:90%;display:none;font-size:12px;">
+        style="margin-top:20px;padding:15px;background:#fee2e2;border:1px solid #ef4444;color:#991b1b;border-radius:8px;max-width:90%;display:none;font-size:12px;">
       </div>
     </div>
   </div>
   <script>
     // Diagnostic: catch any errors before React loads
-    window.onerror = function(msg, url, line, col, error) {
+    window.onerror = function (msg, url, line, col, error) {
       var el = document.getElementById('error-display');
       if (el) {
         el.style.display = 'block';

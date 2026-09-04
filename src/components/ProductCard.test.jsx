@@ -4,9 +4,13 @@ import ProductCard from './ProductCard';
 import { MemoryRouter } from 'react-router-dom';
 
 // Mock Hooks
-const mockAddToCart = vi.fn();
-const mockToggleWishlist = vi.fn();
-const mockToastSuccess = vi.fn();
+const { mockAddToCart, mockToggleWishlist, mockToastSuccess } = vi.hoisted(() => {
+    return {
+        mockAddToCart: vi.fn(),
+        mockToggleWishlist: vi.fn(),
+        mockToastSuccess: vi.fn()
+    }
+});
 
 vi.mock('../context/CartContext', () => ({
     useCart: () => ({ addToCart: mockAddToCart })

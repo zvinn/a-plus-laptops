@@ -24,7 +24,7 @@ const Chatbot = () => {
 
     useEffect(() => {
         scrollToBottom();
-    }, [messages, isOpen]);
+    }, [messages, isOpen, scrollToBottom]);
 
     const addMessage = useCallback((text, type = 'bot') => {
         setMessages(prev => [...prev, { type, text }]);

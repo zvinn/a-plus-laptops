@@ -66,10 +66,10 @@ export default defineConfig({
         ]
       },
       manifest: {
-        name: 'A Plus+ | Gaming Laptops Store',
+        name: 'A Plus+ | Premium Laptops Store',
         short_name: 'A Plus+',
-        description: 'High-Performance Gaming Laptops & Accessories. Official Dealer for Asus, Lenovo, MSI, and Apple in Egypt.',
-        theme_color: '#0d9488',
+        description: 'Premium Laptops for Professionals & Students. Official Dealer for Asus, Lenovo, MSI, HP, Dell and Apple in Egypt.',
+        theme_color: '#2196F3',
         background_color: '#ffffff',
         display: 'standalone',
         scope: '/',

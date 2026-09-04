@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { collection, query, where, getDocs, documentId } from 'firebase/firestore/lite';
+import { collection, query, where, getDocs, documentId } from 'firebase/firestore';
 import { db } from '../firebase';
 import { getRecentlyViewed } from '../utils/recentlyViewed';
 import { useLanguage } from '../context/LanguageContext';

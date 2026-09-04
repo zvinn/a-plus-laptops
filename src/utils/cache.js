@@ -97,7 +97,9 @@ export const getCacheStats = () => {
     let storageKeys = [];
     try {
         storageKeys = Object.keys(localStorage).filter(k => k.startsWith('cache_'));
-    } catch (e) { }
+    } catch {
+        // Silently ignore localStorage errors (e.g., in private browsing)
+    }
 
     return {
         memoryEntries: memoryKeys.length,

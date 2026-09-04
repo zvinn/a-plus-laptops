@@ -1,3 +1,4 @@
+/* eslint-env node */
 import admin from 'firebase-admin';
 
 // Initialize Firebase Admin (Server Side)

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Skeleton from './Skeleton';
+import { optimizeImageUrl } from '../utils/imageCdn';
 
 /**
  * OptimizedImage Component
@@ -46,7 +47,7 @@ const OptimizedImage = ({
             )}
 
             <img
-                src={src}
+                src={optimizeImageUrl(src, { quality: 'auto', format: 'auto' })}
                 alt={alt}
                 loading={priority ? 'eager' : 'lazy'}
                 fetchpriority={priority ? 'high' : 'auto'}

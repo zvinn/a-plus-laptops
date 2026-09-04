@@ -1,14 +1,15 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { collection, getDocs, limit, query, doc, getDoc, orderBy } from 'firebase/firestore/lite';
+import { collection, getDocs, limit, query, doc, getDoc, orderBy } from 'firebase/firestore';
 import { db } from '../firebase';
-import ProductCard from '../components/ProductCard';
+import ProductCard from '../components/ProductCardPremium';
 import LaptopComparison from '../components/LaptopComparison';
 import HeroSearch from '../components/HeroSearch';
 import { useLanguage } from '../context/LanguageContext';
 import useScrollReveal from '../hooks/useScrollReveal';
 import PolicyModal from '../components/PolicyModal';
 import { ShieldCheckIcon, TruckIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline';
+import { Briefcase, GraduationCap, Palette, Wallet } from 'lucide-react';
 import logo from '../assets/brand-logo.png';
 import Skeleton from '../components/Skeleton';
 import HolographicCard from '../components/HolographicCard';
@@ -28,6 +29,7 @@ const Home = () => {
     const [recentlyViewed, setRecentlyViewed] = useState([]);
     const [selectedPolicy, setSelectedPolicy] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [showBestSellers, setShowBestSellers] = useState(false);
 
     useEffect(() => {
         const fetchFeatured = async () => {
@@ -172,12 +174,12 @@ const Home = () => {
         <div className="home-page">
             <SEO
                 title="Home"
-                description="A Plus+ - The ultimate destination for high-performance gaming laptops in Egypt. Shop ASUS ROG, Lenovo Legion, MSI, HP Victus with warranty and free shipping."
+                description="A Plus+ - Your trusted destination for premium laptops in Egypt. Shop laptops for Business, Students, and Creatives with warranty and fast shipping."
                 url="/"
-                keywords="A Plus, gaming laptops Egypt, buy laptop Cairo, ASUS ROG, Lenovo Legion, MSI gaming laptop"
+                keywords="A Plus laptops, buy laptop Egypt, laptop store Cairo, business laptops, student laptops, laptop warranty Egypt"
             />
 
-            {/* Hero Section */}
+            {/* Hero Section - Redesigned */}
             <section className="hero">
                 <div className="hero-bg-effects">
                     <div className="orb orb-1"></div>
@@ -186,7 +188,7 @@ const Home = () => {
                 </div>
 
                 <div className="hero-content container">
-                    {/* LEFT: Text & Search */}
+                    {/* LEFT: Text & CTA */}
                     <div className="hero-text-column">
                         <div className="hero-logo-wrapper">
                             <OptimizedImage
@@ -218,13 +220,76 @@ const Home = () => {
                         </div>
                     </div>
 
-                    {/* RIGHT: 3D Holographic Card */}
+                    {/* RIGHT: Featured Product Visual */}
                     <div className="hero-visual-column">
-                        {featuredLaptops.length > 0 ? (
-                            <HolographicCard product={featuredLaptops[0]} />
-                        ) : (
-                            <Skeleton type="rect" height="500px" width="380px" style={{ borderRadius: '24px' }} />
+                        {featuredLaptops.length > 0 && (
+                            <div className="hero-featured-product">
+                                <div className="hero-product-glow"></div>
+                                <OptimizedImage
+                                    src={featuredLaptops[0]?.image || featuredLaptops[0]?.imageUrl}
+                                    alt={featuredLaptops[0]?.name || 'Featured Laptop'}
+                                    className="hero-product-image"
+                                    priority={true}
+                                />
+                                <div className="hero-product-badge">
+                                    <span>🔥 الأكثر مبيعاً</span>
+                                </div>
+                            </div>
                         )}
+                    </div>
+                </div>
+
+                {/* Trust Bar */}
+                <div className="trust-bar">
+                    <div className="trust-bar-container container">
+                        <div className="trust-item">
+                            <ShieldCheckIcon className="trust-icon" />
+                            <span>ضمان 6 شهور</span>
+                        </div>
+                        <div className="trust-item">
+                            <TruckIcon className="trust-icon" />
+                            <span>توصيل لكل مصر</span>
+                        </div>
+                        <div className="trust-item">
+                            <span className="trust-emoji">📦</span>
+                            <span>فتح علبة قبل الاستلام</span>
+                        </div>
+                        <div className="trust-item">
+                            <span className="trust-emoji">⭐</span>
+                            <span>أكثر من 500 عميل راضي</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* CATEGORIES SECTION */}
+            <section className="categories-section animate-on-scroll">
+                <div className="container">
+                    <div className="section-header">
+                        <h2>{t('categories.title') || 'Shop by Category'}</h2>
+                        <p>{t('categories.subtitle') || 'Find the perfect laptop for your needs'}</p>
+                    </div>
+                    <div className="categories-grid">
+                        <Link to="/shop?use=Business" className="category-card">
+                            <div className="category-icon"><Briefcase size={32} /></div>
+                            <h3>{t('categories.business') || 'Business'}</h3>
+                            <p>{t('categories.businessDesc') || 'Professional laptops for work'}</p>
+                        </Link>
+                        <Link to="/shop?use=Student" className="category-card">
+                            <div className="category-icon"><GraduationCap size={32} /></div>
+                            <h3>{t('categories.student') || 'Student'}</h3>
+                            <p>{t('categories.studentDesc') || 'Affordable for education'}</p>
+                        </Link>
+                        <Link to="/shop?use=Creative" className="category-card">
+                            <div className="category-icon"><Palette size={32} /></div>
+                            <h3>{t('categories.creative') || 'Creative'}</h3>
+                            <p>{t('categories.creativeDesc') || 'For designers & creators'}</p>
+                        </Link>
+                        <Link to="/shop?use=Budget" className="category-card">
+                            <div className="category-icon"><Wallet size={32} /></div>
+                            <h3>{t('categories.budget') || 'Budget'}</h3>
+                            <p>{t('categories.budgetDesc') || 'Best value for money'}</p>
+                        </Link>
                     </div>
                 </div>
             </section>
@@ -267,13 +332,126 @@ const Home = () => {
                 />
             )}
 
-            {/* RECENTLY VIEWED */}
+            {/* UNIFIED PRODUCTS SECTION with Tabs */}
+            <section className="products-showcase section-padding animate-on-scroll">
+                <div className="container">
+                    <div className="section-header">
+                        <h2>{t('featured.title') || 'منتجاتنا المميزة'}</h2>
+                        <p>{t('featured.subtitle') || 'اختر من أفضل اللابتوبات المتاحة'}</p>
+                    </div>
+
+                    {/* Products Tabs */}
+                    <div className="products-tabs">
+                        <button
+                            className={`tab-btn ${!showBestSellers ? 'active' : ''}`}
+                            onClick={() => setShowBestSellers(false)}
+                        >
+                            ⭐ المميزة
+                        </button>
+                        <button
+                            className={`tab-btn ${showBestSellers ? 'active' : ''}`}
+                            onClick={() => setShowBestSellers(true)}
+                        >
+                            🔥 الأكثر مبيعاً
+                        </button>
+                    </div>
+
+                    <div className="products-grid">
+                        {loading ? (
+                            Array(8).fill(0).map((_, i) => (
+                                <div key={i} className="product-card-skeleton">
+                                    <Skeleton type="rect" height="200px" />
+                                    <div style={{ padding: '1.5rem' }}>
+                                        <Skeleton type="text" width="80%" style={{ marginBottom: '1rem' }} />
+                                        <Skeleton type="text" width="60%" style={{ marginBottom: '1rem' }} />
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
+                                            <Skeleton type="text" width="40%" />
+                                            <Skeleton type="circle" width="30px" height="30px" />
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        ) : showBestSellers ? (
+                            bestSellers.slice(0, 8).map((laptop, index) => (
+                                <div key={laptop.id} className="best-seller-item">
+                                    {index < 3 && (
+                                        <div className="best-seller-rank">
+                                            <span>#{index + 1}</span>
+                                        </div>
+                                    )}
+                                    <ProductCard product={laptop} />
+                                </div>
+                            ))
+                        ) : (
+                            featuredLaptops.concat(allLaptops.slice(0, 8 - featuredLaptops.length)).map(laptop => (
+                                <ProductCard key={laptop.id} product={laptop} />
+                            ))
+                        )}
+                    </div>
+
+                    <div className="section-cta">
+                        <Link to="/shop" className="btn btn-primary">{t('featured.viewAll') || 'عرض الكل'}</Link>
+                    </div>
+                </div>
+            </section>
+
+            {/* BRAND SHOWCASE */}
+            <section className="brand-showcase section-padding animate-on-scroll">
+                <div className="container">
+                    <div className="section-header">
+                        <h2>تسوق حسب الماركة</h2>
+                        <p>أشهر العلامات التجارية المتوفرة لدينا</p>
+                    </div>
+                    <div className="brands-grid">
+                        <Link to="/shop?brand=HP" className="brand-card">
+                            <span className="brand-name">HP</span>
+                        </Link>
+                        <Link to="/shop?brand=Dell" className="brand-card">
+                            <span className="brand-name">Dell</span>
+                        </Link>
+                        <Link to="/shop?brand=Lenovo" className="brand-card">
+                            <span className="brand-name">Lenovo</span>
+                        </Link>
+                        <Link to="/shop?brand=Apple" className="brand-card">
+                            <span className="brand-name">Apple</span>
+                        </Link>
+                        <Link to="/shop?brand=ASUS" className="brand-card">
+                            <span className="brand-name">ASUS</span>
+                        </Link>
+                        <Link to="/shop?brand=Acer" className="brand-card">
+                            <span className="brand-name">Acer</span>
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
+            {/* NEWSLETTER / CTA SECTION */}
+            <section className="newsletter-section section-padding animate-on-scroll">
+                <div className="container">
+                    <div className="newsletter-content">
+                        <div className="newsletter-text">
+                            <h2>🔔 ابقَ على اطلاع</h2>
+                            <p>تواصل معنا عبر واتساب لتحصل على أحدث العروض والوصولات الجديدة</p>
+                        </div>
+                        <div className="newsletter-actions">
+                            <a href="https://wa.me/201040663348" className="btn btn-primary btn-lg whatsapp-btn">
+                                <span>💬</span> تواصل عبر واتساب
+                            </a>
+                            <Link to="/shop" className="btn btn-outline btn-lg">
+                                تصفح المنتجات
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* RECENTLY VIEWED - Moved to bottom */}
             {recentlyViewed.length > 0 && (
                 <section className="recently-viewed-section section-padding animate-on-scroll">
                     <div className="container">
                         <div className="section-header">
-                            <h2>Recently Viewed</h2>
-                            <p>Continue where you left off</p>
+                            <h2>شاهدتها مؤخراً</h2>
+                            <p>أكمل من حيث توقفت</p>
                         </div>
                         <div className="recently-viewed-scroll" style={{
                             display: 'flex',
@@ -292,71 +470,6 @@ const Home = () => {
                     </div>
                 </section>
             )}
-
-            {/* BEST SELLERS SECTION */}
-            {bestSellers.length > 0 && (
-                <section className="best-sellers-section section-padding animate-on-scroll">
-                    <div className="container">
-                        <div className="section-header">
-                            <h2>🔥 الأكثر مبيعاً</h2>
-                            <p>المنتجات الأكثر طلباً من عملائنا</p>
-                        </div>
-                        <div className="best-sellers-grid">
-                            {bestSellers.map((laptop, index) => (
-                                <div key={laptop.id} className="best-seller-item">
-                                    <div className="best-seller-rank">
-                                        <span>#{index + 1}</span>
-                                    </div>
-                                    <ProductCard product={laptop} />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-            )}
-            <section className="featured-products section-padding animate-on-scroll">
-                <div className="container">
-                    <div className="section-header">
-                        <h2>{t('featured.title')}</h2>
-                        <p>{t('featured.subtitle')}</p>
-                    </div>
-
-                    <div className="products-grid">
-                        {loading ? (
-                            Array(4).fill(0).map((_, i) => (
-                                <div key={i} className="product-card-skeleton">
-                                    <Skeleton type="rect" height="200px" />
-                                    <div style={{ padding: '1.5rem' }}>
-                                        <Skeleton type="text" width="80%" style={{ marginBottom: '1rem' }} />
-                                        <Skeleton type="text" width="60%" style={{ marginBottom: '1rem' }} />
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
-                                            <Skeleton type="text" width="40%" />
-                                            <Skeleton type="circle" width="30px" height="30px" />
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-                        ) : (
-                            featuredLaptops.map(laptop => (
-                                <ProductCard key={laptop.id} product={laptop} />
-                            ))
-                        )}
-                    </div>
-
-                    <div className="section-cta">
-                        <Link to="/shop" className="btn btn-primary">{t('featured.viewAll')}</Link>
-                    </div>
-                </div>
-            </section>
-
-            {/* COMPARISON SECTION */}
-            <section className="comparison-section section-padding animate-on-scroll">
-                <div className="section-header">
-                    <h2>{t('comparison.title')}</h2>
-                    <p>{t('comparison.subtitle')}</p>
-                </div>
-                <LaptopComparison />
-            </section>
 
             {/* TESTIMONIALS SECTION */}
             <Testimonials />

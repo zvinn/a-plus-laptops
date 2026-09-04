@@ -4,6 +4,10 @@ import App from './App.jsx'
 import './styles/global.css'
 import './index.css' // CRITICAL: Applies Phase 18/19 Mobile Safety Net & Dark Mode
 import { initErrorLogging } from './utils/errorLogger'
+import { initSentry } from './utils/sentry'
+
+// Initialize Sentry for production error tracking
+initSentry();
 
 // Initialize global error handlers (catches unhandled errors and promise rejections)
 initErrorLogging({

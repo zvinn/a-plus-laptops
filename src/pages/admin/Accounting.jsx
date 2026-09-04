@@ -1,28 +1,33 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../firebase';
 import {
     collection, getDocs, addDoc, deleteDoc, doc,
-    query, orderBy, where, serverTimestamp, Timestamp
-} from 'firebase/firestore/lite';
+    query, orderBy, serverTimestamp, Timestamp
+} from 'firebase/firestore';
 import { useToast } from '../../context/ToastContext';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
     ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar, Legend
 } from 'recharts';
+import {
+    Home, Users, Truck, Megaphone, Lightbulb, Package, Wrench, Clipboard,
+    DollarSign, TrendingDown, TrendingUp, Clock, ShoppingBag, Download
+} from 'lucide-react';
+import Skeleton from '../../components/Skeleton';
 import './Accounting.css';
 
 // Expense Categories
 const EXPENSE_CATEGORIES = [
-    { id: 'rent', label: 'إيجار', icon: '🏠', color: '#ef4444' },
-    { id: 'salaries', label: 'رواتب', icon: '👥', color: '#f59e0b' },
-    { id: 'shipping', label: 'شحن', icon: '🚚', color: '#3b82f6' },
-    { id: 'marketing', label: 'تسويق', icon: '📢', color: '#8b5cf6' },
-    { id: 'utilities', label: 'مرافق', icon: '💡', color: '#06b6d4' },
-    { id: 'inventory', label: 'مخزون', icon: '📦', color: '#22c55e' },
-    { id: 'maintenance', label: 'صيانة', icon: '🔧', color: '#ec4899' },
-    { id: 'other', label: 'أخرى', icon: '📋', color: '#6b7280' },
+    { id: 'rent', label: 'إيجار', icon: <Home size={18} />, color: '#ef4444' },
+    { id: 'salaries', label: 'رواتب', icon: <Users size={18} />, color: '#f59e0b' },
+    { id: 'shipping', label: 'شحن', icon: <Truck size={18} />, color: '#3b82f6' },
+    { id: 'marketing', label: 'تسويق', icon: <Megaphone size={18} />, color: '#8b5cf6' },
+    { id: 'utilities', label: 'مرافق', icon: <Lightbulb size={18} />, color: '#06b6d4' },
+    { id: 'inventory', label: 'مخزون', icon: <Package size={18} />, color: '#22c55e' },
+    { id: 'maintenance', label: 'صيانة', icon: <Wrench size={18} />, color: '#ec4899' },
+    { id: 'other', label: 'أخرى', icon: <Clipboard size={18} />, color: '#6b7280' },
 ];
 
 const CHART_COLORS = ['#22c55e', '#ef4444', '#3b82f6', '#f59e0b', '#8b5cf6', '#06b6d4'];
@@ -38,16 +43,17 @@ const Accounting = () => {
     const [loading, setLoading] = useState(true);
     const [period, setPeriod] = useState('month'); // day, week, month, year
     const [showAddExpense, setShowAddExpense] = useState(false);
-    const [newExpense, setNewExpense] = useState({
+    const [newExpense, setNewExpense] = useState(() => ({
         description: '',
         amount: '',
         category: 'other',
         date: new Date().toISOString().split('T')[0],
         notes: ''
-    });
+    }));
 
     // Fetch Data
-    const fetchData = async () => {
+    // Fetch Data
+    const fetchData = useCallback(async () => {
         setLoading(true);
         try {
             // Fetch orders (revenue)
@@ -75,7 +81,7 @@ const Accounting = () => {
             error('فشل في تحميل البيانات المحاسبية');
         }
         setLoading(false);
-    };
+    }, [error]);
 
     useEffect(() => {
         if (!currentUser) {
@@ -83,10 +89,11 @@ const Accounting = () => {
             return;
         }
         fetchData();
-    }, [currentUser, navigate]);
+    }, [currentUser, navigate, fetchData]);
 
     // Filter data by period
-    const getDateRange = () => {
+    // Filter data by period
+    const getDateRange = useCallback(() => {
         const now = new Date();
         const start = new Date();
 
@@ -108,8 +115,9 @@ const Accounting = () => {
         }
 
         return { start, end: now };
-    };
+    }, [period]);
 
+    // Calculate Statistics
     // Calculate Statistics
     const stats = useMemo(() => {
         const { start, end } = getDateRange();
@@ -136,7 +144,7 @@ const Accounting = () => {
             pendingOrders,
             profitMargin: totalRevenue > 0 ? ((netProfit / totalRevenue) * 100).toFixed(1) : 0
         };
-    }, [orders, expenses, period]);
+    }, [orders, expenses, getDateRange]);
 
     // Chart Data
     const revenueChartData = useMemo(() => {
@@ -160,7 +168,7 @@ const Accounting = () => {
         });
 
         return Object.values(data).sort((a, b) => new Date(a.date) - new Date(b.date));
-    }, [orders, expenses, period]);
+    }, [orders, expenses, getDateRange]);
 
     const expensesByCategoryData = useMemo(() => {
         const { start } = getDateRange();
@@ -175,7 +183,7 @@ const Accounting = () => {
         });
 
         return Object.values(categoryTotals);
-    }, [expenses, period]);
+    }, [expenses, getDateRange]);
 
     // Add Expense
     const handleAddExpense = async (e) => {
@@ -211,36 +219,78 @@ const Accounting = () => {
         }
     };
 
-    // Delete Expense
-    const handleDeleteExpense = async (expenseId) => {
-        if (!window.confirm('هل أنت متأكد من حذف هذا المصروف؟')) return;
-
-        try {
-            await deleteDoc(doc(db, 'expenses', expenseId));
-            success('تم حذف المصروف');
-            fetchData();
-        } catch (err) {
-            console.error('Error deleting expense:', err);
-            error('فشل في حذف المصروف');
-        }
-    };
+    // Removed handleDeleteExpense as it was unused
 
     if (loading) {
         return (
-            <div className="accounting-page">
-                <div className="accounting-header">
-                    <div className="loading-skeleton" style={{ width: '200px', height: '40px' }} />
-                </div>
+            <div className="accounting-page page-container container">
+                <Skeleton type="text" height="40px" width="200px" style={{ marginBottom: '2rem' }} />
                 <div className="accounting-stats">
                     {[1, 2, 3, 4].map(i => (
-                        <div key={i} className="stat-card">
-                            <div className="loading-skeleton" style={{ width: '100%', height: '100px' }} />
-                        </div>
+                        <Skeleton key={i} type="rect" height="100px" style={{ borderRadius: '16px' }} />
                     ))}
+                </div>
+                <div style={{ marginTop: '2rem' }}>
+                    <Skeleton type="rect" height="400px" style={{ borderRadius: '16px' }} />
                 </div>
             </div>
         );
     }
+
+    // Export to CSV
+    const handleExport = () => {
+        if (!orders.length && !expenses.length) {
+            error('لا توجد بيانات للتصدير');
+            return;
+        }
+
+        // Prepare data for CSV
+        const csvRows = [];
+
+        // Headers
+        csvRows.push(['type', 'date', 'description', 'category', 'amount', 'status'].join(','));
+
+        // Add Revenue (Orders)
+        orders.forEach(order => {
+            const date = new Date(order.createdAt).toLocaleDateString('en-GB');
+            csvRows.push([
+                'Income',
+                date,
+                `Order #${order.id.slice(0, 6)} - ${order.customerName}`,
+                'Sales',
+                order.totalAmount,
+                order.status
+            ].join(','));
+        });
+
+        // Add Expenses
+        expenses.forEach(expense => {
+            const date = new Date(expense.date).toLocaleDateString('en-GB');
+            const category = EXPENSE_CATEGORIES.find(c => c.id === expense.category)?.label || expense.category;
+            csvRows.push([
+                'Expense',
+                date,
+                expense.description,
+                category,
+                -Math.abs(expense.amount),
+                'Paid'
+            ].join(','));
+        });
+
+        // Create CSV Blob
+        const csvContent = '\uFEFF' + csvRows.join('\n'); // Add BOM for Excel Arabic support
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+
+        // Trigger Download
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `accounting_report_${new Date().toISOString().split('T')[0]}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        success('تم تحميل التقرير بنجاح');
+    };
 
     return (
         <div className="accounting-page">
@@ -269,8 +319,8 @@ const Accounting = () => {
                         ))}
                     </div>
 
-                    <button className="export-btn" onClick={() => alert('جاري التطوير - تصدير التقارير')}>
-                        📥 تصدير
+                    <button className="export-btn" onClick={handleExport}>
+                        <Download size={18} /> تصدير
                     </button>
                 </div>
             </div>
@@ -278,7 +328,7 @@ const Accounting = () => {
             {/* Stats Cards */}
             <div className="accounting-stats">
                 <div className="stat-card revenue">
-                    <div className="stat-icon">💵</div>
+                    <div className="stat-icon"><DollarSign size={24} /></div>
                     <h3>إجمالي الإيرادات</h3>
                     <div className="stat-value">{stats.totalRevenue.toLocaleString()} EGP</div>
                     <div className="stat-change positive">
@@ -287,7 +337,7 @@ const Accounting = () => {
                 </div>
 
                 <div className="stat-card expenses">
-                    <div className="stat-icon">📉</div>
+                    <div className="stat-icon"><TrendingDown size={24} /></div>
                     <h3>إجمالي المصروفات</h3>
                     <div className="stat-value">{stats.totalExpenses.toLocaleString()} EGP</div>
                     <div className="stat-change negative">
@@ -296,7 +346,7 @@ const Accounting = () => {
                 </div>
 
                 <div className="stat-card profit">
-                    <div className="stat-icon">📊</div>
+                    <div className="stat-icon"><TrendingUp size={24} /></div>
                     <h3>صافي الربح</h3>
                     <div className="stat-value" style={{ color: stats.netProfit >= 0 ? '#22c55e' : '#ef4444' }}>
                         {stats.netProfit.toLocaleString()} EGP
@@ -307,7 +357,7 @@ const Accounting = () => {
                 </div>
 
                 <div className="stat-card pending">
-                    <div className="stat-icon">⏳</div>
+                    <div className="stat-icon"><Clock size={24} /></div>
                     <h3>طلبات معلقة</h3>
                     <div className="stat-value">{stats.pendingOrders}</div>
                     <div className="stat-change">
@@ -385,7 +435,7 @@ const Accounting = () => {
                         {orders.slice(0, 10).map(order => (
                             <div key={order.id} className="transaction-item">
                                 <div className="transaction-info">
-                                    <div className="transaction-icon income">🛍️</div>
+                                    <div className="transaction-icon income"><ShoppingBag size={20} /></div>
                                     <div className="transaction-details">
                                         <h4>{order.customerName || 'عميل'}</h4>
                                         <span>{new Date(order.createdAt).toLocaleDateString('ar-EG')}</span>
@@ -398,7 +448,7 @@ const Accounting = () => {
                         ))}
                         {orders.length === 0 && (
                             <div className="empty-state">
-                                <div className="empty-state-icon">📭</div>
+                                <div className="empty-state-icon"><Package size={48} /></div>
                                 <p>لا توجد إيرادات حتى الآن</p>
                             </div>
                         )}
@@ -433,7 +483,7 @@ const Accounting = () => {
                         })}
                         {expenses.length === 0 && (
                             <div className="empty-state">
-                                <div className="empty-state-icon">📭</div>
+                                <div className="empty-state-icon"><Clipboard size={48} /></div>
                                 <p>لا توجد مصروفات مسجلة</p>
                             </div>
                         )}
@@ -446,7 +496,7 @@ const Accounting = () => {
                 <div className="modal-overlay" onClick={() => setShowAddExpense(false)}>
                     <div className="modal-content" onClick={e => e.stopPropagation()}>
                         <div className="modal-header">
-                            <h2>➕ إضافة مصروف جديد</h2>
+                            <h2><DollarSign size={24} /> إضافة مصروف جديد</h2>
                             <button className="close-btn" onClick={() => setShowAddExpense(false)}>×</button>
                         </div>
 
@@ -514,7 +564,7 @@ const Accounting = () => {
                                     إلغاء
                                 </button>
                                 <button type="submit" className="btn-submit">
-                                    💾 حفظ المصروف
+                                    <Download size={18} style={{ transform: 'rotate(180deg)' }} /> حفظ المصروف
                                 </button>
                             </div>
                         </form>

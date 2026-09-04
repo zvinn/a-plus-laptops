@@ -1,25 +1,25 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { db } from '../firebase';
-import { collection, query, where, getDocs, orderBy } from 'firebase/firestore/lite';
+import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import {
-    ClipboardDocumentListIcon,
-    TruckIcon,
-    CheckBadgeIcon,
-    ArchiveBoxIcon,
-    CubeIcon
-} from '@heroicons/react/24/outline';
+    ClipboardList,
+    Truck,
+    CheckCircle,
+    Archive,
+    Package
+} from 'lucide-react';
 import SEO from '../components/SEO';
 import PageTransition from '../components/PageTransition';
 import './OrderTracking.css';
 
 const ORDER_STATUS_STEPS = [
-    { id: 'pending', label: 'Processing', icon: ClipboardDocumentListIcon },
-    { id: 'shipped', label: 'Shipped', icon: TruckIcon },
-    { id: 'out_for_delivery', label: 'Out for Delivery', icon: CubeIcon },
-    { id: 'delivered', label: 'Delivered', icon: CheckBadgeIcon },
+    { id: 'pending', label: 'Processing', icon: ClipboardList },
+    { id: 'shipped', label: 'Shipped', icon: Truck },
+    { id: 'out_for_delivery', label: 'Out for Delivery', icon: Package },
+    { id: 'delivered', label: 'Delivered', icon: CheckCircle },
 ];
 
 const OrderTracking = () => {
@@ -105,7 +105,7 @@ const OrderTracking = () => {
 
                 {orders.length === 0 ? (
                     <div className="no-orders flip-in-ver-right">
-                        <ArchiveBoxIcon className="empty-state-icon" />
+                        <Archive size={64} className="empty-state-icon" />
                         <h2>No orders found</h2>
                         <p>Looks like you haven't bought anything yet.</p>
                         <button onClick={() => navigate('/shop')} className="btn btn-primary">

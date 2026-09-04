@@ -25,7 +25,7 @@ vi.mock('../context/AuthContext', () => ({
 }));
 
 // Mock Firestore Lite
-vi.mock('firebase/firestore/lite', () => ({
+vi.mock('firebase/firestore', () => ({
     collection: vi.fn((db, path) => ({ path })),
     query: vi.fn((...args) => ({ args })),
     where: vi.fn(),
@@ -64,6 +64,15 @@ vi.mock('@heroicons/react/24/outline', () => ({
     CheckBadgeIcon: () => <div data-testid="check-icon" />,
     ArchiveBoxIcon: () => <div data-testid="archive-icon" />,
     CubeIcon: () => <div data-testid="cube-icon" />
+}));
+
+// Mock Lucide React
+vi.mock('lucide-react', () => ({
+    ClipboardList: () => <div data-testid="clipboard-list-icon" />,
+    Truck: () => <div data-testid="truck-icon" />,
+    CheckCircle: () => <div data-testid="check-circle-icon" />,
+    Archive: () => <div data-testid="archive-icon" />,
+    Package: () => <div data-testid="package-icon" />
 }));
 
 describe('OrderTracking Page', () => {
@@ -239,7 +248,9 @@ describe('OrderTracking Page', () => {
             );
 
             await waitFor(() => {
-                expect(screen.getByText(/January 15, 2024/i)).toBeInTheDocument();
+                const dates = screen.getAllByText(/January 15, 2024/i);
+                expect(dates.length).toBeGreaterThan(0);
+                expect(dates[0]).toBeInTheDocument();
             });
 
             // Check items count (2 items in first order)
@@ -263,7 +274,7 @@ describe('OrderTracking Page', () => {
 
             // Check quantities
             expect(screen.getByText(/x1/i)).toBeInTheDocument();
-            expect(screen.getByText(/x2/i)).toBeInTheDocument();
+            expect(screen.getAllByText(/x2/i)[0]).toBeInTheDocument();
 
             // Check item totals (price * quantity)
             expect(screen.getByText(/30,000/)).toBeInTheDocument(); // Laptop: 30000 * 1

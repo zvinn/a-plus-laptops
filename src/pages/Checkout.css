@@ -224,6 +224,49 @@
 }
 
 /* ========================================
+   COUPON SECTION
+   ======================================== */
+.coupon-section {
+    margin: 1rem 0;
+    padding: 0.5rem 0;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.summary-row.discount {
+    color: var(--success);
+}
+
+.summary-row .discount-amount {
+    font-weight: 600;
+    color: var(--success);
+}
+
+.discounted-total {
+    position: relative;
+}
+
+.discounted-total::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background: var(--success);
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* ========================================
    WHATSAPP BUTTON
    ======================================== */
 .btn-whatsapp {

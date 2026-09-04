@@ -1,12 +1,16 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useConfirm } from '../../context/ConfirmContext';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../firebase';
 import {
     collection, getDocs, addDoc, updateDoc, deleteDoc, doc,
-    query, orderBy, where, serverTimestamp, Timestamp
-} from 'firebase/firestore/lite';
+    query, orderBy, serverTimestamp, Timestamp
+} from 'firebase/firestore';
 import { useToast } from '../../context/ToastContext';
+import { Printer, Download, Eye, Plus, Search, FileText, Phone, Mail, MapPin, ShieldCheck, X } from 'lucide-react';
+import { QRCodeCanvas } from 'qrcode.react';
+import Skeleton from '../../components/Skeleton';
 import './InvoiceManager.css';
 
 // Invoice Status Options
@@ -22,11 +26,12 @@ const InvoiceManager = () => {
     const { currentUser } = useAuth();
     const navigate = useNavigate();
     const { success, error } = useToast();
+    const { confirm } = useConfirm();
 
     // State
     const [invoices, setInvoices] = useState([]);
     const [orders, setOrders] = useState([]);
-    const [customers, setCustomers] = useState([]);
+    // Removed unused customers state
     const [loading, setLoading] = useState(true);
     const [selectedInvoice, setSelectedInvoice] = useState(null);
     const [showCreateModal, setShowCreateModal] = useState(false);
@@ -34,8 +39,13 @@ const InvoiceManager = () => {
     const [filterStatus, setFilterStatus] = useState('all');
     const [searchTerm, setSearchTerm] = useState('');
 
+    // Helper for default due date (7 days from now)
+    const getDefaultDueDate = useCallback(() => {
+        return new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    }, []);
+
     // New Invoice Form State
-    const [newInvoice, setNewInvoice] = useState({
+    const [newInvoice, setNewInvoice] = useState(() => ({
         orderId: '',
         customerId: '',
         customerName: '',
@@ -50,7 +60,7 @@ const InvoiceManager = () => {
         notes: '',
         dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
         status: 'draft'
-    });
+    }));
 
     // Generate Invoice Number
     const generateInvoiceNumber = () => {
@@ -62,7 +72,8 @@ const InvoiceManager = () => {
     };
 
     // Fetch Data
-    const fetchData = async () => {
+    // Fetch Data
+    const fetchData = useCallback(async () => {
         setLoading(true);
         try {
             // Fetch invoices
@@ -87,21 +98,14 @@ const InvoiceManager = () => {
             }));
             setOrders(ordersData);
 
-            // Fetch customers
-            const customersQuery = query(collection(db, 'customers'));
-            const customersSnapshot = await getDocs(customersQuery);
-            const customersData = customersSnapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
-            setCustomers(customersData);
+            // Removed unused customers fetch
 
         } catch (err) {
             console.error('Error fetching invoice data:', err);
             error('فشل في تحميل بيانات الفواتير');
         }
         setLoading(false);
-    };
+    }, [error]);
 
     useEffect(() => {
         if (!currentUser) {
@@ -109,7 +113,7 @@ const InvoiceManager = () => {
             return;
         }
         fetchData();
-    }, [currentUser, navigate]);
+    }, [currentUser, navigate, fetchData]);
 
     // Check for overdue invoices
     useEffect(() => {
@@ -135,7 +139,7 @@ const InvoiceManager = () => {
         if (invoices.length > 0) {
             checkOverdue();
         }
-    }, [invoices]);
+    }, [invoices, fetchData]);
 
     // Calculate Stats
     const stats = useMemo(() => {
@@ -160,6 +164,15 @@ const InvoiceManager = () => {
 
     // Create Invoice from Order
     const createFromOrder = (order) => {
+        // Map order items to invoice format with proper number types
+        const mappedItems = (order.items || []).map(item => ({
+            name: item.name || '',
+            quantity: Number(item.quantity) || 1,
+            price: Number(item.price) || 0
+        }));
+
+        const subtotal = mappedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
         setNewInvoice({
             orderId: order.id,
             customerId: order.userId || '',
@@ -167,13 +180,13 @@ const InvoiceManager = () => {
             customerEmail: order.customerEmail || '',
             customerPhone: order.shippingDetails?.phone || '',
             customerAddress: `${order.shippingDetails?.address || ''}, ${order.shippingDetails?.city || ''}`,
-            items: order.items || [],
-            subtotal: order.items?.reduce((sum, item) => sum + (item.price * item.quantity), 0) || 0,
+            items: mappedItems,
+            subtotal: subtotal,
             tax: 0,
-            discount: order.discount || 0,
-            total: order.totalAmount || 0,
+            discount: Number(order.discount) || 0,
+            total: subtotal - (Number(order.discount) || 0),
             notes: '',
-            dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            dueDate: getDefaultDueDate(),
             status: 'draft'
         });
         setShowCreateModal(true);
@@ -183,30 +196,47 @@ const InvoiceManager = () => {
     const handleSaveInvoice = async (e) => {
         e.preventDefault();
 
-        if (!newInvoice.customerName || !newInvoice.items.length) {
-            error('يرجى إضافة اسم العميل والمنتجات');
+        // Better validation with specific messages
+        if (!newInvoice.customerName || newInvoice.customerName.trim() === '') {
+            error('يرجى إضافة اسم العميل');
+            return;
+        }
+
+        if (!newInvoice.items || newInvoice.items.length === 0) {
+            error('يرجى إضافة منتج واحد على الأقل');
+            return;
+        }
+
+        // Check if items have valid data
+        const validItems = newInvoice.items.filter(item =>
+            item.name && item.name.trim() !== '' && item.price > 0
+        );
+
+        if (validItems.length === 0) {
+            error('يرجى إضافة اسم وسعر للمنتجات');
             return;
         }
 
         try {
             const invoiceData = {
                 ...newInvoice,
+                items: validItems, // Only save valid items
                 invoiceNumber: generateInvoiceNumber(),
-                subtotal: newInvoice.items.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-                total: newInvoice.items.reduce((sum, item) => sum + (item.price * item.quantity), 0) + newInvoice.tax - newInvoice.discount,
+                subtotal: validItems.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                total: validItems.reduce((sum, item) => sum + (item.price * item.quantity), 0) + (newInvoice.tax || 0) - (newInvoice.discount || 0),
                 dueDate: Timestamp.fromDate(new Date(newInvoice.dueDate)),
                 createdBy: currentUser.email,
                 createdAt: serverTimestamp()
             };
 
             await addDoc(collection(db, 'invoices'), invoiceData);
-            success('تم إنشاء الفاتورة بنجاح');
+            success('تم إنشاء الفاتورة بنجاح ✅');
             setShowCreateModal(false);
             resetForm();
             fetchData();
         } catch (err) {
             console.error('Error creating invoice:', err);
-            error('فشل في إنشاء الفاتورة');
+            error('فشل في إنشاء الفاتورة: ' + err.message);
         }
     };
 
@@ -229,7 +259,12 @@ const InvoiceManager = () => {
 
     // Delete Invoice
     const handleDeleteInvoice = async (invoiceId) => {
-        if (!window.confirm('هل أنت متأكد من حذف هذه الفاتورة؟')) return;
+        if (!await confirm({
+            title: 'حذف الفاتورة',
+            message: 'هل أنت متأكد من حذف هذه الفاتورة؟ لا يمكن التراجع عن هذا الإجراء.',
+            confirmText: 'حذف',
+            variant: 'danger'
+        })) return;
 
         try {
             await deleteDoc(doc(db, 'invoices', invoiceId));
@@ -265,7 +300,7 @@ const InvoiceManager = () => {
             discount: 0,
             total: 0,
             notes: '',
-            dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            dueDate: getDefaultDueDate(),
             status: 'draft'
         });
     };
@@ -309,17 +344,15 @@ const InvoiceManager = () => {
 
     if (loading) {
         return (
-            <div className="invoice-page">
-                <div className="invoice-header">
-                    <div className="loading-skeleton" style={{ width: '200px', height: '40px' }} />
+            <div className="invoice-page page-container container">
+                <Skeleton type="text" height="40px" width="200px" style={{ marginBottom: '2rem' }} />
+                <div className="invoice-stats" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+                    <Skeleton type="rect" height="120px" style={{ borderRadius: '16px' }} />
+                    <Skeleton type="rect" height="120px" style={{ borderRadius: '16px' }} />
+                    <Skeleton type="rect" height="120px" style={{ borderRadius: '16px' }} />
+                    <Skeleton type="rect" height="120px" style={{ borderRadius: '16px' }} />
                 </div>
-                <div className="invoice-stats">
-                    {[1, 2, 3, 4].map(i => (
-                        <div key={i} className="stat-card">
-                            <div className="loading-skeleton" style={{ width: '100%', height: '100px' }} />
-                        </div>
-                    ))}
-                </div>
+                <Skeleton type="rect" height="400px" style={{ borderRadius: '16px' }} />
             </div>
         );
     }
@@ -734,28 +767,60 @@ const InvoiceManager = () => {
                         </div>
 
                         <div className="invoice-template" id="invoice-print">
+                            {/* Header with Logo */}
                             <div className="invoice-template-header">
                                 <div className="company-info">
+                                    <div className="logo-container">
+                                        <img
+                                            src="/logo.png"
+                                            alt="A Plus+"
+                                            className="invoice-logo"
+                                            onError={(e) => {
+                                                e.target.style.display = 'none';
+                                                e.target.nextSibling.style.display = 'flex';
+                                            }}
+                                        />
+                                        <div className="logo-fallback" style={{ display: 'none' }}>
+                                            <span className="logo-text-fallback">A<sup>+</sup></span>
+                                        </div>
+                                    </div>
                                     <h1>A Plus+</h1>
-                                    <p>متجر اللابتوبات الأفضل</p>
-                                    <p>www.aplus-laptops.com</p>
+                                    <p><Phone size={14} /> 01040663348</p>
+                                    <p><MapPin size={14} /> Nasr City, Cairo, Egypt</p>
                                 </div>
                                 <div className="invoice-info">
-                                    <h2>فاتورة</h2>
-                                    <p><strong>رقم:</strong> {selectedInvoice.invoiceNumber}</p>
-                                    <p><strong>التاريخ:</strong> {new Date(selectedInvoice.createdAt).toLocaleDateString('ar-EG')}</p>
-                                    <p><strong>الاستحقاق:</strong> {new Date(selectedInvoice.dueDate).toLocaleDateString('ar-EG')}</p>
+                                    <div className="invoice-badge">فاتورة / Invoice</div>
+                                    <div className="invoice-meta-grid">
+                                        <div className="meta-item">
+                                            <span className="meta-label">Invoice #:</span>
+                                            <span className="invoice-number-display">{selectedInvoice.invoiceNumber}</span>
+                                        </div>
+                                        <div className="meta-item">
+                                            <span className="meta-label">Date:</span>
+                                            <span>{new Date(selectedInvoice.createdAt).toLocaleDateString('en-GB')}</span>
+                                        </div>
+                                        <div className="meta-item">
+                                            <span className="meta-label">State:</span>
+                                            <span>Cairo</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
+                            {/* Customer Section */}
                             <div className="customer-section">
-                                <h3>فاتورة إلى:</h3>
-                                <p><strong>{selectedInvoice.customerName}</strong></p>
-                                <p>{selectedInvoice.customerEmail}</p>
-                                <p>{selectedInvoice.customerPhone}</p>
-                                <p>{selectedInvoice.customerAddress}</p>
+                                <div className="customer-box">
+                                    <h3><FileText size={18} /> فاتورة إلى:</h3>
+                                    <p className="customer-name-print"><strong>{selectedInvoice.customerName}</strong></p>
+                                    <div className="customer-details-grid">
+                                        {selectedInvoice.customerPhone && <p><Phone size={14} /> {selectedInvoice.customerPhone}</p>}
+                                        {selectedInvoice.customerEmail && <p><Mail size={14} /> {selectedInvoice.customerEmail}</p>}
+                                        {selectedInvoice.customerAddress && <p><MapPin size={14} /> {selectedInvoice.customerAddress}</p>}
+                                    </div>
+                                </div>
                             </div>
 
+                            {/* Items Table */}
                             <table className="invoice-items-table">
                                 <thead>
                                     <tr>
@@ -773,12 +838,13 @@ const InvoiceManager = () => {
                                             <td>{item.name}</td>
                                             <td>{item.quantity}</td>
                                             <td>{item.price?.toLocaleString()} EGP</td>
-                                            <td>{(item.quantity * item.price)?.toLocaleString()} EGP</td>
+                                            <td className="item-total-cell">{(item.quantity * item.price)?.toLocaleString()} EGP</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
 
+                            {/* Totals */}
                             <div className="invoice-totals">
                                 <div className="total-line">
                                     <span>المجموع الفرعي:</span>
@@ -787,31 +853,73 @@ const InvoiceManager = () => {
                                 {selectedInvoice.tax > 0 && (
                                     <div className="total-line">
                                         <span>الضريبة:</span>
-                                        <span>{selectedInvoice.tax?.toLocaleString()} EGP</span>
+                                        <span>+{selectedInvoice.tax?.toLocaleString()} EGP</span>
                                     </div>
                                 )}
                                 {selectedInvoice.discount > 0 && (
-                                    <div className="total-line">
+                                    <div className="total-line discount-line">
                                         <span>الخصم:</span>
                                         <span>-{selectedInvoice.discount?.toLocaleString()} EGP</span>
                                     </div>
                                 )}
                                 <div className="total-line grand">
                                     <span>الإجمالي:</span>
-                                    <span>{selectedInvoice.total?.toLocaleString()} EGP</span>
+                                    <span className="grand-total-amount">{selectedInvoice.total?.toLocaleString()} EGP</span>
                                 </div>
                             </div>
 
+                            {/* Notes */}
                             {selectedInvoice.notes && (
                                 <div className="invoice-notes">
-                                    <h4>ملاحظات:</h4>
+                                    <h4>📝 ملاحظات:</h4>
                                     <p>{selectedInvoice.notes}</p>
                                 </div>
                             )}
 
-                            <div className="invoice-footer">
-                                <p>شكراً لتعاملكم معنا!</p>
-                                <p>A Plus+ - The Best Laptop Store</p>
+                            {/* Footer */}
+                            {/* Warranty Seal & Footer */}
+                            <div className="invoice-footer-container">
+                                <div className="warranty-seal">
+                                    <div className="seal-inner">
+                                        <div className="seal-icon"><ShieldCheck size={24} /></div>
+                                        <div className="seal-text">6 MONTH</div>
+                                        <div className="seal-usage">WARRANTY</div>
+                                        <div className="seal-brand">FROM A PLUS</div>
+                                        <div className="seal-auth">AUTHORIZED SEAL</div>
+                                    </div>
+                                </div>
+
+                                <div className="policy-section">
+                                    <h4>🔐 سياسة الاستبدال والاسترجاع والضمان المقدمة من A Plus</h4>
+                                    <ul>
+                                        <li>يمكن استبدال أو استرجاع الجهاز خلال 14 يوماً من تاريخ الشراء في حالة وجود عيب صناعة أو مشكلة فنية لا يمكن إصلاحها.</li>
+                                        <li>يجب أن يكون الجهاز بحالته الأصلية دون أي خدوش أو تلفيات خارجية أو كسر في الختم أو العبوة.</li>
+                                        <li>يشترط وجود الفاتورة الأصلية عند طلب الاستبدال أو الاسترجاع.</li>
+                                        <li>لا تشمل سياسة الاستبدال أو الضمان أي أعطال ناتجة عن سوء الاستخدام أو التعامل الخاطئ مع الجهاز.</li>
+                                        <li>أنظمة الطاقة أو الأعطال الناتجة عن التيار الكهربائي العالي (Power Surge) أو الكهرباء غير المستقرة غير مشمولة في الضمان.</li>
+                                        <li>في حالة وجود مشكلة في النظام أو الأداء يمكن التواصل مع فريق الدعم الفني عبر خدمة المتابعة الأونلاين.</li>
+                                        <li>كل عمليات الاستبدال والاسترجاع تتم حصرياً عبر مركز خدمة A Plus المعتمد.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div className="invoice-signoff-section">
+                                <div className="qr-code-wrapper">
+                                    <QRCodeCanvas
+                                        value={`INV:${selectedInvoice.id}|DATE:${selectedInvoice.date?.seconds}|AMT:${selectedInvoice.total}`}
+                                        size={90}
+                                        level={"M"}
+                                    />
+                                </div>
+                                <div className="signature-wrapper">
+                                    <p>Authorized Signature</p>
+                                    <div className="signature-line"></div>
+                                </div>
+                            </div>
+
+                            <div className="thank-you-footer">
+                                <p>Thank you for your business!</p>
+                                <p className="brand-website">www.aplus-laptops.com</p>
                             </div>
                         </div>
 
